@@ -32,30 +32,31 @@ def Dijkstra(s):
 def checkNegativeLoop(A):
     global nodes_cnt
     for i in xrange(nodes_cnt + 1):
-        if A[nodes_cnt - 1][i] != A[nodes_cnt][i]:
-            print i, A[nodes_cnt - 1][i], A[nodes_cnt][i]
+        if A[1][i] != A[0][i]:
+            print i, A[0][i], A[1][i]
 
 def reWeighting(GPrime, A):
     global nodes_cnt
     for u in filter(lambda k: k != 0, GPrime.keys()):
         for v in GPrime[u]:
-            GPrime[u][v] = GPrime[u][v] + A[nodes_cnt - 1][u] - A[nodes_cnt - 1][v]
+            GPrime[u][v] = GPrime[u][v] + A[0][u] - A[0][v]
 
 def computeShortestPath(A):
     global shortest, nodes_cnt
     for v in filter(lambda v: v != 0, set(GPrime.keys() + GReverse.keys())):
         result = Dijkstra(v)
         for t, cost in result.iteritems():
-            shortest.append(cost - A[nodes_cnt][v] + A[nodes_cnt][t])
+            shortest.append(cost - A[0][v] + A[0][t])
 
 def BellmanFord(s=0):
     global GReverse, GPrime, nodes_cnt, edges_cnt, shortest
-    A = [[0,] * (nodes_cnt + 1) for _ in xrange(nodes_cnt + 1)]
+    A = [[0,] * (nodes_cnt + 1) for _ in xrange(2)]
     for i in xrange(1, nodes_cnt + 1):
         A[s][i] = sys.maxint
     for i in xrange(1, nodes_cnt + 1):
+        A[0][:] = A[1][:]
         for v in set(GPrime.keys() + GReverse.keys()):
-            A[i][v] = min([A[i - 1][v], min([A[i - 1][w] + GReverse[v][w] for w in GReverse[v]])])
+            A[1][v] = min([A[0][v], min([A[0][w] + GReverse[v][w] for w in GReverse[v]])])
     # diff
     checkNegativeLoop(A)
     return A
@@ -93,7 +94,7 @@ def read(fileName):
         array = list(map(int, filter((lambda c: c != '\n'), line.split(' '))) for line in lines[1:])
         return array, int(lines[0].split(' ')[0]), int(lines[0].split(' ')[1])
 
-def test(fileName="test.txt"):
+def test(fileName="g3.txt"):
     global edges, nodes_cnt, edges_cnt
     edges, nodes_cnt, edges_cnt = read(fileName)
     buildGraph(edges)
