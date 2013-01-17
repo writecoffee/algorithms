@@ -1,4 +1,5 @@
 
+import itertools
 import sys
 
 def floyd_warshall(A, n, edges):
@@ -34,4 +35,12 @@ def test(fileName="test"):
     A = [[[sys.maxint, ] * (n + 1) for _ in xrange(n + 1)]  for _ in xrange(n + 1)]
     floyd_warshall(A, n, edges)
 
+def testClique(n=4):
+    edges = {}
+    for (x, y) in itertools.combinations(range(1, n + 1), 2):
+        edges[(x, y)], edges[(y, x)] = -1, -1
+    A = [[[sys.maxint, ] * (n + 1) for _ in xrange(n + 1)]  for _ in xrange(n + 1)]
+    floyd_warshall(A, n, edges)
+
 test()
+testClique()
