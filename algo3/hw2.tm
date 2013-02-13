@@ -262,21 +262,22 @@
     <\code>
       assign(array, value, i, n):
 
-      \ \ \ \ if i \<less\> n:
+      \ \ \ \ if i \<less\> n then:
 
-      \ \ \ \ \ \ \ \ array[i] := value
+      \ \ \ \ \ \ \ \ array[i] <math|\<leftarrow\>> value
 
       \ \ \ \ else:
 
-      \ \ \ \ \ \ \ \ newSize := <math|2<rsup|\<lceil\>log<rsub|2>(i)\<rceil\>>>
+      \ \ \ \ \ \ \ \ newSize <math|\<leftarrow\>>
+      <math|2<rsup|\<lceil\>log<rsub|2>(i)\<rceil\>>>
 
-      \ \ \ \ \ \ \ \ memPtr := allocate(newSize)
+      \ \ \ \ \ \ \ \ memPtr <math|\<leftarrow\>> allocate(newSize)
 
       \ \ \ \ \ \ \ \ free(array, n)
 
-      \ \ \ \ \ \ \ \ array := memPtr
+      \ \ \ \ \ \ \ \ array <math|\<leftarrow\>> memPtr
 
-      \ \ \ \ \ \ \ \ array[i] := value
+      \ \ \ \ \ \ \ \ array[i] <math|><math|\<leftarrow\>> value
     </code>
 
     <item>Analyze your pseudocode: What is its competitive ratio with OPT?
@@ -324,13 +325,14 @@
       </equation*>
 
       <\equation*>
-        \<leqslant\>2\<times\><frac|k(k-1)|2>+2<rsup|k>-2+N
+        \<leqslant\>2\<times\><frac|k(k-1)|2>+2<rsup|k>-2+2<rsup|k>
       </equation*>
 
-      So, the overall complexity would be dominated by the copying part,
-      namely <math|O(2<rsup|k>)>. Substituting <math|k> with <math|log(N)>,
-      the competitive ratio between the Matlab algorithm and the optimal
-      algorithm would be
+      So, the overall complexity would be dominated by the copying and
+      assigning part, namely <math|O(2<rsup|k>)>. Substituting <math|k> with
+      <math|log(N)>, the running time complexity of this algorithm would be
+      <math|O(N)>. The competitive ratio between the Matlab algorithm and the
+      optimal algorithm would be
 
       <\equation*>
         <frac|O(N<rsup|2>)|O(N)>
@@ -360,6 +362,8 @@
     calculations assuming we round up to the nearest power of <math|c>, for
     some constant <math|c\<gtr\>1>. Reason about the <math|c> you pick.
 
+    <next-line><next-line><next-line><next-line><next-line><next-line><next-line><next-line><next-line><next-line><next-line><next-line><next-line><next-line><next-line><next-line><next-line><next-line><next-line><next-line><next-line>
+
     \;
   </enumerate-numeric>
 
@@ -368,7 +372,103 @@
   <subsection|Problem 3.>
 
   <\enumerate-numeric>
-    <item>
+    <item>The amount of memory used by the standard dynamic programming
+    approach to edit distance is <math|O(n<rsup|2>)>, which is the same order
+    as the amount of time the algorithm takes; while we might be happy
+    waiting for several billion CPU cycles, our code might crash on current
+    hardware if it also demands several billion memory locations.
+    Fortunately, we do not need to store the whole two-dimensional table: it
+    is enough to store just the current row being computed, and the previous
+    row that we have just finished computing. Write pseudocode for this
+    strategy.
+
+    <\code>
+      edit_distance(s1, s1_len, s2, s2_len):
+
+      \ \ \ \ create 2D array M[2][s2_len + 1]
+
+      \ \ \ \ for j <math|\<leftarrow\>> 1 to s1_len do:
+
+      \ \ \ \ \ \ \ \ M[0][j] <math|\<leftarrow\>> j
+
+      \ \ \ \ for i <math|\<leftarrow\>> 1 to s2_len do:
+
+      \ \ \ \ \ \ \ \ M[i % 2][0] <math|\<leftarrow\>> i
+
+      \ \ \ \ \ \ \ \ for j <math|\<leftarrow\>> 1 to s1_len do:
+
+      \ \ \ \ \ \ \ \ \ \ \ \ if s1[i - 1] <math|=> s2[j - 1] then:
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M[i % 2][j] <math|\<leftarrow\>> M[(i -
+      1) % 2][j - 1]
+
+      \ \ \ \ \ \ \ \ \ \ \ \ else:
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ iPrev <math|\<leftarrow\>> M[(i - 1) %
+      2][j]
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ jPrev <math|\<leftarrow\>> M[i % 2][j -
+      1]
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ijPrev <math|\<leftarrow\>> M[(i - 1) %
+      2][j - 1]
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M[i % 2][j] <math|\<leftarrow\>>
+      min(iPrev, jPrev, ijPrev) + 1
+
+      \ \ \ \ return M[(s1_len - 1) % 2][s2_len]
+    </code>
+
+    <item>Describe, in a few sentences, and using concepts from lecture
+    and/or your knowledge of systems why and how this approach is an
+    improvement.
+
+    In this strategy, we only need to use <math|2n> memory.
+
+    <next-line><next-line><next-line><next-line><next-line><next-line><next-line><next-line><next-line><next-line><next-line>
+
+    <item>Find a way to lay out the entries of the table in memory so that
+    when the two letters are the same, instead of doing a memory copy, the
+    algorithm <with|font-shape|italic|does nothing>. Write pseudocode for the
+    edit distance problem where the <with|font-shape|italic|same> memory
+    address is used for location <math|(i-1, j-1)> and for location <math|(i,
+    j)>.
+
+    <\code>
+      edit_dist_good_layout(s1, s1_len, s2, s2_len):
+
+      \ \ \ \ create array M[s2_len + 1]
+
+      \ \ \ \ for j <math|\<leftarrow\>> 0 to s1_len do:
+
+      \ \ \ \ \ \ \ \ M[j] <math|\<leftarrow\>> j
+
+      \ \ \ \ for i <math|\<leftarrow\>> 1 to s2_len do:
+
+      \ \ \ \ \ \ \ \ if s1[0] <math|\<neq\>> s2[i - 1] do:
+
+      \ \ \ \ \ \ \ \ \ \ \ \ M[0] <math|\<leftarrow\>> min(M[0], M[1], i) +
+      1
+
+      \ \ \ \ \ \ \ \ for j <math|\<leftarrow\>> 2 to s1_len do:
+
+      \ \ \ \ \ \ \ \ \ \ \ \ if s1[j - 1] <math|\<neq\>> s2[i - 1]:
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M[j - 1] <math|\<leftarrow\>> min(M[j -
+      2], M[j - 1], M[j]) + 1
+
+      \ \ \ \ return M[s2_len]
+    </code>
+
+    <item>Describe in a few sentences how your algorithm works, and why it is
+    correct.
+
+    Because for computing every unit in the table, in the worst case
+    (<math|i.e.>, <math|s<rsub|1>[i] \<neq\>s<rsub|2>[j]>), we need to
+    compare three values, originally <math|M[i - 1][j-], M[i - 1][j],
+    M[i][j-1]>, We only need a one-dimensional array
+
+    <next-line><next-line><next-line><next-line><next-line><next-line><next-line>
   </enumerate-numeric>
 </body>
 
