@@ -120,17 +120,18 @@
 
     <\with|font-base-size|9>
       <with|font-base-size|8|<\equation*>
-        <with|color|blue|M<rsub|v, k> = <choice|<tformat|<cwith|5|5|1|1|cell-rborder|>|<cwith|2|2|1|1|cell-halign|r>|<cwith|4|4|1|1|cell-halign|r>|<cwith|7|7|1|1|cell-halign|r>|<table|<row|<cell|0>|<cell|>|<cell|(k=0)>>|<row|<cell|>|<cell|>|<cell|>>|<row|<cell|-\<infty\>>|<cell|>|<cell|(k
-        \<gtr\> 0 and v =leaf node)>>|<row|<cell|>|<cell|>|<cell|>>|<row|<cell|max<left|{><below|max|every
-        x, \ y><left|(><below|<above|max|k>|l=1><rsub|>{M<rsub|x, l>
-        +w<rsub|v, x>+M<rsub|y, k-l>+w<rsub|v, y>}<right|)>,
-        >|<cell|>|<cell|>>|<row|<cell| \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <below|max|for
+        <with|color|blue|M<rsub|v, k> = <choice|<tformat|<cwith|5|5|1|1|cell-rborder|>|<cwith|2|2|1|1|cell-halign|r>|<cwith|4|4|1|1|cell-halign|r>|<cwith|7|7|1|1|cell-halign|r>|<cwith|8|8|3|3|cell-valign|b>|<cwith|9|9|3|3|cell-valign|t>|<cwith|8|8|1|1|cell-valign|b>|<table|<row|<cell|0>|<cell|>|<cell|<with|font-base-size|7|(k=0)>>>|<row|<cell|>|<cell|>|<cell|>>|<row|<cell|-\<infty\>>|<cell|>|<cell|<with|font-base-size|7|(k
+        \<gtr\> 0 and v =leaf node)>>>|<row|<cell|>|<cell|>|<cell|>>|<row|<cell|max<left|{><below|max|every
+        children pari x, \ y of v><left|(>{M<rsub|x, l> +w<rsub|v,
+        x>+M<rsub|y, k-l>+w<rsub|v, y>}<right|)>,
+        >|<cell|>|<cell|>>|<row|<cell|<htab|5mm><htab|5mm><below|max|for
         every child u><left|(>M<rsub|u, k-1> +w<rsub|v,
-        u><right|)><left|}>>|<cell|>|<cell|(k\<gtr\>0 and v
-        =<with|font-base-size|8|>root)>>|<row|<cell|>|<cell|>|<cell|>>|<row|<cell|<below|max|for
+        u><right|)><left|}>>|<cell|>|<cell|<with|font-base-size|7|(k\<gtr\>0
+        and v =root)>>>|<row|<cell|>|<cell|>|<cell|<with|mode|text|>>>|<row|<cell|<below|max|for
         every child u of v><rsub|>(M<rsub|u, k-1> +w<rsub|v,
-        u>)>|<cell|>|<cell|(k\<gtr\>0 and v \<neq\>leaf node and v
-        \<neq\>root)>>>>> \ >
+        u>)>|<cell|>|<cell|<with|font-base-size|7|(k\<gtr\>0 and v
+        \<neq\>leaf >>>|<row||<cell|>|<cell|<htab|5mm>and v \<neq\>root)>>>>>
+        \ >
       </equation*>>
     </with>
 
@@ -139,10 +140,127 @@
     where each of these remaining trees has at most <math|<frac|n|2>>
     vertices.
 
+    <\enumerate-alpha>
+      <\with|color|blue>
+        <item>Firstly, we prove the <with|font-shape|italic|Lemma>: picking
+        any specific node as root <math|r>, there would be no more than one
+        subtree which contains <math|\<geqslant\><frac|n|2>> nodes.
+
+        <strong|<em|Proof>:>
+
+        Given a tree graph <math|T> with <math|n> vertices, we define
+        <math|S(r)> to be the number of nodes contained in subtree-<math|r>,
+        <math|r> is any specific node chosen to be the root for tree
+        <math|T>.
+
+        We assume that there are 2 subtrees, <math|t<rsub|1>> and
+        <math|t<rsub|2>>, which contains <math|S(t<rsub|1>)> and
+        <math|S(t<rsub|2>)> number of nodes, where <math|S(t<rsub|1>),
+        S(t<rsub|2>) \<geqslant\><frac|n|2>> respectively. So there would be
+        <math|S(t<rsub|1>)+S(t<rsub|2>) \<geqslant\><frac|n|2>\<times\>2=n>
+        for subtrees of <math|r>, resulting <math|1+n> nodes, plusing node
+        <math|r>, for the tree given.
+
+        This leads to a contradiction. So our original assumption that there
+        would be more than 1 subtree could have more than <math|<frac|n|2>>
+        nodes was wrong, and there must be at most one subtree which can
+        exceed <frac|n|2> number of nodes.
+
+        <item>We now prove that for any given tree with <math|n> vertices,
+        there is a vertex that, if we remove it, splits the tree into several
+        smaller trees where each of these remaining trees has at most
+        <math|<frac|n|2>> vertices.
+
+        <strong|<em|Proof>:>
+
+        We define the above problem as <math|P(r)>.
+
+        Given a tree graph <math|T> with <math|n> vertices. We define
+        <math|S(v)> to be the number of nodes contained in subtree
+        <math|T<rsub|v>> which starts from root <math|v>. Let <math|r> be an
+        arbitrary vertex chosen to be the root of <math|T> and there exists a
+        subtree <math|T<rsub|e>>, where vertex <math|e> is the root, of
+        <math|T<rsub|r>> such that <math|S(T<rsub|e>)\<gtr\><frac|n|2>>.
+
+        Now we choose <math|e> as the new root, the new <math|S(r)> computed
+        would be the number of nodes <math|r> plus all other subtrees of
+        <math|r> except <math|T<rsub|e>>, which would be either
+        <math|\<less\><frac|n|2>> or <math|=<frac|n|2>>.
+
+        <with|font-shape|italic|Case 1> (<math|new S(T<rsub|r>)=<frac|n|2>>)
+
+        The resulting new subtree <math|T<rsub|r>> of <math|T<rsub|e>> has
+        the property that <math|S<rsub|>(r)=<frac|n|2>>. According to the
+        <with|font-shape|italic|lemma> we have proven in part (a), the number
+        of nodes contained by other subtrees of <math|T<rsub|r>> would be all
+        <math|\<less\> <frac|n|2>>. So we could find vertex <math|e>, such
+        that if we remove it the remaining smaller trees has at most
+        <math|<frac|n|2>> vertices.
+
+        <with|font-shape|italic|Case 2> (<math|new
+        S(T<rsub|r>)\<less\><frac|n|2>>)
+
+        Among all other subtrees of <math|T<rsub|e>>, let the one contains
+        the most number of nodes be <math|m>,
+        <math|S(T<rsub|m>)\<leqslant\>S(T<rsub|e>)-1>. <math|S(T<rsub|m>)>
+        would be<math|\<less\><frac|n|2>>, <math|=<frac|n|2>> or
+        <math|\<gtr\><frac|n|2>>.
+
+        <\enumerate-roman>
+          <item>If <math|S(T<rsub|m>)=<frac|n|2>>, then according the
+          <with|font-shape|italic|lemma> we have proven in part (a),
+          \ <math|S(r)> must be <math|\<less\><frac|n|2>>.\ 
+
+          <item>If <math|S(T<rsub|m>)\<less\><frac|n|2>>, then since
+          <math|S(r)\<less\><frac|n|2>> in this case, we have found an vertex
+          <math|e> such that each of its subtree has less than <frac|n|2>
+          number of nodes.
+
+          <item>If <math|S(T<rsub|m>)\<gtr\><frac|n|2>>, then we'll choose
+          <math|m> as a new root. The new subtree <math|T<rsub|e>> for root
+          <math|m> would be <math|\<geqslant\>S(T<rsub|r>)+1>. All subtree
+          for new root <math|m> except <math|T<rsub|e>> would be
+          <math|\<leqslant\>S(T<rsub|m>)-1>.
+        </enumerate-roman>
+
+        So there is always one new subtree keeps increasing, that is the new
+        subtree <math|T<rsub|e>> for the new tree <math|T<rsub|m>>, the
+        number of vertices within that subtree and always one subtree keep
+        decreasing. It will ends up that the increasing side reach
+        <math|<frac|n|2>>, the decreasing side reaches <frac|n|2> or both
+        side reach <math|\<less\><frac|n|2>>.
+      </with>
+    </enumerate-alpha>
+
     <item>Find a <math|O(n)> algorithm that finds such a vertex. (Hint:
     dynamic programming. Note that one way to solve the previous part is to
     come up with an algorithm for this part and then prove that the output
     satisfies the conditions of the previous part.)
+
+    <\with|color|blue>
+      Firstly, randomly pick one vertex as the root <math|r>. Recurse on
+      <math|r> to compute nodes contained in the subtree-<math|r>. We define
+      <math|S(r)> to be the number of nodes contained in subtree-<math|r> and
+      the recursion could be expressed as follows:
+
+      <\equation*>
+        S(r) = <choice|<tformat|<table|<row|<cell|>|<cell|1>|<cell|r is leaf
+        node>>|<row|<cell|<rsub|>>|<cell|1+<big|sum><rsub|every child
+        t>S(t)>|<cell|r is not leaf node>>>>>
+      </equation*>
+
+      Let <math|v> be the current root picked to be check. Let <math|s> be
+      the child of <math|v> who contains the maximum number of nodes,
+      <math|S<rsub|max>(v)>, in its subtree among all children of <math|v>.
+      The recursion could be written as follows:
+
+      <\equation*>
+        <with|font-shape|italic|FindVertex>(v) =
+        <choice|<tformat|<table|<row|<cell|FindVertex(s)>|<cell|>|<cell|S<rsub|max>(v)\<gtr\>\<lceil\><frac|n|2>\<rceil\>>>|<row|<cell|<rsub|>v>|<cell|>|<cell|S<rsub|max>(v)\<leqslant\>\<lceil\><frac|n|2>\<rceil\>>>>>>
+      </equation*>
+
+      \;
+    </with>
 
     <item>Use the previous two algorithms you have constructed to design an
     <math|O(n log n)> <em|divide-andconquer> algorithm that solves our
@@ -165,6 +283,7 @@
 <\references>
   <\collection>
     <associate|auto-1|<tuple|1|?>>
+    <associate|auto-2|<tuple|1|?>>
   </collection>
 </references>
 
