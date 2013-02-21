@@ -22,67 +22,73 @@
   following parts that asks for an algorithm, a proof of correctness and
   running time complexity is also needed.\ 
 
-  <\enumerate-numeric>
+  <with|color|black|<\enumerate-numeric>
     <item><with|color|dark-gray|Suppose you have a rooted tree with <math|n>
     vertices. Design an <math|O(n)> algorithm that finds the best (that is,
     the maximal weight) path of length <math|k> that starts at the root, and
     goes down from there. (Hint: dynamic programming.)>
 
     <\with|color|blue>
-      Define <math|M<rsub|v, k>> as the maxium weight for the length-<math|k>
-      path which starts from node <math|v>. The problem could be divided into
-      sub-problem for computing <math|M<rsub|u,k-1>> for all children of node
-      <math|v> then adding the weight of edge <math|(u, v)>, we then pick the
-      biggest one. The recursion could be written as follows:
+      <\with|color|black>
+        Define <math|M<rsub|v, k>> as the maxium weight for the
+        length-<math|k> path which starts from node <math|v>. The problem
+        could be divided into sub-problem for computing <math|M<rsub|u,k-1>>
+        for all children of node <math|v> then adding the weight of edge
+        <math|(u, v)>, we then pick the biggest one. The recursion could be
+        written as follows:
 
-      <\equation*>
-        M<rsub|v, k> = <choice|<tformat|<table|<row|<cell|0>|<cell|(k=0)>>|<row|<cell|-\<infty\>>|<cell|(k
-        \<gtr\> 0 and v is leaf node)>>|<row|<cell|<below|max|for every child
-        u of v><rsub|><left|{>M<rsub|u, k-1> +w<rsub|v,
-        u><left|}>>|<cell|(k\<gtr\>0 and v is not leaf node)>>>>> \ 
-      </equation*>
+        <\equation*>
+          M<rsub|v, k> = <choice|<tformat|<table|<row|<cell|0>|<cell|(k=0)>>|<row|<cell|-\<infty\>>|<cell|(k
+          \<gtr\> 0 and v is leaf node)>>|<row|<cell|<below|max|for every
+          child u of v><rsub|><left|{>M<rsub|u, k-1> +w<rsub|v,
+          u><left|}>>|<cell|(k\<gtr\>0 and v is not leaf node)>>>>> \ 
+        </equation*>
 
-      Pseudocode is as follows:
+        Pseudocode is as follows:
 
-      <\with|font-base-size|8>
-        <with|font-base-size|9|<\code>
-          let <math|M> be 2-dimension <math|N\<times\>k> table
+        <\with|font-base-size|8>
+          <with|font-base-size|9|<\code>
+            let <math|M> be 2-dimension <math|N\<times\>k> table
 
-          <em|HeaviestPath>(<math|v>, <math|k>):
+            set table <math|M>[<math|i>, <math|j>] <math|\<leftarrow\>-1> for
+            every valid <math|i>, <math|j>
 
-          \ \ \ \ if <math|k=0> then:
+            <em|HeaviestPath>(<math|v>, <math|k>):
 
-          \ \ \ \ \ \ \ \ <math|M[v, k] \<leftarrow\>0>
+            \ \ \ \ if <math|k=0> then:
 
-          \ \ \ \ \ \ \ \ return 0
+            \ \ \ \ \ \ \ \ <math|M[v, k] \<leftarrow\>0>
 
-          \ \ \ \ <math|m\<leftarrow\> -\<infty\>>, <math|t\<leftarrow\>0>
+            \ \ \ \ \ \ \ \ return 0
 
-          \ \ \ \ for each child <math|u> of <math|v> do:
+            \ \ \ \ <math|m\<leftarrow\> -\<infty\>>, <math|t\<leftarrow\>0>
 
-          \ \ \ \ \ \ \ \ if <math|M[u, k-1] \<neq\>-\<infty\>> then do:
+            \ \ \ \ for each child <math|u> of <math|v> do:
 
-          \ \ \ \ \ \ \ \ \ \ \ \ <math|t\<leftarrow\>M[u, k-1]+w(v, u)>
+            \ \ \ \ \ \ \ \ if <math|M[u, k-1] \<neq\>-1> then do:
 
-          \ \ \ \ \ \ \ \ else:
+            \ \ \ \ \ \ \ \ \ \ \ \ <math|t\<leftarrow\>M[u, k-1]+w(v, u)>
 
-          \ \ \ \ \ \ \ \ \ \ \ \ <math|t\<leftarrow\>><with|font-shape|italic|HeaviestPath>(<math|u>,
-          <math|k-1>)<math|+w(v,u)>
+            \ \ \ \ \ \ \ \ else:
 
-          \ \ \ \ \ \ \ \ if <math|t \<gtr\> m> then do:
+            \ \ \ \ \ \ \ \ \ \ \ \ <math|t\<leftarrow\>><with|font-shape|italic|HeaviestPath>(<math|u>,
+            <math|k-1>)<math|+w(v,u)>
 
-          \ \ \ \ \ \ \ \ \ \ \ \ <math|m\<leftarrow\>t>
+            \ \ \ \ \ \ \ \ if <math|t \<gtr\> m> then do:
 
-          \ \ \ \ return <math|m>
-        </code>>
+            \ \ \ \ \ \ \ \ \ \ \ \ <math|m\<leftarrow\>t>
+
+            \ \ \ \ return <math|m>
+          </code>>
+        </with>
+
+        We know that a tree is a special graph which contains no cycle. Also,
+        as what the problem specifies, we only need consider directed path
+        which starts from the root. Let the tree as graph <math|G<rsub|N, V>>
+        Since all nodes will be touched at most once, the computation time
+        for finding maximum would not exceed <math|\|V\|>, which is
+        <math|N-1> in this case. So the time complexity would be <math|O(n)>.
       </with>
-
-      We know that a tree is a special graph which contains no cycle. Also,
-      as what the problem specifies, we only need consider directed path
-      which starts from the root. Let the tree as graph <math|G<rsub|N, V>>
-      Since all nodes will be touched at most once, the computation time
-      would not exceed <math|\|V\|>, which is <math|N-1> in this case. So the
-      time complexity would be <math|O(n)>.
     </with>
 
     <item>Suppose <strong|for this part only> that the root of the tree has
@@ -91,26 +97,54 @@
     start or end at the root, or pass through it as an intermediate node.)
     This algorithm should also take <math|O(n)> time.
 
-    Define <math|M<rsub|v, k>> as the maxium weight for the length-<math|k>
-    path which starts from node <math|v>. As special case, because the root
-    has exactly 2 children The problem could be divided into sub-problem for
-    computing <math|M<rsub|u,k-1>> for all children of node <math|v> then
-    adding the weight of edge <math|(u, v)>, we then pick the biggest one.
-    The recursion could be written as follows:
+    <with|color|black|Define <math|M<rsub|v, k>> as the maxium weight for the
+    length-<math|k> path which starts from node <math|v>. As special case,
+    because the root has exactly 2 children. The problem could be divided
+    into sub-problem for computing <math|M<rsub|u,k-1>> for all children of
+    node <math|v> then adding the weight of edge <math|(u, v)>, we then pick
+    one with the maximum weight. The recursion could be written as follows:>
 
     <\with|font-base-size|8>
       <with|color|blue|<\equation*>
-        M<rsub|v, k> = <choice|<tformat|<table|<row|<cell|0>|<cell|(k=0)>>|<row|<cell|-\<infty\>>|<cell|(k
+        <with|color|black|M<rsub|v, k> = <choice|<tformat|<table|<row|<cell|0>|<cell|(k=0)>>|<row|<cell|-\<infty\>>|<cell|(k
         \<gtr\> 0 and v =leaf node)>>|<row|<cell|max<left|{><below|<above|max|k>|l=1><rsub|>{M<rsub|x,
         l> +w<rsub|v, x>+M<rsub|y, k-l>+w<rsub|v, y>},
         M<rsub|x,k>,M<rsub|y,k><left|}>>|<cell|(k\<gtr\>0 and v
         =<with|font-base-size|8|>root)>>|<row|<cell|<below|max|for every
         child u of v><rsub|>(M<rsub|u, k-1> +w<rsub|v, u>)>|<cell|(k\<gtr\>0
-        and v \<neq\>leaf node and v \<neq\>root)>>>>> \ 
+        and v \<neq\>leaf node and v \<neq\>root)>>>>> \ >
       </equation*>>
     </with>
 
-    \;
+    We store each intermediate cost result into an <math|n\<times\>k> table
+    <with|font-shape|italic|A> such that we are filling the table from left
+    to right (filling column <math|j> from 0 to <math|k-1>). Similarly, we
+    store each optimal child into an <math|n\<times\>2> table <math|P>, where
+    we fill in column from mapped to a specific node recording the optimal 2
+    neighbors for the optimal path, and store <with|font-shape|italic|NULL>
+    for leaf node. We could later restore the entire path by concatenating
+    each edge of the optimal path.
+
+    <em|Correctness>:
+
+    In the induction of this algorithm, we argued that <math|A(v, k)>
+    correctly stores the maximum weight of a <math|k>-length path for subtree
+    descending from node <math|v>, and justified that recursive expression
+    for <math|M<rsub|v,k>> correctly represents the optimal cost. To recover
+    an optimal path, we iterate back throught the table <math|P>, starting
+    from <math|P(r)>, where <math|r> is the root. We can repeate the process
+    until we no longer extend and concatenate the path. Length <math|k> means
+    successful path computed, otherwise, <math|\<leqslant\>k> means fail.
+
+    <em|Run time>:
+
+    The max is computed <math|n> times, and each time involves <math|O(n)>
+    work. For non-root nodes, it would take <math|O(c)> time for computing
+    the optimal sub-path, thinking that constant <math|c> is the number of
+    children for each vertex. For the root vertex, thinking that we only need
+    to read optimal cost from <math|A>, we get the result would be in
+    constant time again. So all manipulation would take <math|O(n)> running
+    time.
 
     <item>Now solve the previous part without restricting the number of
     children of the root. The algorithm should still take <math|O(n)> running
@@ -118,22 +152,62 @@
     vertices more than once; check that the starting vertex and the ending
     vertex of the path do not belong to the same subtree of the root.
 
-    <\with|font-base-size|9>
-      <with|font-base-size|8|<\equation*>
-        <with|color|blue|M<rsub|v, k> = <choice|<tformat|<cwith|5|5|1|1|cell-rborder|>|<cwith|2|2|1|1|cell-halign|r>|<cwith|4|4|1|1|cell-halign|r>|<cwith|7|7|1|1|cell-halign|r>|<cwith|8|8|3|3|cell-valign|b>|<cwith|9|9|3|3|cell-valign|t>|<cwith|8|8|1|1|cell-valign|b>|<table|<row|<cell|0>|<cell|>|<cell|<with|font-base-size|7|(k=0)>>>|<row|<cell|>|<cell|>|<cell|>>|<row|<cell|-\<infty\>>|<cell|>|<cell|<with|font-base-size|7|(k
-        \<gtr\> 0 and v =leaf node)>>>|<row|<cell|>|<cell|>|<cell|>>|<row|<cell|max<left|{><below|max|every
-        children pari x, \ y of v><left|(>{M<rsub|x, l> +w<rsub|v,
-        x>+M<rsub|y, k-l>+w<rsub|v, y>}<right|)>,
-        >|<cell|>|<cell|>>|<row|<cell|<htab|5mm><htab|5mm><below|max|for
-        every child u><left|(>M<rsub|u, k-1> +w<rsub|v,
-        u><right|)><left|}>>|<cell|>|<cell|<with|font-base-size|7|(k\<gtr\>0
-        and v =root)>>>|<row|<cell|>|<cell|>|<cell|<with|mode|text|>>>|<row|<cell|<below|max|for
-        every child u of v><rsub|>(M<rsub|u, k-1> +w<rsub|v,
-        u>)>|<cell|>|<cell|<with|font-base-size|7|(k\<gtr\>0 and v
-        \<neq\>leaf >>>|<row||<cell|>|<cell|<htab|5mm>and v \<neq\>root)>>>>>
-        \ >
-      </equation*>>
+    <\with|color|black>
+      Define <math|M<rsub|v, k>> as the maxium weight for the length-<math|k>
+      path which starts from node <math|v>. The problem could be divided into
+      sub-problem for computing <math|M<rsub|u,k-1>> for all children of node
+      <math|v> then adding the weight of edge <math|(u, v)>, we then pick one
+      with the maximum weight. The recursion could be written as follows:
+
+      <\with|font-base-size|9>
+        <with|font-base-size|8|<\equation*>
+          <with|color|blue|<with|color|black|M<rsub|v, k> =
+          <choice|<tformat|<cwith|5|5|1|1|cell-rborder|>|<cwith|2|2|1|1|cell-halign|r>|<cwith|4|4|1|1|cell-halign|r>|<cwith|7|7|1|1|cell-halign|r>|<cwith|8|8|3|3|cell-valign|b>|<cwith|9|9|3|3|cell-valign|t>|<cwith|8|8|1|1|cell-valign|b>|<table|<row|<cell|0>|<cell|>|<cell|<with|font-base-size|7|(k=0)>>>|<row|<cell|>|<cell|>|<cell|>>|<row|<cell|-\<infty\>>|<cell|>|<cell|<with|font-base-size|7|(k
+          \<gtr\> 0 and v =leaf node)>>>|<row|<cell|>|<cell|>|<cell|>>|<row|<cell|max<left|{><below|max|every
+          children pari x, \ y of v><left|(>{M<rsub|x, l> +w<rsub|v,
+          x>+M<rsub|y, k-l>+w<rsub|v, y>}<right|)>,
+          >|<cell|>|<cell|>>|<row|<cell|<htab|5mm><htab|5mm><below|max|for
+          every child u><left|(>M<rsub|u, k-1> +w<rsub|v,
+          u><right|)><left|}>>|<cell|>|<cell|<with|font-base-size|7|(k\<gtr\>0
+          and v =root)>>>|<row|<cell|>|<cell|>|<cell|<with|mode|text|>>>|<row|<cell|<below|max|for
+          every child u of v><rsub|>(M<rsub|u, k-1> +w<rsub|v,
+          u>)>|<cell|>|<cell|<with|font-base-size|7|(k\<gtr\>0 and v
+          \<neq\>leaf >>>|<row||<cell|>|<cell|<htab|5mm>and v
+          \<neq\>root)>>>>> \ >>
+        </equation*>>
+      </with>
     </with>
+
+    We store each intermediate cost result into an <math|n\<times\>k> table
+    <with|font-shape|italic|A> such that we are filling the table from left
+    to right (filling column <math|j> from 0 to <math|k-1>). Similarly, we
+    store each optimal child into an <math|n\<times\>2> table <math|P>, where
+    we fill in column from mapped to a specific node recording the optimal 2
+    neighbors for the optimal path, and store <with|font-shape|italic|NULL>
+    for leaf node. We could later restore the entire path by concatenating
+    each edge of the optimal path.
+
+    <em|Correctness>:
+
+    In the induction of this algorithm, we argued that <math|A(v, k)>
+    correctly stores the maximum weight of a <math|k>-length path for subtree
+    descending from node <math|v>, and justified that recursive expression
+    for <math|M<rsub|v,k>> correctly represents the optimal cost. To recover
+    an optimal path, we iterate back throught the table <math|P>, starting
+    from <math|P(r)>, where <math|r> is the root, and the tuple retrieved
+    from <math|P(r)> is the direct neighbors. We can repeate the process
+    until we no longer extend and concatenate the path. Length <math|k> means
+    successful path computed, otherwise, <math|\<leqslant\>k> means fail.
+
+    <em|Run time>:
+
+    The max is computed <math|n> times, and each time involves <math|O(n)>
+    work. For non-root nodes, it would take <math|O(c)> time for computing
+    the optimal sub-path, thinking that constant <math|c> is the number of
+    children for each vertex. For the root vertex, thinking that we only need
+    to read optimal cost from <math|A>, we get the result would be in
+    constant time again. So all manipulation would take <math|O(n)> running
+    time.
 
     <item>Prove that for any given tree with <math|n> vertices, there is a
     vertex that, if we remove it, splits the tree into several smaller trees
@@ -141,7 +215,7 @@
     vertices.
 
     <\enumerate-alpha>
-      <\with|color|blue>
+      <\with|color|black>
         <item>Firstly, we prove the <with|font-shape|italic|Lemma>: picking
         any specific node as root <math|r>, there would be no more than one
         subtree which contains <math|\<geqslant\><frac|n|2>> nodes.
@@ -237,7 +311,7 @@
     come up with an algorithm for this part and then prove that the output
     satisfies the conditions of the previous part.)
 
-    <\with|color|blue>
+    <\with|color|black>
       Firstly, randomly pick one vertex as the root <math|r>. Recurse on
       <math|r> to compute nodes contained in the subtree-<math|r>. We define
       <math|S(r)> to be the number of nodes contained in subtree-<math|r> and
@@ -269,7 +343,37 @@
     <strong|Note>: You do not have to solve parts 3 and 5 to get credit for
     part 6: in part 6 you may assume that algorithms for parts 3 and 5 exist
     and they work correctly as indicated.
-  </enumerate-numeric>
+
+    For a tree with <math|n> vertices. Firstly, we run algorithm of
+    <with|font-shape|italic|Question> 5 to get vertex <math|r> where all
+    subtrees of <math|v> contains <math|\<leqslant\><frac|n|2>> number of
+    nodes. Now <math|r> is behaving like the root of the following recursion.
+    We run algorithm from <with|font-shape|italic|Question> 3 to get a
+    candidate optimal path <math|p<rsub|1>> which must pass through node
+    <math|r> with <math|k> vertices. Remove node <math|r>, and for every
+    subtrees, we run algorithm of <with|font-shape|italic|Question >5 and
+    algorithm of <with|font-shape|italic|Question >6 to get candidate optimal
+    path <math|p<rsub|2>, p<rsub|3>, \<ldots\>,p<rsub|x>> until no more
+    length-<math|k> paths could be found.
+    <with|font-shape|italic|Max>(<math|p<rsub|1>,p<rsub|2>,\<ldots\>p<rsub|x>)>
+    is the optimal path for the overall problem.
+
+    <em|Correctness>
+
+    For every recursion, <math|r> as a new root. The <math|r> would be either
+    in the final optimal path <math|p<rprime|'>> or not. If <math|r> is in
+    <math|p<rprime|'>>, final optimal weight would be the current maximum
+    cost computed <math|w>. Otherwise, <math|p<rprime|'>> must be in one of
+    <math|r>'s subtrees. So if <math|k>-length path exists in the current
+    tree, \ <math|p<rprime|'>> would be found in the process.
+
+    <em|Running Time>
+
+    For each step we run the algorithm for <with|font-shape|italic|Question>
+    5 and <with|font-shape|italic|Question> 6, the running time combined
+    would be <math|O(n)>. There are at most <math|log <frac|n|2>> subproblems
+    for current level. So the overall running time is <math|O(n log n)>.
+  </enumerate-numeric>>
 
   \;
 </body>
