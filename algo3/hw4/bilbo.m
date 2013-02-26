@@ -28,18 +28,20 @@ t2=createVLC(hs2,h2);
 t3=createVLC(hs3,h3);
 t4=createVLC(hs4,h4);
 
-keyboard %% pauses code here in debug mode; remove this in your final submission
+%%keyboard %% pauses code here in debug mode; remove this in your final submission
 
 im=zeros(400,672); prev=128; pos=1; %initializes an empty image
 
-%% SUGGESTION: precompute the 8x8 cosine transform matrix M here
+% SUGGESTION: precompute the 8x8 cosine transform matrix M here
+n=8;M=[]; for j=0:n-1, M=[M;cos((.5:n)/n*pi*j)]; end
 for yblock=0:24 %% loop over 16x16 blocks in the image, in the vertical direction
     for xblock=0:41 %% loop over 16x16 blocks in the image, in the horizontal direction
         for y=0:1 %% loop over 8x8 subblocks in each 16x16 block
             for x=0:1 %% loop over 8x8 subblocks in each 16x16 block
                 [coeffs,pos]=readcoeffs(bits,pos,t1,t2);
                 [coeffs,prev]=fixJPEGcoeffs(coeffs(zz),q1(zz),prev); %% needs to be implemented!!
-block = coeffs; %% CHANGE THIS TO THE 2-DIMENSIONAL COSINE TRANFORM OF COEFFS!!
+% block = coeffs; %% CHANGE THIS TO THE 2-DIMENSIONAL COSINE TRANFORM OF COEFFS!!
+                block=((coeffs*M)'*M)';
                 im(yblock*16+y*8+(1:8),xblock*16+x*8+(1:8))= block;
             end
         end

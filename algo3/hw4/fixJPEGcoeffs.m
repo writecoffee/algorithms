@@ -5,3 +5,10 @@ function [coeffs,prev]=fixJPEGcoeffs(coeffs,q,prev)
 % transform coefficient of the previous block; prev should output the (1,1)
 % cosine transform coefficient of the current block
 
+coeffs=coeffs.*q./4;
+coeffs(1,:)=coeffs(1,:)./(2^.5);
+coeffs(:,1)=coeffs(:,1)./(2^.5);
+coeffs(1,1)=coeffs(1,1)+prev;
+prev=coeffs(1,1);
+
+end

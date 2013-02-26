@@ -18,5 +18,5 @@ while col>0
     col=table(row,col); %% traversing the binary tree
     pos=pos+1;
 end
-out=abs(col),pos
+out=abs(col);pos;
 end

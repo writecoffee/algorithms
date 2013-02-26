@@ -8,3 +8,16 @@ function [coeffs,pos]=readcoeffs(bits,pos,DCcode,ACcode)
 % along with the position "pos" where the next block starts.
 
 coeffs=zeros(1,64);
+[out,pos]=decodeVLC(bits,pos,DCcode);
+[out,pos]=decodeFIXED(bits,pos,out);
+coeffs(1)=out;
+i=1;
+x=1;
+while x~=0
+    [x,pos]=decodeVLC(bits,pos,ACcode);
+    [out,pos]=decodeFIXED(bits,pos,mod(x,16));
+    i=i+floor(x/16)+1;
+    coeffs(i)=out;
+end
+end
+
