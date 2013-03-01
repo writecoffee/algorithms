@@ -1,0 +1,151 @@
+\documentclass{letter}
+\usepackage{enumerate}
+
+%%%%%%%%%% Start TeXmacs macros
+\newcommand{\section}[1]{\medskip\bigskip
+
+\noindent\textbf{\LARGE #1}}
+\newcommand{\tmstrong}[1]{\textbf{#1}}
+\newcommand{\tmtextit}[1]{{\itshape{#1}}}
+\newenvironment{enumeratenumeric}{\begin{enumerate}[1.] }{\end{enumerate}}
+\newenvironment{itemizedot}{\begin{itemize} \renewcommand{\labelitemi}{$\bullet$}\renewcommand{\labelitemii}{$\bullet$}\renewcommand{\labelitemiii}{$\bullet$}\renewcommand{\labelitemiv}{$\bullet$}}{\end{itemize}}
+\newenvironment{itemizeminus}{\begin{itemize} \renewcommand{\labelitemi}{$-$}\renewcommand{\labelitemii}{$-$}\renewcommand{\labelitemiii}{$-$}\renewcommand{\labelitemiv}{$-$}}{\end{itemize}}
+%%%%%%%%%% End TeXmacs macros
+
+\begin{document}
+
+\title{CS157 Homework 5}\author{chaoqian and silao\_xu}\maketitle
+
+\section{Problem 1}
+
+Bilbo has a long journey ahead of him and wants to stay in comfortable hotels
+along his route each night, but can only walk 20 miles in a day. Fortunately,
+he has a guidebook charting the locations of all the hotels along his route.
+(Bilbo already knows which route he is taking; he only has to choose where
+along his route to stay each night.)
+\begin{enumeratenumeric}
+  \item (8 points) Find a greedy algorithm for Bilbo to compute how to finish
+  his journey in the least number of days. Points on this problem will only be
+  given for the proof that your algorithm is optimal; more points will be
+  given for simpler and clearer proofs.
+  \begin{itemizedot}
+    \item \tmtextit{{\tmstrong{Greedy Algorithm}}}
+    
+    Let start point be $s$ and the termination be $T$. The following algorithm
+    will find the next hotel as far as possible within 20 miles for each hop.
+    \begin{verbatim}
+ 1   def ():
+ 2       ()
+ 3       if  then do:
+ 4          return 0
+ 5       else:
+ 6          return ()
+ 7   end
+ 8
+ 9   def ():
+10       .
+11       while .. then do:
+12           
+13           .
+14       end
+15       return 
+16   end
+\end{verbatim}
+    \item {\tmstrong{\tmtextit{Correctness}}}
+    \begin{itemizeminus}
+      \item {\tmstrong{Claim}}. \tmtextit{FindWay} terminates.
+      
+      \tmtextit{Proof}: The \tmtextit{FindWay} would recurse on the next route
+      point (the hotel along the route he will live in at night). Since the
+      destination of the route is known, therefore line 3 would become true at
+      some point.
+      
+      \item {\tmstrong{Claim}}. \tmtextit{FindWay} satisfies the feasibility
+      that he needs to walk at most 20 miles every day in the trip.
+      
+      \tmtextit{Proof}:
+      
+      \item {\tmstrong{Claim}}. \tmtextit{FindWay} satisfies the optimality
+      criteria that he can finish his journey in the least number of days.
+    \end{itemizeminus}
+    
+    
+    
+  \end{itemizedot}
+  
+  
+  
+  
+  \item (3 points) After studying your algorithm for the previous problem,
+  Bilbo realizes that, actually, the different hotels cost different amounts,
+  and what he actually wants to do is minimize the total cost of his journey.
+  (Luckily, his guidebook also lists the cost of each hotel.) He thinks of the
+  following greedy algorithm: wherever he is, for each hotel within a day's
+  walk of him (20 miles), he computes the ``cost per mile'' of staying there,
+  dividing its cost by the amount of progress he would make by staying there;
+  given this list of costs, he then chooses to spend his next night at the
+  hotel with the best cost per mile. Demonstrate for Bilbo that being greedy
+  can be costly, that is, describe an example where Bilbo's algorithm gives
+  suboptimal performance.
+  
+  \\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  \\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}{\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}
+  
+  \item (4 points) Find a dynamic programming algorithm for Bilbou2019s
+  problem. Make it clear to Bilbo why it works, including an explanation of
+  the meaning of any tables you ask Bilbo to construct. (Your solution for
+  this part should look like an explanation, not a proof.)
+  
+  \\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}\\
+  {\linebreak}{\linebreak}{\linebreak}{\linebreak}
+\end{enumeratenumeric}
+
+\end{document}
