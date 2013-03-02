@@ -4,9 +4,9 @@
 
 <\body>
   <surround|||<doc-data|<doc-title|CS157 Homework
-  5>|<doc-author-data|<author-name|chaoqian and silao_xu>|<\author-address>
+  5>|<\doc-author-data|<author-name|chaoqian and silao_xu>>
     \;
-  </author-address>>|<doc-date|<date|>>>>
+  </doc-author-data>|<doc-date|<date|>>>>
 
   <section|Problem 2>
 
@@ -33,13 +33,66 @@
     the same time.\ 
 
     <\code>
-      label each people from <math|1> to <math|n>
+      <math|n\<leftarrow\>>number of people
 
-      label each event from 1 to <math|m>
+      <math|m\<leftarrow\>>number of events
+
+      construct a <math|m> array ``<with|font-shape|italic|Attends>'' in
+      which each element <math|i> stores an empty
+
+      \ \ \ \ set storing the people who are attending
+
+      label each people from 1 to <math|n>
+
+      label each event from 1 to <math|m> sorted by beginning time in
+      ascending order
 
       def Arrange():
 
-      \ \ \ \ 
+      \ \ \ \ <math|p\<leftarrow\>><with|font-shape|italic|NULL>
+
+      \ \ \ \ <math|i\<leftarrow\>>1
+
+      \ \ \ \ <math|S\<leftarrow\>>set(all people)
+
+      \ \ \ \ <math|E\<leftarrow\>>set(all events)
+
+      \ \ \ \ while <math|i\<leqslant\>m>:
+
+      \ \ \ \ \ \ \ \ <math|p\<leftarrow\>>set(events in <math|E> finished
+      earlier than event<math|<rsub|i>>'s start time)
+
+      \ \ \ \ \ \ \ \ <math|S\<leftarrow\>S\<cup\>p>
+
+      \ \ \ \ \ \ \ \ <math|l\<leftarrow\>>number of events overlapped with
+      event <math|i>
+
+      \ \ \ \ \ \ \ \ <math|e\<leftarrow\>>set(events that overlapped with
+      event <math|i>)
+
+      \ \ \ \ \ \ \ \ <with|font-shape|italic|Attends>[<math|i>]<math|\<leftarrow\>>set(<math|m-l>
+      people chosen from <math|S>)
+
+      \ \ \ \ \ \ \ \ <math|S\<leftarrow\>S-><with|font-shape|italic|Attends>[<math|i>]
+
+      \ \ \ \ \ \ \ \ for each <em|event><math|<rsub|j>> in <math|e> do:
+
+      \ \ \ \ \ \ \ \ \ \ \ \ <with|font-shape|italic|Attends>[<math|j>]<math|\<leftarrow\>>set(1
+      people chosen from <math|S>)
+
+      \ \ \ \ \ \ \ \ \ \ \ \ <math|S\<leftarrow\>S-><with|font-shape|italic|Attends>[<math|j>]
+
+      \ \ \ \ \ \ \ \ end
+
+      \ \ \ \ \ \ \ \ <math|i\<leftarrow\>i+l>
+
+      \ \ \ \ \ \ \ \ <math|E\<leftarrow\>E-e-><with|font-shape|italic|event><math|><math|<rsub|i>>
+
+      \ \ \ \ end
+
+      \ \ \ \ return <with|font-shape|italic|Attends>
+
+      end
     </code>
 
     <strong|<em|<item>Correctness>>
