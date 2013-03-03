@@ -30,7 +30,7 @@
       far as possible within 20 miles for each hop.\ 
 
       <\code>
-        <\verbatim>
+        <with|font-base-size|9|<\verbatim>
           01 def <with|font-shape|italic|Find-Way>(s):\ 
 
           02 \ \ \ \ n = <with|font-shape|italic|Get-Next>(s)\ 
@@ -63,7 +63,7 @@
           15 \ \ \ \ return n
 
           16 end
-        </verbatim>
+        </verbatim>>
       </code>
 
       <item><strong|<with|font-shape|italic|Correctness>>
@@ -80,13 +80,15 @@
         feasibility that he needs to walk at most 20 miles every day in the
         trip.
 
-        <with|font-shape|italic|Proof>: Based on the assumption that the
-        distance between every consecutive pair of hotels would not exceed 20
-        miles, in <with|font-shape|italic|Get-Next> line 10, the first next
-        hotel we look at would not 20 miles further than <with|mode|math|s>.
-        Also, in <with|font-shape|italic|Get-Next> line 11 we limit that the
-        furthest hotel from <with|mode|math|s> would not exceed 20 miles. So
-        we conclude that <with|font-shape|italic|Find-Way> satisfies the
+        <with|font-shape|italic|Proof>: Based on the
+        assumptFind-MinCost-Wayion that the distance between every
+        consecutive pair of hotels would not exceed 20 miles, in
+        <with|font-shape|italic|Get-Next> line 10, the first next hotel we
+        look at would not 20 miles further than <with|mode|math|s>. Also, in
+        <with|font-shape|italic|Get-Next> line 11 we limit that the furthest
+        hotel from <with|mode|math|s> would not exceed 20 miles.\ 
+
+        So we conclude that <with|font-shape|italic|Find-Way> satisfies the
         feasibility that Bilbo would walk at most 20 miles every day in the
         trip.
 
@@ -97,9 +99,9 @@
         <with|font-shape|italic|Proof>: Let <with|mode|math|S>* be the
         optimal solution got from <with|font-shape|italic|Find-Way>. Assume
         that there is an optimal solution <with|mode|math|S> that require
-        less than days in solution <with|mode|math|S>* for Bilbo to finish,
-        there must be a day <with|mode|math|d>, in the entire trip such that
-        Bilbo could walk more than <with|font-shape|italic|Find-Way>
+        less days than solution <with|mode|math|S>* for Bilbo to finish the
+        tour, there must be a day <with|mode|math|d>, in the entire trip such
+        that Bilbo could walk more than <with|font-shape|italic|Find-Way>
         solution. However, based on the fact that the distance between every
         consecutive pair of hotels would not exceed 20 miles and the
         algorithm we construct in <with|font-shape|italic|Get-Next> line 11,
@@ -141,14 +143,14 @@
     <item>(4 points) Find a dynamic programming algorithm for Bilbo's
     problem. Make it clear to Bilbo why it works, including an explanation of
     the meaning of any tables you ask Bilbo to construct. (Your solution for
-    this part should look like an explanation, not a proof).
+    this part shFind-MinCost-Wayould look like an explanation, not a proof).
 
     <\itemize-dot>
       <strong|<em|<item>DP Algorithm>>
 
       The pseudocode is as follows:
 
-      <\code>
+      <with|font-base-size|9|<\code>
         <math|s\<leftarrow\>>departure point
 
         <math|t\<leftarrow\>>termination point
@@ -169,7 +171,9 @@
         \ \ \ \ the previous hotel number Bilbo would live in before hotel
         <math|i>
 
-        def <with|font-shape|italic|Find-MinCost-Way>(<math|t>):
+        \;
+
+        def <name|<with|font-shape|italic|Find-MinCost-Way>>(<math|t>):
 
         \ \ \ \ <em|hotels>[0]<math|\<leftarrow\>0>
 
@@ -186,11 +190,19 @@
         \ \ \ \ \ \ \ \ \ \ \ \ hops[<math|j>] <math|\<leftarrow\>>hotel
         index of min{hotels[<math|i>]}
 
+        \ \ \ \ \ \ \ \ end
+
+        \ \ \ \ end
+
         \ \ \ \ for each hotel <math|k> within 20 miles before <math|t> then
         do:
 
         \ \ \ \ \ \ \ \ return min{hotel(<math|k>)}
-      </code>
+
+        \ \ \ \ end
+
+        end
+      </code>>
 
       <strong|<em|<item>Correctness>> (Proof by Induction)
 
