@@ -17,14 +17,14 @@
   least one of you attend each event. Of course, you must arrive to computer
   science events on time, and it is rude to leave early.\ 
 
-  Design a greedy algorithm so that you and your friends, between you, can
-  attend every computer science event, if this is possible at all. As above,
-  points on this problem will only be given for the proof that your algorithm
-  is optimal; more points will be given for simpler and clearer proofs.
-  Remember, if you are having trouble proving the correctness of your
-  algorithm, consider a different algorithm; if your proof seems unwieldy and
-  awkward, consider a different proof approach<emdash>your first idea might
-  be correct, but might not be the best.
+  <with|color|black|Design a greedy algorithm so that you and your friends,
+  between you, can attend every computer science event, if this is possible
+  at all.> As above, points on this problem will only be given for the proof
+  that your algorithm is optimal; more points will be given for simpler and
+  clearer proofs. Remember, if you are having trouble proving the correctness
+  of your algorithm, consider a different algorithm; if your proof seems
+  unwieldy and awkward, consider a different proof approach<emdash>your first
+  idea might be correct, but might not be the best.
 
   <\itemize-dot>
     <strong|<em|<item>Algorithm>>
@@ -66,7 +66,7 @@
       14 \ \ \ \ \ \ \ <math|V\<leftarrow\>>set(people who had attended
       events those are in <math|P>)
 
-      15 \ \ \ \ \ \ \ <math|F\<leftarrow\>S-V>, <math|q\<leftarrow\>n-\|V\|>
+      15 \ \ \ \ \ \ \ <math|F\<leftarrow\>S-V>, <math|q\<leftarrow\>\|V\|>
 
       16 \ \ \ \ \ \ \ <math|l\<leftarrow\>>number of events overlapped with
       event <math|i>
@@ -74,7 +74,7 @@
       17 \ \ \ \ \ \ \ <math|e\<leftarrow\>>set(events that overlapped with
       event <math|i>)
 
-      18 \ \ \ \ \ \ \ <with|font-shape|italic|Attends>[<math|i>]<math|\<leftarrow\>>set(<math|1+n-q-l>
+      18 \ \ \ \ \ \ \ <with|font-shape|italic|Attends>[<math|i>]<math|\<leftarrow\>>set(<math|n-q-l>
       number of people chosen from <math|S>)
 
       19 \ \ \ \ \ \ \ <math|F\<leftarrow\>F-><with|font-shape|italic|Attends>[<math|i>]
@@ -109,26 +109,30 @@
       their staring time, the maximum index for those events would be
       <math|m>, <math|m> is the number of events. In line 23 the
       <with|font-shape|italic|Arrange-Event>'s index <math|i> (defined in
-      line 9) would keep increasing therinterruptefore line 12 would become
-      true at some point.
+      line 9) would keep increasing and line 12 would become true at some
+      point.
 
       <item><strong|Claim>. <with|font-shape|italic|Arrange-Event> satisfies
       the feasibility that every event has at least one people to attend.
 
-      <with|font-shape|italic|Proof> (by contradiction): We assume that there
-      is an event, <with|font-shape|italic|event><math|<rsub|k>>, that has no
-      people attend, which means there is no available people at the moment
-      when it starts. In line 18, we get empty set for
-      <em|event><math|<rsub|k>>, that is\ 
+      <em|Contradiction Hypothesis>:\ 
+
+      Assume that there is an event, <with|font-shape|italic|event><math|<rsub|k>>,
+      that has no people attend, which means there is no available people at
+      the moment when it starts.
+
+      So, in line 18, we get empty set for <em|event><math|<rsub|k>>, that is\ 
 
       <\eqnarray*>
-        <tformat|<table|<row|<cell|1+n-q-l>|<cell|\<leqslant\>>|<cell|0>>|<row|<cell|n>|<cell|\<leqslant\>>|<cell|l+q-1>>|<row|<cell|n>|<cell|\<less\>>|<cell|l+q>>|<row|<cell|n-q>|<cell|\<less\>>|<cell|l>>>>
+        <tformat|<table|<row|<cell|n-q-l>|<cell|\<leqslant\>>|<cell|0>>|<row|<cell|n>|<cell|\<leqslant\>>|<cell|l+q>>>>
       </eqnarray*>
 
-      which means the number of people who is available right now smaller
-      than the number of events which overlap with each other.
-      <with|color|magenta|It contradicts with the goal that aims to have at
-      least one person attend each event.>
+      which means <with|font-shape|italic|event><math|<rsub|k>>'s overlapping
+      events number is <math|\<geqslant\>>the number of people <math|n>.
+      Plusing <with|font-shape|italic|event><math|<rsub|k>> itself, this
+      sequence of overlapping events is <math|\<gtr\>n>. It contradicts with
+      the prerequisite that the number of events occurs at the same time
+      cannot exceed <math|n>.
 
       So we can conclude that <with|font-shape|italic|Arrange-Event>
       satisfies the feasibility that every event has at least one people to
@@ -145,31 +149,43 @@
       <with|font-shape|italic|event><math|<rsub|k>>, such that\ 
 
       <\eqnarray*>
-        <tformat|<table|<row|<cell|<with|mode|text|<with|font-shape|italic|Attends>*[<math|i>]<math|=><with|font-shape|italic|Attends>[i]>>|<cell|(for
+        <tformat|<table|<row|<cell|<with|mode|text|<with|font-shape|italic|Attends>*[<math|i>]<math|=><with|font-shape|italic|Attends>[<math|i>]>>|<cell|(for
         i\<less\>k)>|<cell|>>>>
       </eqnarray*>
 
       and
 
       <\eqnarray*>
-        <tformat|<table|<row|<cell|<with|mode|text|<with|font-shape|italic|Attends>*[<math|i>]<math|\<less\>><with|font-shape|italic|Attends>[i]>>|<cell|(for
+        <tformat|<table|<row|<cell|<with|mode|text|<with|font-shape|italic|Attends>*[<math|i>]<math|\<less\>><with|font-shape|italic|Attends>[<math|i>]>>|<cell|(for
         i=k)>|<cell|>>>>
       </eqnarray*>
 
-      Case 1: there are some other overlapping events for
+      Case 1: there are some consecutive events that overlap
       <with|font-shape|italic|event><math|<rsub|k>>. Since for
       <math|i\<less\>k>, we had assigned the same number of people for
-      <with|font-shape|italic|event><math|<rsub|i>>. In line 18, for event
-      <math|k> we assign more people in solution <math|S> than in solution
-      <math|S>*, then for the following events that overlap with
-      <with|font-shape|italic|event><math|<rsub|k>>, there will be one event
-      cannot be assigned with people to attend. <with|color|magenta|It
-      contradicts with the goal that aims to have at least one person attend
-      each event.>
+      <with|font-shape|italic|event><math|<rsub|i>>, in line 18, for
+      <with|font-shape|italic|event><math|<rsub|k>> we assign more people in
+      solution <math|S> than in solution <math|S>*, then for the following
+      events that overlap with <with|font-shape|italic|event><math|<rsub|k>>,
+      there will be one event cannot be assigned with people to attend.
+      <with|color|black|It contradicts with the feasibility that every event
+      has at least one person to attend.>
 
-      Case 2: there is no\ 
+      Case 2: there is no consecutive overlapping event for
+      <with|font-shape|italic|event><math|<rsub|k>>. Since for
+      <math|i\<less\>k>, we had assigned the same number of people for
+      <with|font-shape|italic|event><math|<rsub|i>>. In line 18, suppose we
+      can assign more people than <math|S>*, that is at this moment
+      <with|mode|math|n<rsub|free> = n-q+c>, where <math|c> is a constant
+      positive integer. Let <math|n<rsub|busy>=q>. It's obvious since these
+      people are still in events that would end after
+      <with|font-shape|italic|event><math|<rsub|k>>'s ending time. So, for
+      <math|S>, <math|n<rsub|free>+n<rsub|busy>=n+c>, it contradicts with the
+      fact that we have <math|n> people for assigning.
 
-      \;
+      To sum this up, <with|font-shape|italic|Arrange-Event> satisfies the
+      opitimality criteria that we would achieve the maximum total attendant
+      number overall.
     </itemize-minus>
   </itemize-dot>
 
