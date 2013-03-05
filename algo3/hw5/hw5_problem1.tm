@@ -25,9 +25,10 @@
     <\itemize-dot>
       <item><with|font-shape|italic|<strong|Greedy Algorithm>>
 
-      Let start point be <with|mode|math|s> and the termination be
-      <with|mode|math|T>. The following algorithm will find the next hotel as
-      far as possible within 20 miles for each hop.\ 
+      Let start point be <with|mode|math|s> and the destination be
+      <with|mode|math|T>. The <with|font-shape|italic|Get-Next> routine and
+      the following algorithm will find return the minimum days spent on the
+      journey.
 
       <\code>
         <with|font-base-size|9|<\verbatim>
@@ -52,7 +53,7 @@
           10 \ \ \ \ n = s.nextHotel\ 
 
           11 \ \ \ \ while n.distFromStart - s.distFromStart
-          <math|\<geqslant\>> 20 do:\ 
+          <math|\<leqslant\>> 20 do:\ 
 
           12 \ \ \ \ \ \ \ \ s = n
 
@@ -69,24 +70,23 @@
       <item><strong|<with|font-shape|italic|Correctness>>
 
       <\itemize-minus>
-        <item><strong|Claim>. <with|font-shape|italic|Find-Way> terminates.
+        <item><strong|Claim>. Our algorithm terminates.
 
         <with|font-shape|italic|Proof>: The <with|font-shape|italic|Find-Way>
         would recurse on the next route point (the hotel along the route he
-        will live in at night). Since the destination of the route is known,
-        therefore line 3 would become true at some point.
+        will live in at night). Since the destination of the route is finite,
+        therefore line 3 would become true at some point, so our algorithm
+        can terminate.
 
         <item><strong|Claim>. <with|font-shape|italic|Find-Way> satisfies the
-        feasibility that he needs to walk at most 20 miles every day in the
-        trip.
+        feasibility that Bilbo walks at most 20 miles every day in the trip.
 
-        <with|font-shape|italic|Proof>: Based on the
-        assumptFind-MinCost-Wayion that the distance between every
-        consecutive pair of hotels would not exceed 20 miles, in
-        <with|font-shape|italic|Get-Next> line 10, the first next hotel we
-        look at would not 20 miles further than <with|mode|math|s>. Also, in
-        <with|font-shape|italic|Get-Next> line 11 we limit that the furthest
-        hotel from <with|mode|math|s> would not exceed 20 miles.\ 
+        <with|font-shape|italic|Proof>: Based on the assumption that the
+        distance between every consecutive pair of hotels would not exceed 20
+        miles, in <with|font-shape|italic|Get-Next> line 10, the first next
+        hotel we look at would not 20 miles further than <with|mode|math|s>.
+        Also, in <with|font-shape|italic|Get-Next> line 11 we limit that the
+        furthest hotel from <with|mode|math|s> would not exceed 20 miles.\ 
 
         So we conclude that <with|font-shape|italic|Find-Way> satisfies the
         feasibility that Bilbo would walk at most 20 miles every day in the
@@ -96,20 +96,25 @@
         optimality criteria that he can finish his journey in the least
         number of days.
 
-        <with|font-shape|italic|Proof>: Let <with|mode|math|S>* be the
-        optimal solution got from <with|font-shape|italic|Find-Way>. Assume
-        that there is an optimal solution <with|mode|math|S> that require
-        less days than solution <with|mode|math|S>* for Bilbo to finish the
-        tour, there must be a day <with|mode|math|d>, in the entire trip such
-        that Bilbo could walk more than <with|font-shape|italic|Find-Way>
-        solution. However, based on the fact that the distance between every
+        <em|Contradiction Hypothesis>
+
+        Let <with|mode|math|S>* be the optimal solution got from
+        <with|font-shape|italic|Find-Way>. Assume that there is a better
+        solution <with|mode|math|S> that require less days than solution
+        <with|mode|math|S>* for Bilbo to finish the tour, there must be a day
+        <with|mode|math|d>, in the entire trip such that Bilbo could walk
+        more distance than <with|font-shape|italic|Find-Way> solution.\ 
+
+        However, based on the fact that the distance between every
         consecutive pair of hotels would not exceed 20 miles and the
         algorithm we construct in <with|font-shape|italic|Get-Next> line 11,
         if in day <with|mode|math|d> solution <with|mode|math|S> Bilbo would
         walk more than the miles in solution <with|mode|math|S>*, then Bilbo
-        have to walk more than 20 miles. Contradiction!
+        have to walk more than 20 miles, in contradiction with the
+        feasibility.
 
-        So, no other solutions would be better than <with|mode|math|S>*,
+        So the contradiction hypothesis does not hold<emdash>no other
+        solutions would be better than <with|mode|math|S>*,
         <with|font-shape|italic|Find-Way> satisfies the optimality criteria
         that Bilbo can finish his journey in the least number of days.
       </itemize-minus>
@@ -151,57 +156,57 @@
       The pseudocode is as follows:
 
       <with|font-base-size|9|<\code>
-        <math|s\<leftarrow\>>departure point
+        01 <math|s\<leftarrow\>>departure point
 
-        <math|t\<leftarrow\>>termination point
+        02 <math|t\<leftarrow\>>termination point
 
-        <math|N\<leftarrow\>>total number of hotels
+        03 <math|N\<leftarrow\>>total number of hotels
 
-        label each hotel in the route from <math|s> to <math|t> from 1 to
+        04 label each hotel in the route from <math|s> to <math|t> as 1 to
         <math|N>
 
-        construct a <math|(N+1)> array ``<em|hotels>'' in which
+        05 construct a <math|(N+1)> array ``<em|hotels>'' in which
 
-        \ \ \ \ each element <math|i> stores the minimum cost from <math|s>
+        06 \ \ \ each element <math|i> stores the minimum cost from <math|s>
         to hotel <math|i>
 
-        construct a <math|(N+1)> array ``<with|font-shape|italic|hops>'' in
-        which each element <math|i> stores
+        07 construct a <math|(N+1)> array ``<with|font-shape|italic|hops>''
+        in which each element <math|i> stores
 
-        \ \ \ \ the previous hotel number Bilbo would live in before hotel
-        <math|i>
+        08 \ \ \ the previous hotel number Bilbo would live in before
+        arriving hotel <math|i>
 
-        \;
+        09
 
-        def <name|<with|font-shape|italic|Find-MinCost-Way>>(<math|t>):
+        10 def <name|<with|font-shape|italic|Find-MinCost-Way>>(<math|t>):
 
-        \ \ \ \ <em|hotels>[0]<math|\<leftarrow\>0>
+        11 \ \ \ <em|hotels>[0]<math|\<leftarrow\>0>
 
-        \ \ \ \ <em|hops>[0]<math|\<leftarrow\>s>
+        12 \ \ \ <em|hops>[0]<math|\<leftarrow\>s>
 
-        \ \ \ \ for <math|j> from 1 to <math|N> do:
+        13 \ \ \ for <math|j> from 1 to <math|N> do:
 
-        \ \ \ \ \ \ \ \ for each hotel <math|i> with 20 miles before location
-        <math|j>:
+        14 \ \ \ \ \ \ \ for each hotel <math|i> within 20 miles before
+        location <math|j>:
 
-        \ \ \ \ \ \ \ \ \ \ \ \ hotels[<math|j>] <math|\<leftarrow\>>
+        15* \ \ \ \ \ \ \ \ \ \ hotels[<math|j>] <math|\<leftarrow\>>
         min{hotels[<math|i>] + <math|j>.cost}
 
-        \ \ \ \ \ \ \ \ \ \ \ \ hops[<math|j>] <math|\<leftarrow\>>hotel
+        16 \ \ \ \ \ \ \ \ \ \ \ hops[<math|j>] <math|\<leftarrow\>>hotel
         index of min{hotels[<math|i>]}
 
-        \ \ \ \ \ \ \ \ end
+        17 \ \ \ \ \ \ \ end
 
-        \ \ \ \ end
+        18 \ \ \ end
 
-        \ \ \ \ for each hotel <math|k> within 20 miles before <math|t> then
+        19 \ \ \ for each hotel <math|k> within 20 miles before <math|t> then
         do:
 
-        \ \ \ \ \ \ \ \ return min{hotel(<math|k>)}
+        20 \ \ \ \ \ \ \ return min{hotel(<math|k>)}
 
-        \ \ \ \ end
+        21 \ \ \ end
 
-        end
+        22 end
       </code>>
 
       <strong|<em|<item>Correctness>> (Proof by Induction)
@@ -218,21 +223,21 @@
 
       <with|font-shape|italic|Inductive Hypothesis>:
 
-      Assume in intermediate destination hotel <math|k>, in its previous 20
-      miles, there were <math|m> hotels and from <math|s> to hotel <math|i>
-      (<math|i> ranges from <math|k-m> to <math|k>) we have constructed
+      Assume in intermediate hotel <math|k>, within its previous 20 miles,
+      there were <math|m> hotels and from <math|s> to hotel <math|i>
+      (<math|i> ranges from <math|k-m> to <math|k-1>) we have constructed
       optimal route for it.\ 
 
       We need to prove that we would have the minimal cost starting from
-      <math|s>, ending at hotel <math|k+1>.
+      <math|s>, ending at hotel <math|k>.
 
-      In hotel <math|k+1>'s previous 20 miles, there are no more than
+      In hotel <math|k>'s previous 20 miles, there are no more than
       <math|m+1> hotels. So based on our inductive hypothesis, from <math|s>
-      to hotel <math|i> (<math|i> ranges from <math|k+1-(m+1)> to <math|k>),
-      we have constructed optimal route for it. For the route from <math|s>
-      to hotel <math|k+1>, we could find the optimal route by choosing the
-      minimal cost from the previous <math|m+1> hotels' route and add hotel
-      <math|k+1>'s cost.
+      to hotel <math|i> (<math|i> ranges from <math|k-m> to <math|k-1>), we
+      have constructed optimal route for it. According to line 15, for the
+      route from <math|s> to hotel <math|k>, we could find the optimal route
+      by choosing the minimal cost from the previous <math|m> hotels' route
+      and add hotel <math|k>'s cost, which will still be the minimum cost.
 
       So we could find the optimal route from <math|s> to the termination.
     </itemize-dot>

@@ -45,14 +45,17 @@
       05 def <with|font-shape|italic|Arrange-Events>():
 
       06 \ \ \ construct a <math|m> array
-      ``<with|font-shape|italic|Attends>'' in which each element <math|i>
-      stores an empty
+      ``<with|font-shape|italic|Attends>'' in which
+      <with|font-shape|italic|Attends>[<math|i>] is an empty set\ 
 
-      07 \ \ \ \ \ \ \ set storing the people who are attending
+      07 \ \ \ \ \ \ \ /* used for recording the people who are attending
+      <with|font-shape|italic|event><math|<rsub|i>> */
 
-      08 \ \ \ <math|p\<leftarrow\>><with|font-shape|italic|NULL>
+      08 \ \ \ <math|q\<leftarrow\>0> \ /* used for keeping track of the
+      number of people who are busy */
 
-      09 \ \ \ <math|i\<leftarrow\>>1
+      09 \ \ \ <math|i\<leftarrow\>>1 \ /* used as the index of the event
+      number */
 
       10 \ \ \ <math|S\<leftarrow\>>set(all people)
 
@@ -61,10 +64,11 @@
       12 \ \ \ while <math|i\<leqslant\>m>:
 
       13 \ \ \ \ \ \ \ <math|P\<leftarrow\>>set(events in <math|E> that will
-      finish later than event<math|<rsub|i>>'s start time)
+      finish later than <with|font-shape|italic|event><math|<rsub|i>>'s start
+      time)
 
-      14 \ \ \ \ \ \ \ <math|V\<leftarrow\>>set(people who had attended
-      events those are in <math|P>)
+      14 \ \ \ \ \ \ \ <math|V\<leftarrow\>>set(people who are busy attending
+      events in <math|P>)
 
       15 \ \ \ \ \ \ \ <math|F\<leftarrow\>S-V>, <math|q\<leftarrow\>\|V\|>
 
@@ -105,21 +109,23 @@
       <item><strong|Claim>. <with|font-shape|italic|Arrange-Event>
       terminates.
 
-      <with|font-shape|italic|Proof>: Since we have ordered the events by
-      their staring time, the maximum index for those events would be
-      <math|m>, <math|m> is the number of events. In line 23 the
+      <with|font-shape|italic|Proof>: The maximum index for those events
+      would be <math|m>, <math|m> is the number of events. Since the events
+      number is finite and in line 23 the
       <with|font-shape|italic|Arrange-Event>'s index <math|i> (defined in
       line 9) would keep increasing and line 12 would become true at some
-      point.
+      point. So the algorithm can terminate.
 
       <item><strong|Claim>. <with|font-shape|italic|Arrange-Event> satisfies
-      the feasibility that every event has at least one people to attend.
+      the feasibility that our algorithm's arrangement can let every event
+      has at least one people to attend, if there exists such an arrangment
+      at the first place.
 
       <em|Contradiction Hypothesis>:\ 
 
       Assume that there is an event, <with|font-shape|italic|event><math|<rsub|k>>,
       that has no people attend, which means there is no available people at
-      the moment when it starts.
+      the moment when <with|font-shape|italic|event><math|<rsub|k>> starts.
 
       So, in line 18, we get empty set for <em|event><math|<rsub|k>>, that is\ 
 
@@ -143,8 +149,8 @@
       for all events.
 
       <with|font-shape|italic|Proof>: Let <math|S>* be the optimal solution
-      got from <with|font-shape|italic|Arrange-Event>. Assume that there is
-      an optimal solution <math|S> which can arrange more attandants than
+      got from <with|font-shape|italic|Arrange-Event>. Assume that there is a
+      better solution <math|S> which can arrange more attandants than
       solution <math|S>* overall. There must be an event,
       <with|font-shape|italic|event><math|<rsub|k>>, such that\ 
 
@@ -165,11 +171,11 @@
       <math|i\<less\>k>, we had assigned the same number of people for
       <with|font-shape|italic|event><math|<rsub|i>>, in line 18, for
       <with|font-shape|italic|event><math|<rsub|k>> we assign more people in
-      solution <math|S> than in solution <math|S>*, then for the following
-      events that overlap with <with|font-shape|italic|event><math|<rsub|k>>,
-      there will be one event cannot be assigned with people to attend.
-      <with|color|black|It contradicts with the feasibility that every event
-      has at least one person to attend.>
+      solution <math|S> than in solution <math|S>*, then for the events come
+      after <math|k> and overlap with <with|font-shape|italic|event><math|<rsub|k>>,
+      there will be at least one event that cannot be assigned with people to
+      attend. <with|color|black|It contradicts with the feasibility that
+      every event has at least one person to attend.>
 
       Case 2: there is no consecutive overlapping event for
       <with|font-shape|italic|event><math|<rsub|k>>. Since for
@@ -177,15 +183,16 @@
       <with|font-shape|italic|event><math|<rsub|i>>. In line 18, suppose we
       can assign more people than <math|S>*, that is at this moment
       <with|mode|math|n<rsub|free> = n-q+c>, where <math|c> is a constant
-      positive integer. Let <math|n<rsub|busy>=q>. It's obvious since these
-      people are still in events that would end after
-      <with|font-shape|italic|event><math|<rsub|k>>'s ending time. So, for
-      <math|S>, <math|n<rsub|free>+n<rsub|busy>=n+c>, it contradicts with the
-      fact that we have <math|n> people for assigning.
+      positive integer. Let <math|n<rsub|busy>=q> and <math|q> is the number
+      of people who is busy attending events start before
+      <with|font-shape|italic|event><math|<rsub|k>>'s start time. So, for
+      <math|S>, at the time when <with|font-shape|italic|event><math|<rsub|k>>
+      starts, <math|n<rsub|free>+n<rsub|busy>=n+c>, it contradicts with the
+      fact that we have <math|n> people for assigning in total.
 
       To sum this up, <with|font-shape|italic|Arrange-Event> satisfies the
-      opitimality criteria that we would achieve the maximum total attendant
-      number overall.
+      opitimality criteria that we would achieve the maximum total attendance
+      overall.
     </itemize-minus>
   </itemize-dot>
 
