@@ -442,44 +442,83 @@
     for each <math|i\<in\><around*|{|1,2,\<ldots\>,k|}>>. The number of the
     parameters is equivalent to choosing <math|k> input from
     <math|<around*|[|m|]>>, namely <math|C<rsub|m><rsup|k>>, which is exactly
-    a <math|<frac|1|m<rsup|k>>> fraction of parameter set
+    <math|<frac|1|m<rsup|k>>> fraction of parameter set
     <math|<around*|\||p|\|>> and thus the hash function family
     <math|<around*|{|h<rsub|p>|}> : X\<rightarrow\>Y> is
     <math|k>-independent.
 
-    <item>(7 points) The hash function family <math|h<rsub|p><around*|(|x|)>>
-    of the previous part is a bit odd because it maps <math|[m]> to itself.
-    Consider instead a prime <math|q> that is smaller than <math|m>, and
-    consider instead a new hash function family <math|h<rsub|p><rprime|'>(x)>
-    from <math|[m]> to <math|[q]> computed as: <math|h<rprime|'><rsub|p>(x) =
-    h<rsub|p>(x) mod q = (p<rsub|0> + p<rsub|1>x + p<rsub|2>x<rsub|2> + . . .
-    + p<rsub|k-1>x<rsup|k-1> mod m) mod q><emdash>the hash function from the
-    previous part, parameterized identically, but then taken modulo <math|q>.
-    This new hash function family <math|h<rsub|p><rprime|'><around*|(|x|)>>
-    will <with|font-shape|italic|not> be <math|k>-independent, but in many
-    cases it will be ``close enough for practical purpose''. (Note that,
-    unlike for the previous part of this problem, the range of
-    <math|h<rprime|'>> has size <math|q> instead of <math|m>.)
+    <\with|color|dark brown>
+      <item>(7 points) The hash function family
+      <math|h<rsub|p><around*|(|x|)>> of the previous part is a bit odd
+      because it maps <math|[m]> to itself. Consider instead a prime <math|q>
+      that is smaller than <math|m>, and consider instead a new hash function
+      family <math|h<rsub|p><rprime|'>(x)> from <math|[m]> to <math|[q]>
+      computed as: <math|h<rprime|'><rsub|p>(x) = h<rsub|p>(x) mod q =
+      (p<rsub|0> + p<rsub|1>x + p<rsub|2>x<rsub|2> + . . . +
+      p<rsub|k-1>x<rsup|k-1> mod m) mod q><emdash>the hash function from the
+      previous part, parameterized identically, but then taken modulo
+      <math|q>. This new hash function family
+      <math|h<rsub|p><rprime|'><around*|(|x|)>> will
+      <with|font-shape|italic|not> be <math|k>-independent, but in many cases
+      it will be ``close enough for practical purpose''. (Note that, unlike
+      for the previous part of this problem, the range of <math|h<rprime|'>>
+      has size <math|q> instead of <math|m>.)
 
-    Find bounds on the fraction of parameters <math|p> such that
-    <math|h<rprime|'><rsub|p><around*|(|x<rsub|1>|)>=y<rsub|1>> and
-    <math|h<rprime|'><rsub|p><around*|(|x<rsub|2>|)>=y<rsub|2>> and
-    <math|\<ldots\>> <math|h<rsub|p><rprime|'><around*|(|x<rsub|k>|)>=y<rsub|k>>,
-    when <math|x<rsub|1>,\<ldots\>,x<rsub|k>> are distinct elements of
-    <math|<around*|[|m|]>> and <math|y<rsub|1>,\<ldots\>,y<rsub|k>> are
-    elements of <math|<around*|[|q|]>>.
+      Find bounds on the fraction of parameters <math|p> such that
+      <math|h<rprime|'><rsub|p><around*|(|x<rsub|1>|)>=y<rsub|1>> and
+      <math|h<rprime|'><rsub|p><around*|(|x<rsub|2>|)>=y<rsub|2>> and
+      <math|\<ldots\>> <math|h<rsub|p><rprime|'><around*|(|x<rsub|k>|)>=y<rsub|k>>,
+      when <math|x<rsub|1>,\<ldots\>,x<rsub|k>> are distinct elements of
+      <math|<around*|[|m|]>> and <math|y<rsub|1>,\<ldots\>,y<rsub|k>> are
+      elements of <math|<around*|[|q|]>>.
 
-    Use these bounds and the approximation <math|e<rsup|x>\<approx\>1+x> for
-    small <math|x> to show that (subject to this approximation), when
-    <math|q> is smaller than <math|m/k>, then the fraction of <math|p> such
-    that <math|h<rsub|p><rprime|'><around*|(|x<rsub|1>|)>=y<rsub|1>> and
-    <math|h<rsub|p><rprime|'><around*|(|x<rsub|2>|)>=y<rsub|2>> and
-    <math|\<ldots\>> <math|h<rsub|p><rprime|'><around*|(|x<rsub|k>|)>=y<rsub|k>>
-    is within a factor of <math|e> of <math|<frac|1|q<rsup|k>>>. (Thus, the
-    hash function family <math|h<rsub|p><rprime|'><around*|(|x|)>> is
-    ``e-close to being <math|k>-independent''.)
+      Use these bounds and the approximation <math|e<rsup|x>\<approx\>1+x>
+      for small <math|x> to show that (subject to this approximation), when
+      <math|q> is smaller than <math|m/k>, then the fraction of <math|p> such
+      that <math|h<rsub|p><rprime|'><around*|(|x<rsub|1>|)>=y<rsub|1>> and
+      <math|h<rsub|p><rprime|'><around*|(|x<rsub|2>|)>=y<rsub|2>> and
+      <math|\<ldots\>> <math|h<rsub|p><rprime|'><around*|(|x<rsub|k>|)>=y<rsub|k>>
+      is within a factor of <math|e> of <math|<frac|1|q<rsup|k>>>. (Thus, the
+      hash function family <math|h<rsub|p><rprime|'><around*|(|x|)>> is
+      ``e-close to being <math|k>-independent''.)
+    </with>
+
+    <math|X> in <math|<around*|[|m|]>> maps to <math|m<rsup|k>> number of
+    output of <math|h<rsub|p><around*|(|x<rsub|i>|)>> in <math|Y<rprime|'>>
+    ranging over <math|<around*|[|m|]>>. <math|Y<rprime|'>> is then taken
+    modulo <math|q> and mapped to <math|y<rsub|1>,y<rsub|2>,\<ldots\>,y<rsub|k>>
+    in <math|Y> ranging over <math|<around*|[|q|]>>. We claim that the
+    mapping relation is as <math|X\<rightarrow\>Y<rprime|'>\<rightarrow\>Y>.
+
+    Each of the output from <math|Y<rprime|'>> will be mapped to at least
+    <math|\<lfloor\><frac|m|q>\<rfloor\>\<nocomma\>> and at most
+    <math|\<lceil\><frac|m|q>\<rceil\>> number of outputs from <math|Y>
+    within <math|<around*|[|q|]>>. Thus, the <math|k> outputs from <math|Y>
+    are determined by <math|<around*|[|\<lfloor\><frac|m|q>\<rfloor\>\<nocomma\><rsup|k>,\<lceil\><frac|m|q>\<rceil\><rsup|k>|]>>
+    outputs from <math|Y<rprime|'>>. And according to
+    <with|font-shape|italic|Question 3.3>, we know that exactly
+    <math|<frac|1|m<rsup|k>>> fraction of all parameters <math|p> maps
+    <math|k> distinct elements from <math|X> to <math|Y<rprime|'>>, so the
+    bound on the fraction of parameters <math|p> that maps <math|k> distinct
+    <math|X> to <math|Y> by element is <math|<around*|[|<frac|\<lfloor\><frac|m|q>\<rfloor\>\<nocomma\><rsup|k>|m<rsup|k>>,<frac|\<lceil\><frac|m|q>\<rceil\><rsup|k>|m<rsup|k>>|]>>.
+
+    For the left bound
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|<frac|\<lfloor\><frac|m|q>\<rfloor\>\<nocomma\><rsup|k>|m<rsup|k>>>|<cell|\<geqslant\>>|<cell|<frac|<around*|(|<frac|m|q>-1|)>\<nocomma\><rsup|k>|m<rsup|k>>>>|<row|<cell|>|<cell|=>|<cell|<frac|<around*|(|<frac|m|q><around*|(|1-<frac|q|m>|)>|)>\<nocomma\><rsup|k>|m<rsup|k>>>>|<row|<cell|>|<cell|\<gtr\>>|<cell|<frac|<frac|m<rsup|k>|q<rsup|k>><around*|(|1-<frac|1|k>|)><rsup|k>|m<rsup|k>><htab|5mm><around*|(|q\<less\>m/k|)>>>|<row|<cell|>|<cell|=>|<cell|<frac|<around*|(|1-<frac|1|k>|)><rsup|k>|q<rsup|k>>>>|<row|<cell|>|<cell|\<approx\>>|<cell|<frac|<around*|(|e<rsup|-<frac|1|k>>|)><rsup|k>|q<rsup|k>><htab|5mm><around*|(|e<rsup|x>\<approx\>1-x|)>>>|<row|<cell|>|<cell|=>|<cell|<frac|1|e
+      q<rsup|k>>>>>>
+    </eqnarray*>
+
+    For the right bound
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|<frac|\<lceil\><frac|m|q>\<rceil\><rsup|k>|m<rsup|k>>>|<cell|\<leqslant\>>|<cell|<frac|<around*|(|<frac|m|q>+1|)>\<nocomma\><rsup|k>|m<rsup|k>>>>|<row|<cell|>|<cell|=>|<cell|<frac|m<rsup|k><around*|(|<frac|1|q>+<frac|1|m>|)>\<nocomma\><rsup|k>|m<rsup|k>>>>|<row|<cell|>|<cell|=>|<cell|<frac|1|q<rsup|k>><around*|(|1+<frac|q|m>|)><rsup|k>>>|<row|<cell|>|<cell|\<less\>>|<cell|<frac|1|q<rsup|k>><around*|(|1+<frac|1|k>|)><rsup|k><htab|5mm><around*|(|q\<less\>m/k|)>>>|<row|<cell|>|<cell|\<approx\>>|<cell|<frac|<around*|(|e<rsup|<frac|1|k>>|)><rsup|k>|q<rsup|k>><htab|5mm><around*|(|e<rsup|x>\<approx\>1-x|)>>>|<row|<cell|>|<cell|=>|<cell|<frac|e|q<rsup|k>>>>>>
+    </eqnarray*>
 
     \;
+
+    Thus, the hash function family <math|h<rsub|p><rprime|'><around*|(|x|)>>
+    is ``e-close to being <math|k>-independent''.
   </enumerate-numeric>
 </body>
 
