@@ -562,6 +562,94 @@
     this case <math|\<Rightarrow\>> takes time <math|O<around*|(|n|)>>
     [expected to take this amount of time].
 
+    <item><em|<strong|Deterministic Selection (Medium-Find)>>
+
+    <em|Input>: an array <math|A> with <math|n> distinct (for simplicty)
+    numbers and a nubmer <math|i\<in\><around*|{|1,2,\<ldots\>,n|}>>.
+
+    <em|Output>: <math|i<rsup|th>> order statistic
+    (<math|i.e.,><math|i<rsup|th>> smallest element of input array)
+
+    <em|Example>: median. (<math|i=<frac|n+1|2>> for <math|n> odd,
+    <math|i=<frac|n|2>> for <math|n> even)
+
+    <em|DSelect Algorithm>:
+
+    <\render-code>
+      <with|font-shape|small-caps|Dselect>(<strong|array> <math|A>,
+      <strong|length> <math|n>, <strong|order statistic> <math|i>)
+
+      <tabular|<tformat|<table|<row|<cell|1>|<cell|<em|Break <math|A> into
+      groups of 5, sort each group><htab|5mm><math|\<theta\><around*|(|n|)>>>>|<row|<cell|2>|<cell|<math|C\<leftarrow\>>the
+      <math|n/5> ``middle elements''<htab|5mm><math|\<theta\><around*|(|n|)>>>>|<row|<cell|3>|<cell|<math|p\<leftarrow\>><with|font-shape|small-caps|DSelect>(<math|C,n/5,n/10>)<htab|5mm><with|font-base-size|10|/*
+      recursively computes median of <math|C>
+      */><htab|5mm><math|T<around*|(|<frac|n|5>|)>>>>|<row|<cell|4>|<cell|<em|Partition
+      <math|A> around <math|p>><htab|5mm><math|\<theta\><around*|(|n|)>>>>|<row|<cell|5>|<cell|<strong|if>
+      <math|j=i> <strong|then return> <math|p>>>|<row|<cell|6>|<cell|<strong|if>
+      <math|j\<less\>i> <strong|then return>
+      <with|font-shape|small-caps|DSelect>(<math|1<rsup|st>> part of
+      <math|A>, <math|j-1>, <math|i>)>>|<row|<cell|7>|<cell|<strong|else>
+      <strong|return> <with|font-shape|small-caps|DSelect>(<math|2<rsup|nd>>
+      part of <math|A>, <math|n-j>, <math|i-j>)>>>>>
+    </render-code>
+
+    <em|The Key Lemma>:
+
+    <math|2<rsup|nd>> recursive call (in line 6 or 7) guaranteed to be on an
+    array of size <math|\<leqslant\><frac|7|10>n> (roughly).
+
+    <\itemize-minus>
+      <item>(<em|<with|color|blue|Rough Proof>>): Let <math|k=n/5=># of
+      groups, let <math|x<rsub|i>=i<rsup|th>> smallest of the <math|k>
+      ``middle elements''. [so pivot<math|=x<rsub|k/2>>]\ 
+
+      <item>(<em|<with|color|blue|Goal>>): <math|\<geqslant\>30>% of input
+      array smaller than <math|x<rsub|k/2>>, <math|\<geqslant\>30>% is
+      bigger.<with|color|blue|<with|color|black|>>
+
+      <item>(<with|color|blue|<em|Though Experiment>>): Imagine we lay out
+      elements of <math|A> in a 2-D grid:
+
+      <math|x<rsub|k/2>> bigger than 60% of the elements in
+      <math|\<approx\>50>% of the groups <math|\<Rightarrow\>> bigger than
+      30% of <math|A> (similarly, smaller than 30% of <math|A>)
+    </itemize-minus>
+
+    <em|Running Time>:
+
+    Let <math|T<around*|(|n|)>> be the maximum running time of
+    <with|font-shape|small-caps|DSelect> on an input array of length
+    <math|n>. There is a constant <math|c\<geqslant\>1> such that:
+
+    <\enumerate-numeric>
+      <item><math|T<around*|(|1|)>=1>
+
+      <item><math|T<around*|(|n|)>\<leqslant\>c
+      n+T<around*|(|n/5|)>+T<around*|(|<frac|7|10>n|)>>
+    </enumerate-numeric>
+
+    <em|<with|color|red|Note>>: different-sized subproblems
+    <math|\<Rightarrow\>> can't use Master Method!
+    <em|<with|color|red|Strategy>>: ``hope and check''.
+    <em|<with|color|red|Hope>>: there is some constant <math|a> (independent
+    of <math|n>) such that <math|T<around*|(|n|)>\<leqslant\>a n>,
+    <math|\<forall\>n\<geqslant\>1>.\ 
+
+    <em|Claim>: Let <math|a=10c>, then <math|T<around*|(|n|)>\<leqslant\>a
+    n\<nocomma\>,\<forall\>n\<geqslant\>1>.\ 
+
+    <em|Proof>: by induction on <math|n>. (<em|Base case>):
+    <math|T<around*|(|1|)>=1\<leqslant\>a\<cdot\>1> (<em|Inductive
+    Hypothesis>): <math|T<around*|(|k|)>\<leqslant\>a
+    k,\<forall\>k\<less\>n>, we have
+
+    <\eqnarray*>
+      <tformat|<table|<row|<cell|T<around*|(|n|)>>|<cell|\<leqslant\>>|<cell|c
+      n+T<around*|(|n/5|)>+T<around*|(|<frac|7|10>n|)>>>|<row|<cell|>|<cell|\<leqslant\>>|<cell|c
+      n+a<around*|(|n/5|)>+a<around*|(|<frac|7|10>n|)>>>|<row|<cell|>|<cell|=>|<cell|n<around*|(|c+<frac|9|10>a|)>>>|<row|<cell|>|<cell|=>|<cell|a
+      n>>>>
+    </eqnarray*>
+
     <item><em|<strong|Select a pivot deterministically>>
 
     <math|<around*|(|1|)>> divide the list into groups of 5 elements;
@@ -780,6 +868,20 @@
       1|]>\<times\><around*|[|word 2|]>>, run regular suffix tree algo and
       post-processing.
     </itemize-minus>
+
+    <item><strong|<em|Pipe Lining>>
+
+    If searching long away, you're going to bet you have to keep looking,
+    then you're going to guess wrong once
+
+    <math|\<Rightarrow\>> total cost: <math|k+b\<rightarrow\>n/2+b,b=>depth
+    of pipeline
+
+    For binary search, it takes <math|O<around*|(|log<rsub|2> n|)>> iteration
+    to find elem, each iteration costs <math|b/2+1>, since we'll be wrong
+    about <math|1/2> the time
+
+    <math|\<Rightarrow\>> total cost: <math|<around*|(|b/2+1|)>log<rsub|2> n>
   </itemize-dot>
 
   \;
@@ -788,13 +890,9 @@
 <\initial>
   <\collection>
     <associate|font-base-size|12>
-    <associate|page-bot|1>
-    <associate|page-even|1>
+    <associate|math-font|roman>
     <associate|page-medium|paper>
-    <associate|page-odd|1>
-    <associate|page-right|1>
-    <associate|page-top|1>
-    <associate|page-type|a5>
+    <associate|page-type|letter>
   </collection>
 </initial>
 
@@ -804,7 +902,7 @@
     <associate|auto-2|<tuple|2|3>>
     <associate|auto-3|<tuple|3|9>>
     <associate|auto-4|<tuple|4|11>>
-    <associate|auto-5|<tuple|5|?>>
+    <associate|auto-5|<tuple|5|12>>
     <associate|auto-6|<tuple|6|?>>
     <associate|auto-7|<tuple|7|?>>
   </collection>
@@ -828,6 +926,10 @@
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|Greedy
       Algorithm> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-4><vspace|0.5fn>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|Other
+      Data Structure> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-5><vspace|0.5fn>
     </associate>
   </collection>
 </auxiliary>
