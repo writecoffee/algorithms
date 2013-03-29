@@ -530,6 +530,138 @@
     <math|O<around*|(|n<rsup|3>|)>>.
   </itemize-dot>
 
+  <section|Randomized Algorithm>
+
+  <\itemize>
+    <item><strong|<em|Graphs and Minimum Cuts>>
+
+    <math|<rsup|<around*|(|quiz|)>>><em|How many cuts does a graph with
+    <math|n> vertices have?> <emdash> <math|2<rsup|n>-2>
+    <with|color|blue|(each node could be either in group <math|A> or in group
+    <math|B>, eliminating the 2 possiblities that nodes reside all in one
+    group)>
+
+    <em|Input>: an undirected graph <math|G=<around*|(|V,E|)>>, parallel
+    edges allowed.
+
+    <em|Goal>: compute a cut with fewest number of crossing edges
+
+    <em|Karger's Algorithm>:
+
+    <\render-code>
+      <with|font-shape|small-caps|Karger-Min-Cut>(<math|V,E>)
+
+      <tabular|<tformat|<table|<row|<cell|1>|<cell|<strong|while>
+      <math|<around*|\||E|\|>\<gtr\>2> <strong|do>:>>|<row|<cell|2>|<cell|<htab|5mm>Pick
+      a remaining edge <math|<around*|(|u,v|)>> uniformly at
+      random>>|<row|<cell|3>|<cell|<htab|5mm>Merge (or ``contract'') <math|u>
+      and <math|v> into a single vertex>>|<row|<cell|4>|<cell|<htab|5mm>Remove
+      self loop>>|<row|<cell|5>|<cell|<strong|return> the <em|CUT>
+      represented by final 2 vertices>>>>>
+    </render-code>
+
+    <em|Analysis>:
+
+    <\itemize-minus>
+      <item>(<em|The Setup>) Fix a graph <math|G=<around*|(|V,E|)>> with
+      <math|n> vertices, <math|m> edges; fix a minimum cut
+      <math|<around*|(|A,B|)>>. Let <math|k> be # of edges crossing
+      <math|<around*|(|A,B|)>>, and call these edges <math|F>.
+
+      <item>(<em|What Could Go Wrong>) <math|<rsup|<around*|(|1|)>>> Suppose
+      an edge of <math|F> is contracted at some point <math|\<Rightarrow\>>
+      algorithm will not output <math|<around*|(|A,B|)>>.
+      <math|<rsup|<around*|(|2|)>>> Suppose only edges inside <math|A> or
+      inside <math|B> get contracted <math|\<Rightarrow\>> algorithm will
+      output <math|<around*|(|A,B|)>>. Thus, Pr[output is
+      <math|<around*|(|A,B|)>>] = Pr[never contracts an edge of <math|F>]
+
+      <item>Let <math|S<rsub|i>=> event that an edge of <math|F> contracted
+      in iteration <math|i>.\ 
+
+      <item><with|color|red|Goal: compute
+      <math|<text|<em|Pr>><around*|[|\<sim\>S<rsub|1>\<wedge\>\<sim\>S<rsub|2>\<wedge\>\<sim\>S<rsub|3>\<wedge\>\<ldots\>\<wedge\>\<sim\>S<rsub|n-2>|]>>>.
+
+      <item>(<em|The First Iteration>) The probability that an edge crossing
+      <math|<around*|(|A,B|)>> is chosen in the first iteration is
+      <math|Pr<around*|[|S<rsub|1>|]>=k/m>.\ 
+
+      <item>(<em|Key Observation>) Degree of each vertex is at least
+      <math|k>. <em|Reason>: each vertex <math|v> defines a cut
+      <math|<around*|(|<around*|{|v|}>,V-<around*|{|v|}>|)>>, since
+      <math|<big|sum><rsub|v>degree<around*|(|v|)>=2m>, we have
+      <math|m\<geqslant\><frac|k n|2>>. Since
+      <math|Pr<around*|[|S<rsub|1>|]>=k/m>,<with|color|red|
+      <math|<text|<em|Pr>><around*|[|S<rsub|1>|]>\<leqslant\>2/n>>.
+
+      <item>(<em|The Second Iteration>)\ 
+
+      <\eqnarray*>
+        <tformat|<table|<row|<cell|<text|<em|Pr>><around*|[|\<sim\>S<rsub|1>\<wedge\>\<sim\>S<rsub|2>|]>>|<cell|=>|<cell|<text|<em|Pr>><around*|[|\<sim\>S<rsub|2>*<text|\|>\<sim\>S<rsub|1>|]>\<cdot\><text|<em|Pr>><around*|[|\<sim\>S<rsub|1>|]>>>|<row|<cell|>|<cell|=>|<cell|<around*|(|1-<frac|k|<text|<em|#remaining
+        edge>>>|)>\<cdot\><text|<em|Pr>><around*|[|\<sim\>S<rsub|1>|]>>>>>
+      </eqnarray*>
+
+      All nodes in contracted graph define cuts in <math|G> (with at least
+      <math|k> crossing edges) <math|\<Rightarrow\>> All degrees in
+      contracted graph are at least <math|k>.
+
+      So <math|<text|#<em|remaining edges>>
+      \<geqslant\><frac|k<around*|(|n-1|)>|2>> <math|\<Rightarrow\>>
+      <with|color|red|<math|<text|<em|Pr>><around*|[|\<sim\>S<rsub|2><text|\|>\<sim\>S<rsub|1>|]>\<geqslant\>1-<frac|2|n-1>>>
+
+      <item>(<em|All Iterations>)
+
+      <\eqnarray*>
+        <tformat|<table|<row|<cell|<text|<em|Pr>><around*|[|\<sim\>S<rsub|1>\<wedge\>\<sim\>S<rsub|2><rsup|>\<wedge\>\<ldots\>\<wedge\>\<sim\>S<rsub|n-2>|]>>|<cell|=>|<cell|<text|<em|Pr>><around*|[|\<sim\>S<rsub|1>|]>\<cdot\><text|<em|Pr>><around*|[|\<sim\>S<rsub|2><text|\|>\<sim\>S<rsub|1>|]>\<cdot\>\<ldots\>\<cdot\><text|<em|Pr>><around*|[|\<sim\>S<rsub|n-2><text|\|>\<sim\>S<rsub|1>\<wedge\>\<ldots\>\<wedge\>\<sim\>S<rsub|n-1>|]>>>|<row|<cell|>|<cell|\<geqslant\>>|<cell|<around*|(|1-<frac|2|n>|)><around*|(|1-<frac|2|n-1>|)>\<ldots\><around*|(|1-<frac|2|n-<around*|(|n-4|)>>|)><around*|(|1-<frac|2|n-<around*|(|n-3|)>>|)>>>|<row|<cell|>|<cell|=>|<cell|<frac|2|n<around*|(|n-1|)>>>>|<row|<cell|>|<cell|\<geqslant\>>|<cell|<with|color|red|<frac|1|n<rsup|2>>>>>>>
+      </eqnarray*>
+
+      <math|\<Rightarrow\>> Problem! Low success probability (But:
+      non-trivial recalling <math|\<approx\>2<rsup|n>> cuts)
+    </itemize-minus>
+
+    <em|Repeated Trials>:
+
+    <\itemize-minus>
+      <item>(<em|Solution>) Run the basic algorithm a large number <math|N>
+      trials, remember the smallest cut found.
+
+      <item>(<em|How Many Trials Needed>) Let <math|T<rsub|i>=> event that
+      the cut <math|<around*|(|A,B|)>> is found on the <math|i<rsup|th>> try.
+      <math|\<Rightarrow\>> by definition, different <math|T<rsub|i>>'s are
+      independent. So: <math|<text|<em|Pr>><around*|[|<text|all <math|N>
+      trials fail>|]>=<text|<em|Pr>><around*|[|\<sim\>T<rsub|1>\<wedge\>\<sim\>T<rsub|2>\<wedge\>\<ldots\>\<wedge\>\<sim\>T<rsub|N>|]>=<big|prod><rsub|i=1><rsup|N><text|<em|Pr>><around*|[|\<sim\>T<rsub|i>|]>\<leqslant\><around*|(|1-<frac|1|n<rsup|2>>|)><rsup|N>>
+
+      <item>(<em|Calculus Fact>) <math|\<forall\>> real number
+      <math|x<rsub|>>, <math|1+x\<leqslant\>e<rsup|x>>. So if we take
+      <math|N=n<rsup|2>>, <math|<text|<em|Pr>><around*|[|<text|all trials
+      fail>|]>\<leqslant\><around*|(|e<rsup|-<frac|1|n<rsup|2>>>|)><rsup|n<rsup|2>>=<frac|1|e>>.
+      If we take <math|N=n<rsup|2><text|ln>n>,
+      <with|color|red|<math|<text|<em|Pr>><around*|[|<text|all trials
+      fail>|]>\<leqslant\><around*|(|<frac|1|e>|)><rsup|<text|ln>n>=<frac|1|n>>>
+    </itemize-minus>
+
+    <em|Running Time>: Polynomial in <math|n> and <math|m> but slow
+    (<math|\<Omega\><around*|(|n<rsup|2>m|)>>). But can get big speed-ups (to
+    roughtly <math|O<around*|(|n<rsup|2>|)>> with more ideas).\ 
+  </itemize>
+
+  <section|Graph Algorithm>
+
+  <\itemize>
+    <item><em|<strong|Adjacency Lists>>
+
+    <em|Ingredients>:
+
+    <math|<rsup|<around*|(|1|)>>>array (or list) of vertices;
+    <math|<rsup|<around*|(|2|)>>>array (or list) of edges;
+    <math|<rsup|<around*|(|3|)>>>each edge points to its endpoints;
+    <with|color|blue|-- <math|\<theta\><around*|(|m|)>>>
+    <math|<rsup|<around*|(|4|)>>>each vertex points to edges incident on it.
+    <with|color|blue|-- <math|\<theta\><around*|(|m|)>>> <with|color|dark
+    red|[<em|<math|<rsup|<around*|(|3|)>>> and <math|<rsup|<around*|(|4|)>>>
+    is one-to-one correspondence>]>
+  </itemize>
+
   <section|Divide & Conquer>
 
   <\itemize-dot>
@@ -573,24 +705,27 @@
     <em|Example>: median. (<math|i=<frac|n+1|2>> for <math|n> odd,
     <math|i=<frac|n|2>> for <math|n> even)
 
-    <em|DSelect Algorithm>:
+    <em|DSelect Algorithm>: (Select a pivot deterministically)
 
     <\render-code>
       <with|font-shape|small-caps|Dselect>(<strong|array> <math|A>,
       <strong|length> <math|n>, <strong|order statistic> <math|i>)
 
       <tabular|<tformat|<table|<row|<cell|1>|<cell|<em|Break <math|A> into
-      groups of 5, sort each group><htab|5mm><math|\<theta\><around*|(|n|)>>>>|<row|<cell|2>|<cell|<math|C\<leftarrow\>>the
-      <math|n/5> ``middle elements''<htab|5mm><math|\<theta\><around*|(|n|)>>>>|<row|<cell|3>|<cell|<math|p\<leftarrow\>><with|font-shape|small-caps|DSelect>(<math|C,n/5,n/10>)<htab|5mm><with|font-base-size|10|/*
-      recursively computes median of <math|C>
-      */><htab|5mm><math|T<around*|(|<frac|n|5>|)>>>>|<row|<cell|4>|<cell|<em|Partition
-      <math|A> around <math|p>><htab|5mm><math|\<theta\><around*|(|n|)>>>>|<row|<cell|5>|<cell|<strong|if>
-      <math|j=i> <strong|then return> <math|p>>>|<row|<cell|6>|<cell|<strong|if>
+      groups of 5, sort each group><htab|5mm><emdash>
+      <math|\<theta\><around*|(|n|)>>>|<cell|>>|<row|<cell|2>|<cell|<math|C\<leftarrow\>>the
+      <math|n/5> ``middle elements''<htab|5mm><emdash>
+      <math|\<theta\><around*|(|n|)>>>|<cell|>>|<row|<cell|3>|<cell|<math|p\<leftarrow\>><with|font-shape|small-caps|DSelect>(<math|C,n/5,n/10>)<htab|5mm><with|font-base-size|10|/*
+      recursively computes median of <math|C> */><htab|5mm><emdash>
+      <math|T<around*|(|<frac|n|5>|)>>>|<cell|>>|<row|<cell|4>|<cell|<em|Partition
+      <math|A> around <math|p>><htab|5mm>---
+      <math|\<theta\><around*|(|n|)>>>|<cell|>>|<row|<cell|5>|<cell|<strong|if>
+      <math|j=i> <strong|then return> <math|p>>|<cell|>>|<row|<cell|6>|<cell|<strong|if>
       <math|j\<less\>i> <strong|then return>
       <with|font-shape|small-caps|DSelect>(<math|1<rsup|st>> part of
-      <math|A>, <math|j-1>, <math|i>)>>|<row|<cell|7>|<cell|<strong|else>
+      <math|A>, <math|j-1>, <math|i>)>|<cell|>>|<row|<cell|7>|<cell|<strong|else>
       <strong|return> <with|font-shape|small-caps|DSelect>(<math|2<rsup|nd>>
-      part of <math|A>, <math|n-j>, <math|i-j>)>>>>>
+      part of <math|A>, <math|n-j>, <math|i-j>)>|<cell|>>>>>
     </render-code>
 
     <em|The Key Lemma>:
@@ -621,12 +756,12 @@
     <with|font-shape|small-caps|DSelect> on an input array of length
     <math|n>. There is a constant <math|c\<geqslant\>1> such that:
 
-    <\enumerate-numeric>
+    <with|font-base-size|9|<\enumerate-numeric>
       <item><math|T<around*|(|1|)>=1>
 
       <item><math|T<around*|(|n|)>\<leqslant\>c
       n+T<around*|(|n/5|)>+T<around*|(|<frac|7|10>n|)>>
-    </enumerate-numeric>
+    </enumerate-numeric>>
 
     <em|<with|color|red|Note>>: different-sized subproblems
     <math|\<Rightarrow\>> can't use Master Method!
@@ -643,27 +778,12 @@
     Hypothesis>): <math|T<around*|(|k|)>\<leqslant\>a
     k,\<forall\>k\<less\>n>, we have
 
-    <\eqnarray*>
+    <with|font-base-size|9|<\eqnarray*>
       <tformat|<table|<row|<cell|T<around*|(|n|)>>|<cell|\<leqslant\>>|<cell|c
       n+T<around*|(|n/5|)>+T<around*|(|<frac|7|10>n|)>>>|<row|<cell|>|<cell|\<leqslant\>>|<cell|c
       n+a<around*|(|n/5|)>+a<around*|(|<frac|7|10>n|)>>>|<row|<cell|>|<cell|=>|<cell|n<around*|(|c+<frac|9|10>a|)>>>|<row|<cell|>|<cell|=>|<cell|a
       n>>>>
-    </eqnarray*>
-
-    <item><em|<strong|Select a pivot deterministically>>
-
-    <math|<around*|(|1|)>> divide the list into groups of 5 elements;
-    <math|<around*|(|2|)>> for each group, find its mediam
-    <math|\<rightarrow\>O<around*|(|1|)>> for each
-    <math|\<Rightarrow\>O<around*|(|n|)>> total; <math|<around*|(|3|)>> find
-    the median of these <math|n/5> elements recursively and use it as your
-    pivot.\ 
-
-    <em|Why does this guarantee a good pivot?> If there are <math|n> elements
-    total, then the pivot is greater than at least <math|3n/10> elements, and
-    less than at least <math|3n/10> elements <math|\<Rightarrow\>>
-    <math|3n/10\<leqslant\>R<around*|(|pivot|)>\<leqslant\>7n/10\<Rightarrow\>T<around*|(|n|)>\<leqslant\>T<around*|(|7n/10|)>+T<around*|(|n/5|)>+n>,
-    base case 1.
+    </eqnarray*>>
 
     <item><strong|<em|FindMax>> value increasing from the left, descending to
     the right
@@ -889,7 +1009,7 @@
 
 <\initial>
   <\collection>
-    <associate|font-base-size|12>
+    <associate|font-base-size|10>
     <associate|math-font|roman>
     <associate|page-medium|paper>
     <associate|page-type|letter>
@@ -900,11 +1020,11 @@
   <\collection>
     <associate|auto-1|<tuple|1|1>>
     <associate|auto-2|<tuple|2|3>>
-    <associate|auto-3|<tuple|3|9>>
-    <associate|auto-4|<tuple|4|11>>
-    <associate|auto-5|<tuple|5|12>>
-    <associate|auto-6|<tuple|6|?>>
-    <associate|auto-7|<tuple|7|?>>
+    <associate|auto-3|<tuple|3|7>>
+    <associate|auto-4|<tuple|4|7>>
+    <associate|auto-5|<tuple|5|7>>
+    <associate|auto-6|<tuple|6|9>>
+    <associate|auto-7|<tuple|7|11>>
   </collection>
 </references>
 
@@ -919,17 +1039,25 @@
       Programming> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-2><vspace|0.5fn>
 
-      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|Divide
-      & Conquer> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|Randomized
+      Algorithm> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-3><vspace|0.5fn>
 
-      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|Greedy
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|Graph
       Algorithm> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-4><vspace|0.5fn>
 
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|Divide
+      & Conquer> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-5><vspace|0.5fn>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|Greedy
+      Algorithm> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <no-break><pageref|auto-6><vspace|0.5fn>
+
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|Other
       Data Structure> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
-      <no-break><pageref|auto-5><vspace|0.5fn>
+      <no-break><pageref|auto-7><vspace|0.5fn>
     </associate>
   </collection>
 </auxiliary>
