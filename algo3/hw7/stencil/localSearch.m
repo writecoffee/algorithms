@@ -23,6 +23,7 @@ timeout = 0;
 accepted = 0;
 timeAllowed = timeDelta;
 funcOrig = funcToOptimize(startingX);
+valueDelta = 0;
 
 while timeout == 0
     % check boundary
@@ -50,8 +51,8 @@ while timeout == 0
 end
 
 % timeDelta seconds have passed and the best value found in this stack imrpoves not much
-if timeout == 1 && abs(valueDelta) / funcOrig <= funcDelta
-    if accepted == 1
+if timeout == 1 && (valueDelta > 0 || (abs(valueDelta) / funcOrig) <= funcDelta)
+    if accepted == 1 && valueDelta < 0
         x = xp;
     else
         x = startingX;
