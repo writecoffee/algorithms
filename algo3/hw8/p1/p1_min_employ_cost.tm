@@ -88,7 +88,8 @@
     three column represents <math|w<rsub|i-1>,t<rsub|i>> and <math|w<rsub|i>>
     for the reason that each month's total workers number consists of last
     month's 90 percent of last month's experienced workers and last month new
-    workers who got trained.
+    workers who got trained. Also, since the total workers number for May has
+    already known, it consists of itself.
 
     The resulting strategy computed by the linear programming is as follows:
 
