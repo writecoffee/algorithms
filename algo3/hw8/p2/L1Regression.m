@@ -14,10 +14,10 @@ f   = [zeros(2, 1); ones(n, 1)];
 % constraints for Zi (i from 1 to n), Zi >= 0
 Az  = [zeros(n, 2), -1 .* eye(n)];
 
-% constraints for |pXi + q - Yi| <= Zi
+% constraints for |pXi + q - Yi| >= -Zi
 Ac  = [x', ones(n, 1)];
 
-% constraints for |pXi + q - Yi| >= -Zi
+% constraints for |pXi + q - Yi| <= Zi
 Ap  = [Ac, Az(:, 3 : n + 2)];
 
 An  = [Ac .* -1, Az(:, 3 : n + 2)];
