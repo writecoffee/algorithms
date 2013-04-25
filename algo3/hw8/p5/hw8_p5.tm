@@ -13,20 +13,82 @@
   <\enumerate>
     <item>Namely, recall from lecture that the dual to our linear program is:
     <math|<text|max><rsub|y>b<rsup|T>\<cdot\>y> subject to the constraints
-    <math|A<rsup|T>\<cdot\>y=u> and <math|y\<geqslant\>0> (the unbounded
-    variables <math|x> correspond to equality constraints under duality).
-    Show that the coefficients <math|<around*|{|y<rsub|i>|}>><emdash>that we
-    found in our physics thought experiment above<emdash>make everything work
-    out:
+    <math|A<rsup|T>\<cdot\>y=u<rsup|T>> and <math|y\<geqslant\>0> (the
+    unbounded variables <math|x> correspond to equality constraints under
+    duality). Show that the coefficients <math|<around*|{|y<rsub|i>|}>><emdash>that
+    we found in our physics thought experiment above<emdash>make everything
+    work out:
 
-    1) show that <math|{y<rsub|i>}> is a feasible solution to the dual linear
-    program;\ 
+    <\enumerate>
+      <item>show that <math|{y<rsub|i>}> is a feasible solution to the dual
+      linear program
 
-    2) show that the objective value of <math|{y<rsub|i>}> in the dual linear
-    program <em|equals> the optimal objective value of the original linear
-    program, <math|u\<cdot\>x<rsup|\<ast\>>>;\ 
+      Based on the fact from the physics intution, we have
+      <math|y<rsub|1>A<rsub|1>+\<ldots\>+y<rsub|m>A<rsub|m>=u>, there is the
+      constraints such that <math|A<rsup|T>\<cdot\>y=u>. Based on the fact
+      that <math|y<rsub|1>,\<ldots\>y<rsub|m>> are all non-negative, the
+      constraint that in dual program<emdash><math|y\<geqslant\>0> could be
+      satisfied. So, we can draw conclusion that
+      <math|<around*|{|y<rsub|i>|}>> is a feasible solution to the dual
+      linear program.
 
-    3) summarize what you have found.
+      <item>show that the objective value of <math|{y<rsub|i>}> in the dual
+      linear program <em|equals> the optimal objective value of the original
+      linear program, <math|u\<cdot\>x<rsup|\<ast\>>>
+
+      For the constraints that passes through <math|x<rsup|\<ast\>>>, we have
+      <math|A<rsub|i>\<cdot\>x<rsup|\<ast\>>=b<rsup|i>>. Suppose we have a
+      coefficients <math|<around*|{|y<rsub|i><rsup|\<ast\>>|}>> such that
+      <math|y<rsup|\<ast\>><rsub|i>\<gtr\>0>, then left-multiplying
+      <math|y<rsup|\<ast\>><rsup|T>> in both side of
+      <math|A\<cdot\>x<rsup|\<ast\>>=b>, we get
+
+      <\eqnarray*>
+        <tformat|<table|<row|<cell|y<rsup|\<ast\>T>\<cdot\>A\<cdot\>x<rsup|\<ast\>>>|<cell|=>|<cell|y<rsup|\<ast\>T>\<cdot\>b>>|<row|<cell|A<rsup|T>\<cdot\>y<rsup|\<ast\>>\<cdot\>x<rsup|\<ast\>>>|<cell|=>|<cell|b<rsup|T>\<cdot\>y<rsup|\<ast\>>>>|<row|<cell|u\<cdot\>x<rsup|\<ast\>>>|<cell|=>|<cell|b<rsup|T>\<cdot\>y<rsup|\<ast\>><htab|5mm><around*|(|1|)>>>>>
+      </eqnarray*>
+
+      For any coefficients <math|<around*|{|y<rsub|i>|}>> that is a feasible
+      solution to the dual linear program which has
+      <math|A<rsub|i>\<cdot\>x\<geqslant\>b<rsub|i>>, left-multiplying
+      <math|y<rsup|T>> in both side of the contraints of primal LP, we have\ 
+
+      <\eqnarray*>
+        <tformat|<table|<row|<cell|y<rsup|T>\<cdot\>A\<cdot\>x>|<cell|\<geqslant\>>|<cell|y<rsup|T>\<cdot\>b>>|<row|<cell|<around*|(|y<rsup|T>\<cdot\>A\<cdot\>x|)><rsup|T>>|<cell|\<geqslant\>>|<cell|<around*|(|y<rsup|T>\<cdot\>b|)><rsup|T>>>|<row|<cell|x<rsup|T>\<cdot\><around*|(|A<rsup|T>\<cdot\>y|)>>|<cell|\<geqslant\>>|<cell|b<rsup|T>\<cdot\>y>>|<row|<cell|x<rsup|T>\<cdot\>u<rsup|T>>|<cell|\<geqslant\>>|<cell|b<rsup|T>\<cdot\>y>>|<row|<cell|u\<cdot\>x>|<cell|\<geqslant\>>|<cell|b<rsup|T>\<cdot\>y<htab|5mm><around*|(|2|)>>>>>
+      </eqnarray*>
+
+      Plugging <math|x<rsup|\<ast\>>> into the left-hand side of (2), we have
+      <math|u\<cdot\>x<rsup|\<ast\>>\<geqslant\>b<rsup|T>\<cdot\>y>,
+      substituting <math|u\<cdot\>x<rsup|\<ast\>>> with
+      <math|y<rsup|\<ast\>>\<cdot\>b<rsup|T>> according to (1), we get the
+      upper bound for the dual LP as follows
+
+      <\eqnarray*>
+        <tformat|<table|<row|<cell|y<rsup|\<ast\>>\<cdot\>b<rsup|T>>|<cell|\<geqslant\>>|<cell|y\<cdot\>b<rsup|T><htab|5mm><around*|(|3|)>>>>>
+      </eqnarray*>
+
+      Since <math|u\<cdot\>x<rsup|\<ast\>>> is the lower bound for the primal
+      linear program, which has been already known, and
+      <math|y<rsup|\<ast\>>\<cdot\>b<rsup|T>> is the upper bound for the dual
+      linear program and plus the equality (1), <em|Duality> <em|Theorem>
+      proved here.
+
+      <item>summarize what you have found.
+
+      For the primal LP, let <math|<text|<em|OPT> >= <text|Maximize
+      >C<rsup|T>x>, <em|s.t.>, <math|A x\<leqslant\>b>,
+      <math|\<forall\>x<rsub|i>\<in\>x,x<rsub|i>\<geqslant\>0>. For the dual
+      LP, let <math|<text|<em|OPT>><rsup|\<ast\>>= <text|Minimize
+      >b<rsup|T>y>, <em|s.t.>, <math|A<rsup|T>y\<geqslant\>C>,
+      <math|\<forall\>y<rsub|i>\<in\>y,y<rsub|i>\<geqslant\>0>.
+
+      When <em|OPT><math| = +\<infty\>> and thus on its counterpart, the dual
+      LP is infeasible; when primal LP is infeasible,
+      <math|<text|<em|OPT>><rsup|\<ast\>>=-\<infty\>> and <em|vice versa>.
+
+      When <math|<text|<em|OPT>>\<in\>R>,
+      <math|<text|<em|OPT>><rsup|\<ast\>>> also is within <math|R>, their
+      boundary coincide.
+    </enumerate>
 
     <item>We consider randomized strategies for the players. Suppose that
     you, the row player, know that the column player picks rock with
@@ -177,7 +239,7 @@
 
 <\references>
   <\collection>
-    <associate|auto-1|<tuple|1|?>>
+    <associate|auto-1|<tuple|1|1>>
   </collection>
 </references>
 
