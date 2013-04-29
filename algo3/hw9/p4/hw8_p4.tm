@@ -1,4 +1,4 @@
-<TeXmacs|1.0.7.19>
+<TeXmacs|1.0.7.14>
 
 <style|generic>
 
@@ -39,11 +39,37 @@
     into a flow that satisfies the constraints you describe, proving that
     your algorithm does not ``miss out'' on any good marriage plans.
 
-    \;
+    <\itemize>
+      <item>Given bipartite graph <math|B=<around*|(|A\<cup\>B,E|)>> in
+      <em|Diagram 1>, we have the following notation,\ 
 
-    We consider the first 40 people on the left as 40 nodes where
-    node-<math|i>'s capacity <math|c<rsub|i>=1>,
-    <math|i\<in\><around*|[|1,40|]>>.\ 
+      <\eqnarray*>
+        <tformat|<table|<row|<cell|A>|<cell|=>|<cell|P\<cup\>Q, <text|
+        represents the <math|n> people on the
+        left>>>|<row|<cell|P>|<cell|=>|<cell|<text|the 40 people on the left
+        we ensure they <em|must> get married>>>|<row|<cell|Q>|<cell|=>|<cell|<text|the
+        other <math|n-40> people on the left>>>|<row|<cell|B>|<cell|=>|<cell|<text|the
+        100 people on the right>>>>>
+      </eqnarray*>
+
+      such that very people in <math|A> has at least 1 directed edge going
+      into <math|B> with capacity 1 and also every vertice in <math|B> has at
+      least one edge directing into it from <math|A> with capacity 1.\ 
+
+      We add new vertices <math|s> and <math|t>, then we add an edge from
+      <math|s> to every vertex in <math|P> and add an edge from every vertex
+      in <math|B> to <math|t>. Make all the edge capacities 1. We add new
+      vertice <math|s<rprime|'>> and add an edge from <math|s> to
+      <math|s<rprime|'>> with capacity 60 and edges from <math|s<rprime|'>>
+      directing into every vertice in <math|Q> with capacity 1. The resulting
+      graph <math|G> is shown in <em|Diagram 2>.
+
+      <item>Now we are going to prove after solving the maximum network flow
+      problem on graph <math|G>, we will get the maximum marriages and the
+      first 40 people on the left <em|must> get married.
+
+      \;
+    </itemize>
 
     <item>(10 points) Consider the (apparently very different though actually
     very similar) problem of scheduling weekly TA office hours in a course.
