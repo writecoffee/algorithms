@@ -89,9 +89,18 @@
     <math|O<around*|(|<around*|\||E|\|>\<cdot\><around*|\||f|\|>|)>> where
     <math|<around*|\||E|\|>> is the number of edges of <math|G> and
     <math|<around*|\||f|\|>=<big|sum><rsub|e<text| leaving
-    <math|s>>>c<rsub|e>\<nocomma\>=max<around*|(|n,m|)>>. There would be at
+    <math|s>>>c<rsub|e>\<nocomma\>=<around*|\||A|\|>=n>. There would be at
     most <math|n+m+n m> edges in <math|G>. So the running time is
-    <math|O<around*|(|n m<rsup|2>|)>>.
+    <math|O<around*|(|n<rsup|2> m|)>>.
+
+    However, if paths are chosen in a sensible mannerin particular, by using
+    a breadth-firrst search, which finds the path with the fewest
+    edges<emdash>then the number of iterations is at most
+    <math|O<around*|(|<around*|\||V|\|>\<cdot\><around*|\||E|\|>|)>>, no
+    matter what the capacities are. This latter bound gives an overall
+    running time of <math|O<around*|(|<around*|\||V|\|>\<cdot\><around*|\||E|\|><rsup|2>|)>>
+    for maximum flow. (<em|Edmonds-Karp>: at each iteration, pick shortest
+    <math|s>-<math|t> path)
   </itemize>
 </body>
 
