@@ -9,6 +9,8 @@
     <item><strong|Ford-fulgerson Algorithm>
 
     <\render-code>
+      initial flow: <math|f<rsub|e>=0,\<forall\>e>
+
       <math|H=copy of G\<nocomma\>,<text|the residual graph>>
 
       <strong|while> <math|H> has a path from <math|s> to <math|t>
@@ -68,7 +70,10 @@
 
     <item><strong|Min-cut>
 
-    \;
+    <em|As a byproduct of the Ford-Fugerson Algorithm>. Let <math|L> be the
+    nodes that <em|are> reachable from <math|s> in <math|H>, and let
+    <math|R=V-L> be the rest of the nodes. Then <math|<around*|(|L,R|)>> is a
+    cut in the graph <math|G>.
 
     <\theorem>
       Maximum <math|s>-<math|t> flow is <math|\<leqslant\>> minimum
