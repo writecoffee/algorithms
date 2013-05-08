@@ -346,6 +346,56 @@
   <math|C<around*|[|0,1|]>+C<around*|[|1,n+1|]>> through
   <math|C<around*|[|0,n|]>+C<around*|[|n,n+1|]>>. The total runtime is thus
   <math|O<around*|(|n<rsup|3>|)>>.
+
+  <item><strong|Max-Weight-Path>
+
+  <\enumerate>
+    <em|<em|<item>>Find a path that goes through the root without restricting
+    the nubmer of children for each node>.\ 
+
+    <item><em|Find the vertex that if we remove it, splits the tree into
+    several smaller trees where each of these remaining trees has at most
+    <math|<frac|n|2>> vertices>.
+
+    <item><em|Design an O(n log n) divide-andconquer algorithm that solves
+    our problem, finding the maximal-weight path of length k in the tree.>
+
+    Consider a node v as returned by the algorithm from part 5, and consider
+    an optimal path of length <math|k> in the tree. Further, consider making
+    <math|v> the root of the tree (this can be done in linear time via a
+    depth-first search starting at <math|v>). There are two cases: either the
+    path passes through <math|v>, or the path does not pass through <math|v>
+    in which case it must be contained entirely within a single subtree of
+    <math|v>.
+
+    This observation gives us the structure of the algorithm:
+
+    <\render-code>
+      <with|font-shape|small-caps|Max-Weight-Path><math|<around*|(|G,k|)>>
+
+      \ \ \ \ <math|v> = the vertex from the algorithm of part 5.
+
+      \ \ \ \ Rearrange <math|G> to make <math|v> the root.
+
+      \ \ \ \ return max<math|<choice|<tformat|<table|<row|<cell|Result of
+      the algorithm of part 3 on (G, k)>>|<row|<cell|<text|<with|font-shape|small-caps|Max-Weight-Path><math|<around*|(|S<rsub|i>,k|)>>>
+      for each subtree \ S<rsub|i> of v>>>>>>
+    </render-code>
+
+    As discussed above, given the correctness of algorithms from parts 3 and
+    5, the correctness of this algorithm follows.
+
+    We now analyze the run time. Note that for each recursive invocation of
+    the algorithm on a tree of size <math|t>, we do <math|O(t)> work at the
+    current level of recursion, namely a constant amount of work per vertex.
+    Further, since the recursive calls are on disjoint sets of vertices, the
+    total time spent at a given depth <math|j> of the recursion, across all
+    recursive calls of <with|font-shape|small-caps|Max-Weight-Path>, is
+    <math|O(n)>. As shown in part 4, each recursive call will be on a subtree
+    at most half the size, which implies that there are at most <math|log n>
+    levels of recursion. Thus the total time of our algorithm is
+    <math|O<around*|(|n log n|)>>, as desired.
+  </enumerate>
 </body>
 
 <\initial>
