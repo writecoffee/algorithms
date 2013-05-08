@@ -19,13 +19,11 @@
     <below|<wide*|k<around*|(|X\<otimes\>K<rsub|1>|)><rsup|2>|\<wide-underbrace\>>|A<rsup|<text|<em|Conv>>>>+<below|<wide*|k<around*|(|X\<otimes\>K<rsub|2>|)><rsup|2>|\<wide-underbrace\>>|B<rsup|<text|<em|Conv>>>>+<big|sum><rsub|m><around*|(|x<rsub|m>-I<rsub|m<rsub|>>|)><rsup|2>
   </equation*>
 
-  where <math|K<rsub|1>=<matrix|<tformat|<table|<row|<cell|-1>|<cell|1>|<cell|0>|<cell|\<cdots\>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|>>|<row|<cell|\<vdots\>>|<cell|>|<cell|>|<cell|\<ddots\>>>>>>,
-  K<rsub|2>=<matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|\<cdots\>>>|<row|<cell|-1>|<cell|0>|<cell|>>|<row|<cell|0>|<cell|0>|<cell|>>|<row|<cell|\<vdots\>>|<cell|>|<cell|\<ddots\>>>>>>>.
-
-  \;
-
-  Now <math|A<rsup|<text|<em|Conv>>>> and <math|B<rsup|<text|<em|Conv>>>>
-  could be expressed as follows using <em|Fourier> transform
+  where <math|K<rsub|1>=<matrix|<tformat|<table|<row|<cell|-1>|<cell|1>>>>>,
+  K<rsub|2>=<matrix|<tformat|<table|<row|<cell|1>>|<row|<cell|-1>>>>>>, as we
+  compute convolution for each row and each column for above. Now
+  <math|A<rsup|<text|<em|Conv>>>> and <math|B<rsup|<text|<em|Conv>>>> could
+  be expressed as follows using <em|Fourier> transform,
 
   <\equation*>
     k<around*|(|F<around*|(|X|)>\<cdot\>F<around*|(|K<rsub|1>|)>|)><rsup|2>+k<around*|(|F<around*|(|X|)>\<cdot\>F<around*|(|K<rsub|2>|)>|)><rsup|2>+<big|sum><rsub|k><around*|(|x<rsub|m>-I<rsub|m<rsub|>>|)><rsup|2>
