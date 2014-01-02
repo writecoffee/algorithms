@@ -2,7 +2,12 @@
 
 public class zigzag_conversion {
     public static String convert(String s, int nRows) {
+        if (nRows == 1) {
+        	return s;
+        }
+
         StringBuilder result = new StringBuilder();
+        
         int inc = 2 * (nRows - 1);
         int N = s.length();
         for (int i = 0; i < nRows; ++i) {
@@ -25,5 +30,6 @@ public class zigzag_conversion {
     
     public static void main(String []args) {
     	System.out.println(convert(new String("AMONSTUKOLTZ"), 4));
+    	System.out.println(convert(new String("ABC"), 2));
     }
 }
