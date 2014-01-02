@@ -1,0 +1,9 @@
+** Make sure the input to your function is a matrix (2-dimensional), not 3-dimensional; if you load an image with Matlab's functions, you will probably get a 3-dimensional image, with the 3rd dimension storing color information. If this is the case, you can take a 2-dimensional slice of it with im(:,:,1), which will give you the red color component of the image, or mean(im,3) which will average the three color components.
+
+** You should probably make sure the input to your function has type "double" and not an integer type; Matlab's image loading routines may give you integer matrices; you can convert an integer matrix to type double with double(im).
+
+** Make sure you are using the *two* dimensional versions of fft and ifft, which are fft2 and ifft2!
+
+** If you are plotting your image at the end, use imagesc instead of image; if Matlab complains that its input is complex and not real, you can change it to real with real(im)
+
+** You do *not* need to turn in any explanation or writeup for this problem. However, if your code has bugs or is wrong, then we *need* an explanation or writeup so that we can give you partial credit. You can add comments to your code, scan or take a picture of your pencil+paper work and submit it with your code, etc.
