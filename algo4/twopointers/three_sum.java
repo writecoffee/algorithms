@@ -38,7 +38,7 @@ public class three_sum {
                     while (l < r && sortedNums.get(l) == sortedNums.get(l - 1)) {
                         l++;
                     }
-                    while (l < r && sortedNums.get(r) == sortedNums.get(r - 1)) {
+                    while (l < r && sortedNums.get(r) == sortedNums.get(r + 1)) {
                         r--;
                     }
                 }
@@ -51,5 +51,7 @@ public class three_sum {
 
     public static void main(String[] args) {
         threeSum(new int[] {-1, 0, 1, 2, -1, -4});
+        threeSum(new int[] { -2, 0, 1, 1, 2 });
+
     }
 }

@@ -40,8 +40,13 @@ public class two_sum {
 			int sum = pairList.get(l).first + pairList.get(r).first;
 			if (sum == target) {
 				int[] result = new int[2];
-				result[0] = pairList.get(l).second;
-				result[1] = pairList.get(r).second;
+				if (pairList.get(l).second < pairList.get(r).second) {
+    				result[0] = pairList.get(l).second;
+    				result[1] = pairList.get(r).second;
+				} else {
+    				result[0] = pairList.get(r).second;
+    				result[1] = pairList.get(l).second;
+				}
 				return result;
 			} else if (sum < target){
 				l++;
@@ -69,7 +74,8 @@ public class two_sum {
 		}
 
 		for (int i = 0; i < numbers.length; ++i) {
-			if (targetMap.containsKey(target - numbers[i])) {
+			if (targetMap.containsKey(target - numbers[i])
+			        && targetMap.get(target - numbers[i]) != i + 1) {
 				int[] result = new int[2];
 				result[0] = i + 1;
 				result[1] = targetMap.get(target - numbers[i]);
@@ -81,7 +87,14 @@ public class two_sum {
 
 	public static void main(String[] args) {
 		int []numbers = {2, 7, 11, 15};
-		int []result = twoSumUsingSort(numbers, 9);
-		System.out.println(result[0] + " and " + result[1]);
+		int []result = twoSum(numbers, 9);
+		if (result != null) {
+    		System.out.println(result[0] + " and " + result[1]);
+		}
+		int []numbers2 = {3, 2, 4};
+		int []result2 = twoSum(numbers2, 6);
+		if (result2 != null) {
+    		System.out.println(result2[0] + " and " + result2[1]);
+		}
 	}
 }
