@@ -24,32 +24,36 @@ public class combinations {
     }
 
     public static ArrayList<ArrayList<Integer>> combineNonrecur(int n, int k) {
+        int[] stack = new int[k];
         ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        int stackPointer = 0;
 
-        if (k == 0) {
-            return result;
-        }
-
-        result.add(new ArrayList<Integer>());
-        for (int i = 0; i < k; i++) {
-            ArrayList<ArrayList<Integer>> nextResult = new ArrayList<ArrayList<Integer>>();
-
-            for (ArrayList<Integer> intermediate : result) {
-                int nextStartupNumber = 0;
-                if (intermediate.size() > 0) {
-                    nextStartupNumber = intermediate.get(intermediate.size() - 1);
+        while (true) {
+            if (stack[stackPointer] >= n) {
+                if (stackPointer == 0) {
+                    break;
                 }
 
-                for (int j = nextStartupNumber; j < n - (k - i) + 1; j++) {
-                    ArrayList<Integer> newIntermediate = new ArrayList<Integer>(intermediate);
-                    newIntermediate.add(j + 1);
-                    nextResult.add(newIntermediate);
+                stackPointer--;
+                stack[stackPointer]++;
+            } else if (stackPointer == k - 1) {
+                ArrayList<Integer> newResult = new ArrayList<Integer>();
+                for (int j = 0; j < k; j++) {
+                    newResult.add(stack[j] + 1);
                 }
+                result.add(newResult);
+
+                stack[stackPointer]++;
+            } else {
+                stackPointer++;
+                stack[stackPointer] = stack[stackPointer - 1] + 1;
             }
-
-            result = new ArrayList<ArrayList<Integer>>(nextResult);
         }
 
+        for (int i = 0; i < stack.length; i++) {
+            assert stack[i] == n;
+        }
+        
         return result;
     }
 
