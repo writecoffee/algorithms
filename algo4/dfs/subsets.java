@@ -33,8 +33,28 @@ public class subsets {
         }
     }
 
+    public static ArrayList<ArrayList<Integer>> generateSubsetsNonrecur(int[] S) {
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        result.add(new ArrayList<Integer>());
+        Arrays.sort(S);
+
+        for (int i = 0; i < S.length; i++) {
+            ArrayList<ArrayList<Integer>> intermediate = new ArrayList<ArrayList<Integer>>();
+            for (int j = 0; j < result.size(); j++) {
+                ArrayList<Integer> newIntermediate = new ArrayList<Integer>(result.get(j));
+                newIntermediate.add(S[i]);
+                intermediate.add(newIntermediate);
+            }
+
+            result.addAll(intermediate);
+        }
+
+        return result;
+    }
+
     public static void main(String[] args) {
         generateSubsets(new int[] { 0 });
-        generateSubsets(new int[] { 1, 2, 3, 4 });
+        generateSubsetsNonrecur(new int[] { 1, 2, 3, 4 });
+        generateSubsetsNonrecur(new int[] { 4, 1, 0 });
     }
 }
