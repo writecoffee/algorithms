@@ -22,6 +22,19 @@ public class remove_duplicates_from_sorted_array {
         return p + 1;
     }
 
+    public int removeDuplicatesImprov(int[] A) {
+        int n = A.length;
+        int j = 0;
+
+        for (int i = 0; i < n; ++i) {
+            if (i == 0 || A[i] != A[i - 1]) {
+                A[j++] = A[i];
+            }
+        }
+
+        return j;
+    }
+
     public static void main(String[] args) {
 
     }
