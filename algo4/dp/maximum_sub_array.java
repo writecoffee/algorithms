@@ -15,18 +15,20 @@ public class maximum_sub_array {
         int globalMaxSum = A[0];
         int localMaxSum = A[0];
         int start = 0;
+        int startTemp = 0;
         int end = 0;
 
         for (int i = 1; i < A.length; i++) {
             if (A[i] > localMaxSum + A[i]) {
                 localMaxSum = A[i];
-                start = i;
+                startTemp = i;
             } else {
                 localMaxSum = localMaxSum + A[i];
             }
 
             if (localMaxSum > globalMaxSum) {
                 globalMaxSum = localMaxSum;
+                start = startTemp;
                 end = i;
             }
         }
