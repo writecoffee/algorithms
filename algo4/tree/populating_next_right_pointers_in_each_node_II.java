@@ -15,29 +15,32 @@ public class populating_next_right_pointers_in_each_node_II {
                 current.left.next = current.right;
             }
 
-            TreeLinkNode next = current.next;
-            while (next != null && next.left == null && next.right == null) {
-                next = next.next;
+            TreeLinkNode nextSiblingWithChild = current.next;
+            while (nextSiblingWithChild != null &&
+                   nextSiblingWithChild.left == null &&
+                   nextSiblingWithChild.right == null) {
+                nextSiblingWithChild = nextSiblingWithChild.next;
             }
 
-            if (next == null) {
+            if (nextSiblingWithChild == null) {
                 break;
             }
 
-            TreeLinkNode nextChild = (next.left != null) ? next.left : next.right;
+            TreeLinkNode nextChild = nextSiblingWithChild.left != null ?
+                            nextSiblingWithChild.left :
+                            nextSiblingWithChild.right;
             if (current.right != null) {
                 current.right.next = nextChild;
             } else if (current.left != null) {
                 current.left.next = nextChild;
             }
 
-            current = next;
+            current = nextSiblingWithChild;
         }
     }
 
     public static void connect(TreeLinkNode root) {
         TreeLinkNode first = root;
-
         while (first != null) {
             connectLevel(first);
 
@@ -46,7 +49,7 @@ public class populating_next_right_pointers_in_each_node_II {
             }
 
             if (first != null) {
-                first = (first.left != null) ? first.left : first.right;
+                first = first.left != null ? first.left : first.right;
             }
         }
     }
