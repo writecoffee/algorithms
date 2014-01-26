@@ -1,3 +1,4 @@
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -28,7 +29,36 @@ public class longest_consecutive_sequence {
         return result;
     }
 
+    public static int merge(HashMap<Integer, Integer> map, int l, int r) {
+        int left = l - map.get(l) + 1;
+        int right = r + map.get(r) - 1;
+        int range = right - left + 1;
+        map.put(left, range);
+        map.put(right, range);
+        return range;
+    }
+
+    public static int longestConsecutiveUnionFind(int[] nums) {
+        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+        int maxLen = (nums.length == 0) ? 0 : 1;
+
+        for (int num : nums) {
+            if (!map.containsKey(num)) {
+                map.put(num, 1);
+
+                if (map.containsKey(num - 1)) {
+                    maxLen = Math.max(maxLen, merge(map, num - 1, num));
+                }
+
+                if (map.containsKey(num + 1)) {
+                    maxLen = Math.max(maxLen, merge(map, num, num + 1));
+                }
+            }
+        }
+        return maxLen;
+    }
+
     public static void main(String[] args) {
-        longestConsecutive(new int[] {100, 4, 200, 1, 3, 2 });
+        longestConsecutiveUnionFind(new int[] { 100, 4, 200, 1, 3, 2 });
     }
 }
