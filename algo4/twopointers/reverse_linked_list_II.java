@@ -11,25 +11,24 @@ public class reverse_linked_list_II {
     }
 
     public static ListNode reverseBetween(ListNode head, int m, int n) {
-        ListNode psudoHead = new ListNode(0);
+        ListNode psudoHead = new ListNode(-1);
         psudoHead.next = head;
-
-        ListNode prev = psudoHead;
         ListNode curr = head;
-        int pos = 1;
+        ListNode prev = psudoHead;
+        int i = 1;
 
-        while (pos < m && curr != null) {
-            prev = curr;
+        while (i < m && curr != null) {
+            prev = prev.next;
             curr = curr.next;
-            ++pos;
+            i++;
         }
 
-        while (pos < n && curr != null) {
-            ListNode nt = curr.next.next;
-            curr.next.next = prev.next;
+        while (i < n) {
+            ListNode temp = prev.next;
             prev.next = curr.next;
-            curr.next = nt;
-            ++pos;
+            curr.next = curr.next.next;
+            prev.next.next = temp;
+            i++;
         }
 
         return psudoHead.next;
