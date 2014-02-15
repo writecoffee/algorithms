@@ -1,42 +1,42 @@
 public class search_for_a_range {
 
     public static int[] searchRange(int[] A, int target) {
-        int[] result = new int[] { -1, -1 };
+        int[] range = { -1, -1 };
 
-        int lower = 0;
-        int upper = A.length;
+        int low = 0, high = A.length - 1;
+        while (low <= high) {
+            int mid = (low + high) / 2;
 
-        while (lower < upper) {
-            int mid = (lower + upper) / 2;
-            if (A[mid] < target) {
-                lower = mid + 1;
+            if (A[mid] == target) {
+                if (mid == 0 || A[mid - 1] < target) {
+                    range[0] = mid;
+                    low = mid;
+                    high = A.length - 1;
+                }
+
+                if (mid == A.length - 1 || A[mid + 1] > target) {
+                    range[1] = mid;
+                    low = 0;
+                    high = mid;
+                }
+
+                if (range[0] > -1 && range[1] > -1) {
+                    return range;
+                }
+
+                if (range[0] < 0) {
+                    high = mid - 1;
+                } else {
+                    low = mid + 1;
+                }
+            } else if (A[mid] < target) {
+                low = mid + 1;
             } else {
-                upper = mid;
+                high = mid - 1;
             }
         }
 
-        if (lower < 0 || lower > A.length - 1) {
-            return result;
-        }
-
-        if (lower == upper && A[lower] != target) {
-            return result;
-        }
-
-        result[0] = lower;
-
-        upper = A.length;
-        while (lower < upper) {
-            int mid = (lower + upper) / 2;
-            if (A[mid] <= target) {
-                lower = mid + 1;
-            } else {
-                upper = mid;
-            }
-        }
-
-        result[1] = upper - 1;
-        return result;
+        return range;
     }
 
     static int[] result = searchRange(new int[] { 1, 1, 2, 3, 4, 5 }, 1);
