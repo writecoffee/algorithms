@@ -9,21 +9,18 @@ public class trapping_rain_water {
         }
 
         int volumn = 0;
-        Deque<Integer> stack = new ArrayDeque<Integer>();
+        Deque<Integer> left = new ArrayDeque<Integer>();
         while (i < A.length) {
-            while (!stack.isEmpty() && A[i] >= A[stack.peekLast()]) {
-                int bottom = stack.pollLast();
-                if (stack.isEmpty()) {
-                    break;
-                }
+            if (left.isEmpty() || A[i] < A[left.peekLast()]) {
+                left.addLast(i);
+                i++;
+            } else {
+                int bottom = left.pollLast();
 
-                int width = i - stack.peekLast() - 1;
-                int height = Math.min(A[i], A[stack.peekLast()]) - A[bottom];
-                volumn += width * height;
+                int width = left.isEmpty() ? 0 : i - left.peekLast() - 1;
+                int height = left.isEmpty() ? 0 : Math.min(A[left.peekLast()], A[i]) - A[bottom];
+                volumn = volumn + width * height;
             }
-
-            stack.addLast(i);
-            ++i;
         }
 
         return volumn;
