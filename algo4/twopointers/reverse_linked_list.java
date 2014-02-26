@@ -33,6 +33,26 @@ public class reverse_linked_list {
         return psudoHead.next;
     }
 
+    public static ListNode reverseOrig(ListNode head) {
+        if (head == null) {
+            return null;
+        }
+
+        ListNode psudoHead = new ListNode(-1);
+        psudoHead.next = head;
+        ListNode curr = head;
+        ListNode prev = psudoHead;
+
+        while (curr.next != null) {
+            ListNode temp = prev.next;
+            prev.next = curr.next;
+            curr.next = curr.next.next;
+            prev.next.next = temp;
+        }
+
+        return psudoHead.next;
+    }
+
     public static void main(String[] args) {
         ListNode n1 = new ListNode(1);
         ListNode n2 = new ListNode(2);
@@ -44,6 +64,6 @@ public class reverse_linked_list {
         n3.next = n4;
         n4.next = n5;
 
-        reverse(n1);
+        reverseOrig(n1);
     }
 }
