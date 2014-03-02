@@ -11,17 +11,17 @@ public class search_in_rotated_sorted_array {
                 return mid;
             }
 
-            if (A[i] <= A[mid]) {
-                if (A[i] <= target && target < A[mid]) {
-                    j = mid - 1;
-                } else {
+            if (A[mid] < A[i]) {
+                if (target > A[mid] && target <= A[j]) {
                     i = mid + 1;
+                } else {
+                    j = mid - 1;
                 }
             } else {
-                if (A[mid] < target && target <= A[j]) {
-                    i = mid + 1;
-                } else {
+                if (target >= A[i] && target < A[mid]) {
                     j = mid - 1;
+                } else {
+                    i = mid + 1;
                 }
             }
         }
