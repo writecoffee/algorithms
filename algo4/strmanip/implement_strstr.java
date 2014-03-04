@@ -35,13 +35,13 @@ public class implement_strstr {
     }
     
     public static String strStr(String haystack, String needle) {
-        int N = haystack.length();
-        int M = needle.length();
+        int m = haystack.length();
+        int n = needle.length();
 
-        if (M > N) {
+        if (n > m) {
             return null;
         }
-        if (M == 0) {
+        if (n == 0) {
             return haystack;
         }
 
@@ -49,13 +49,13 @@ public class implement_strstr {
         int i = 0;
 
 comparing:
-        while (i <= N - M) {
+        while (i <= m - n) {
             if (needle.charAt(0) != haystack.charAt(i)) {
                 i++;
                 continue;
             }
 
-            for (int j = 0; j < M; j++) {
+            for (int j = 0; j < n; j++) {
                 if (needle.charAt(j) != haystack.charAt(i + j)) {
                     i = i + j - overlay[j - 1];
                     continue comparing;
@@ -80,8 +80,6 @@ comparing:
 
             if (needle.charAt(h) == needle.charAt(i)) {
                 overlay[i] = overlay[i - 1] + 1;
-            } else {
-                overlay[i] = 0;
             }
         }
         
