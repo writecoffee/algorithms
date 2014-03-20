@@ -36,8 +36,34 @@ public class maximum_sub_array {
         return new int[] { globalMaxSum, start, end };
     }
 
+    public static int maxSubArrayLength(int[] A) {
+        int gMaxSum = A[0];
+        int lMaxSum = A[0];
+        int len = 1;
+        int j = 0;
+
+        for (int i = 1; i < A.length; i++) {
+            if (lMaxSum < 0) {
+                lMaxSum = A[i];
+                j = i;
+            } else {
+                lMaxSum += A[i];
+            }
+
+            if (lMaxSum > gMaxSum) {
+                len = i - j + 1;
+                gMaxSum = lMaxSum;
+            }
+        }
+
+        return len;
+    }
+
     public static void main(String[] args) {
-        System.out.println(maxSubArray(new int[] { -2, 1, -3, 4, -1, 2, 1, -5, 4 }));
+        System.out.println("Max Sum: " + maxSubArray(new int[] { -2, 1, -3, 4, -1, 2, 1, -5, 4 }));
+        System.out.println("Sum Len: " + maxSubArrayLength(new int[] { -1, -1, -1, 4, -1, 2, 1, -5, 4 }));
+
         maxSubArrayWithIndices(new int[] { -1, -1, -1, 4, -1, 2, 1, -5, 4 });
+        maxSubArrayWithIndices(new int[] { -2, 1, -3, 4, -1, 2, 1, -5, 4 });
     }
 }
