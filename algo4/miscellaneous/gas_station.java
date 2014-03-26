@@ -16,6 +16,25 @@ public class gas_station {
         return sum >= 0 ? (result + 1) % n : -1;
     }
 
+    public int canCompleteCircuit2(int[] gas, int[] cost) {
+        int n = gas.length;
+        int k = 0;
+        int lSum = 0;
+        int gSum = 0;
+
+        for (int i = 0; i < n; ++i) {
+            lSum += gas[i] - cost[i];
+            gSum += gas[i] - cost[i];
+
+            if (lSum < 0) {
+                lSum = 0;
+                k = i + 1;
+            }
+        }
+
+        return gSum < 0 ? -1 : k;
+    }
+
     public static void main(String[] args) {
         System.out.println(canCompleteCircuit(new int[] { 10, 3, 6, 3, 4 }, new int[] { 9, 4, 3, 2, 4 }));
     }
