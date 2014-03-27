@@ -53,4 +53,53 @@ public class valid_sudoku {
 
         return true;
     }
+
+    public boolean isValidSudoku(int[] arr) {
+        final int n = 9;
+
+        for (int i = 0; i < n; ++i) {
+            boolean[] visited = new boolean[n];
+
+            for (int j = 0; j < n; ++j) {
+                int val = arr[i * n + j];
+                if (val < 1 || val > 9) {
+                    return false;
+                } else if (visited[val - 1]) {
+                    return false;
+                } else {
+                    visited[val - 1] = true;
+                }
+            }
+        }
+
+        for (int i = 0; i < n; ++i) {
+            boolean[] visited = new boolean[n];
+
+            for (int j = 0; j < n; ++j) {
+                int val = arr[i + j * n];
+                if (visited[val - 1]) {
+                    return false;
+                } else {
+                    visited[val - 1] = true;
+                }
+            }
+        }
+
+        for (int i = 0; i < n; ++i) {
+            boolean[] visited = new boolean[n];
+
+            for (int j = 0; j < n; ++j) {
+                int row = i / 3 * 3 + j / 3;
+                int col = i % 3 * 3 + j % 3;
+                int val = arr[row * n + col];
+                if (visited[val - 1]) {
+                    return false;
+                } else {
+                    visited[val - 1] = true;
+                }
+            }
+        }
+
+        return true;
+    }
 }
