@@ -9,63 +9,63 @@ public class sort_list {
         }
     }
 
-    public static ListNode _head;
-    public static ListNode sortList(ListNode head) {
-        _head = head;
-        return sortHelper(getLength(head));
+    private ListNode current = null;
+
+    public ListNode sort(ListNode head) {
+        current = head;
+        int length = getLength(head);
+        return mergeHelper(length);
     }
 
-    private static ListNode sortHelper(int length) {
+    public ListNode mergeHelper(int length) {
         if (length == 0) {
             return null;
         }
 
         if (length == 1) {
-            ListNode current = _head;
-            _head = _head.next;
-            current.next = null;
-            return current;
+            ListNode t = current;
+            current = current.next;
+            t.next = null;
+            return t;
         }
 
         int half = length / 2;
-        ListNode head1 = sortHelper(half);
-        ListNode head2 = sortHelper(length - half);
-        return mergeList(head1, head2);
+        ListNode l = mergeHelper(half);
+        ListNode r = mergeHelper(length - half);
+        return merge(l, r);
     }
 
-    private static ListNode mergeList(ListNode head1, ListNode head2) {
-        ListNode psudoHead = new ListNode(0);
-        psudoHead.next = null;
-        ListNode current = psudoHead;
+    public ListNode merge(ListNode l, ListNode r) {
+        ListNode psudoHead = new ListNode(-1);
+        ListNode c = psudoHead;
 
-        while (head1 != null && head2 != null) {
-            ListNode minNode;
-            if (head1.val < head2.val) {
-                minNode = head1;
-                head1 = head1.next;
+        while (l != null && r != null) {
+            if (l.val < r.val) {
+                c.next = l;
+                l = l.next;
             } else {
-                minNode = head2;
-                head2 = head2.next;
+                c.next = r;
+                r = r.next;
             }
-
-            current.next = minNode;
-            current = current.next;
+            c = c.next;
         }
 
-        if (head1 != null) {
-            current.next = head1;
-        } else if (head2 != null) {
-            current.next = head2;
+        if (l != null) {
+            c.next = l;
+        }
+
+        if (r != null) {
+            c.next = r;
         }
 
         return psudoHead.next;
     }
 
-    private static int getLength(ListNode head) {
+    public int getLength(ListNode head) {
         int length = 0;
         while (head != null) {
-            length++;
             head = head.next;
+            length++;
         }
 
         return length;
