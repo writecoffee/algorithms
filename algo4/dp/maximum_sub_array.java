@@ -59,6 +59,32 @@ public class maximum_sub_array {
         return len;
     }
 
+    /**
+     * A variance of this problem: if the maximum sum is negative, return 0. 
+     */
+    public int maxConsSum(int[] arr) {
+        int n = arr.length;
+        if (n == 0) {
+            return 0;
+        }
+
+        int lMax = 0;
+        int gMax = 0;
+
+        for (int i = 0; i < n; ++i) {
+            lMax += arr[i];
+
+            if (lMax < 0) {
+                lMax = 0;
+                continue;
+            }
+
+            gMax = lMax > gMax ? lMax : gMax;
+        }
+
+        return gMax;
+    }
+
     public static void main(String[] args) {
         System.out.println("Max Sum: " + maxSubArray(new int[] { -2, 1, -3, 4, -1, 2, 1, -5, 4 }));
         System.out.println("Sum Len: " + maxSubArrayLength(new int[] { -1, -1, -1, 4, -1, 2, 1, -5, 4 }));
