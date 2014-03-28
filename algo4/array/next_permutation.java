@@ -29,6 +29,34 @@ public class next_permutation {
         }
     }
 
+    public boolean hasNextPermutation(int[] arr) {
+        int n = arr.length;
+        int i = n - 1;
+
+        if (n < 1) {
+            return false;
+        }
+
+        while (i >= 1 && arr[i] <= arr[i - 1]) {
+            --i;
+        }
+
+        reverse(arr, i, n);
+
+        if (i > 0) {
+            int next = i;
+            i--;
+            while (arr[next] <= arr[i]) {
+                next++;
+            }
+
+            swap(arr, i, next);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public static void main(String[] args) {
         int[] test = new int[] { 0, 2, 1 };
         nextPermutation(test);
