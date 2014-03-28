@@ -1,4 +1,4 @@
-public class find_common_ancestor {
+public class least_common_ancestor {
     public static class TreeNode {
         public final int v;
         public final TreeNode left;
@@ -8,6 +8,15 @@ public class find_common_ancestor {
             v = _v;
             left = _left;
             right = _right;
+        }
+    }
+
+    public static class TreeNodeWithParent {
+        public final int v;
+        public TreeNodeWithParent parent;
+
+        TreeNodeWithParent(int _v) {
+            v = _v;
         }
     }
 
@@ -86,5 +95,41 @@ public class find_common_ancestor {
         } else {
             return new Result(x.node != null ? x.node : y.node, false);
         }
+    }
+
+    /**
+     * Another version of the LCA problem. Each node has a parent pointer and the two input
+     * are guaranteed to exist in the tree.
+     * 
+     */
+    public TreeNodeWithParent getLCA(TreeNodeWithParent node1, TreeNodeWithParent node2) {
+        int l1 = getLevel(node1);
+        int l2 = getLevel(node2);
+
+        if (l1 > l2) {
+            for (int i = 0; i < l1 - l2; ++i) {
+                node1 = node1.parent;
+            }
+        } else if (l2 > l1) {
+            for (int i = 0; i < l2 - l1; ++i) {
+                node2 = node2.parent;
+            }
+        }
+
+        while (node1 != node2) {
+            node1 = node1.parent;
+            node2 = node2.parent;
+        }
+
+        return node1;
+    }
+
+    public int getLevel(TreeNodeWithParent node) {
+        int h = 0;
+        while (node.parent != null) {
+            node = node.parent;
+            h++;
+        }
+        return h;
     }
 }
