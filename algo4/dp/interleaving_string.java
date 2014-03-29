@@ -7,18 +7,15 @@ public class interleaving_string {
             return false;
         }
 
-        if (m == 0 && n == 0) {
-            return true;
-        }
-
         boolean[][] dp = new boolean[m + 1][n + 1];
+        dp[0][0] = true;
 
         for (int i = 1; i <= m; i++) {
-            dp[i][0] = s1.charAt(i - 1) == s3.charAt(i - 1);
+            dp[i][0] = dp[i - 1][0] && s1.charAt(i - 1) == s3.charAt(i - 1);
         }
 
         for (int j = 1; j <= n; j++) {
-            dp[0][j] = s2.charAt(j - 1) == s3.charAt(j - 1);
+            dp[0][j] = dp[0][j - 1] && s2.charAt(j - 1) == s3.charAt(j - 1);
         }
 
         for (int i = 1; i <= m; i++) {
@@ -31,7 +28,18 @@ public class interleaving_string {
         return dp[m][n];
     }
 
+    public static void printTable(boolean[][] dp, int m, int n) {
+        for (int i = 0; i < m + 1; ++i) {
+            for (int j = 0; j < n + 1; ++j) {
+                System.out.print((dp[i][j] ? 'Y' : 'N') + " ");
+            }
+
+            System.out.println();
+        }
+    }
+
     public static void main(String[] args) {
-        System.out.println(isInterleave("aabcc", "dbbca", "aadbbcbcac"));
+        assert isInterleave("aabcc", "dbbca", "aadbbcbcac");
+        assert isInterleave("", "", "");
     }
 }
