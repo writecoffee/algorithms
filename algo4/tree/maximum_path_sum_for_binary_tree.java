@@ -1,4 +1,4 @@
-public class maximum_path_sum {
+public class maximum_path_sum_for_binary_tree {
     public static class TreeNode {
         public final int val;
         public final TreeNode left;
@@ -11,12 +11,12 @@ public class maximum_path_sum {
         }
     }
 
-    public static int result = Integer.MIN_VALUE;
+    public static int gMax;
 
     public int maxPathSum(TreeNode root) {
-        result = Integer.MIN_VALUE;
+        gMax = Integer.MIN_VALUE;
         maxPathSumRecur(root);
-        return result;
+        return gMax;
     }
 
     private int maxPathSumRecur(TreeNode root) {
@@ -26,10 +26,15 @@ public class maximum_path_sum {
 
         int l = maxPathSumRecur(root.left);
         int r = maxPathSumRecur(root.right);
-        int maxSumTillRoot = Math.max(root.val, Math.max(l, r) + root.val);
-        result = Math.max(Math.max(result, maxSumTillRoot), l + r + root.val);
 
-        return maxSumTillRoot;
+        int lMax;
+        if (l < 0 && r < 0) {
+            lMax = root.val;
+        } else {
+            lMax = Math.max(l, r) + root.val;
+        }
+
+        gMax = Math.max(Math.max(gMax, lMax), l + r + root.val);
+        return lMax;
     }
-
 }
