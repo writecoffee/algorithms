@@ -1,61 +1,64 @@
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Set;
 
 public class longest_consecutive_sequence {
-
     public static int longestConsecutive(int[] num) {
-        Set<Integer> s = new HashSet<Integer>();
-        int result = 0;
-        for (int i = 0; i < num.length; i++) {
+        HashSet<Integer> s = new HashSet<Integer>();
+        int n = num.length;
+
+        for (int i = 0; i < n; ++i) {
             s.add(num[i]);
         }
 
-        for (int i = 0; i < num.length; i++) {
-            int upper = num[i];
-            int lower = num[i];
+        int gMax = 0;
+        for (int i = 0; i < n; ++i) {
+            if (s.contains(num[i])) {
+                int j = num[i] + 1;
+                int k = num[i] - 1;
 
-            while (s.contains(upper + 1)) {
-                s.remove(++upper);
+                while (s.contains(j)) {
+                    s.remove(j++);
+                }
+
+                while (s.contains(k)) {
+                    s.remove(k--);
+                }
+
+                gMax = Math.max(gMax, j - k - 1);
             }
-
-            while (s.contains(lower - 1)) {
-                s.remove(--lower);
-            }
-
-            result = Math.max(result, upper - lower + 1);
         }
 
-        return result;
+        return gMax;
     }
 
     public static int merge(HashMap<Integer, Integer> map, int l, int r) {
-        int left = l - map.get(l) + 1;
-        int right = r + map.get(r) - 1;
-        int range = right - left + 1;
-        map.put(left, range);
-        map.put(right, range);
-        return range;
+        int lb = l - map.get(l) + 1;
+        int rb = r + map.get(r) - 1;
+        int length = rb - lb + 1;
+        map.put(lb, length);
+        map.put(rb, length);
+        return length;
     }
 
     public static int longestConsecutiveUnionFind(int[] nums) {
-        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
-        int maxLen = (nums.length == 0) ? 0 : 1;
+        HashMap<Integer, Integer> h = new HashMap<Integer, Integer>();
+        int gMax = (nums.length == 0) ? 0 : 1;
 
         for (int num : nums) {
-            if (!map.containsKey(num)) {
-                map.put(num, 1);
+            if (!h.containsKey(num)) {
+                h.put(num, 1);
 
-                if (map.containsKey(num - 1)) {
-                    maxLen = Math.max(maxLen, merge(map, num - 1, num));
+                if (h.containsKey(num - 1)) {
+                    gMax = Math.max(gMax, merge(h, num - 1, num));
                 }
 
-                if (map.containsKey(num + 1)) {
-                    maxLen = Math.max(maxLen, merge(map, num, num + 1));
+                if (h.containsKey(num + 1)) {
+                    gMax = Math.max(gMax, merge(h, num, num + 1));
                 }
             }
         }
-        return maxLen;
+
+        return gMax;
     }
 
     public static void main(String[] args) {
