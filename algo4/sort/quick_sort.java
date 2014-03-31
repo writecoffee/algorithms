@@ -18,6 +18,11 @@ public class quick_sort {
 
     public static Random r = new Random();
 
+    /**
+     * After doing randomized selection, i will represents the final position
+     * of the pivot in the array. 
+     * 
+     */
     private static int partition(int[] array, int start, int end) {
         int i = start;
         int j = end - 1;
@@ -44,13 +49,5 @@ public class quick_sort {
         int temp = array[i];
         array[i] = array[j];
         array[j] = temp;
-    }
-
-    public static void main(String[] args) {
-        int[] array = new int[] { 1, 5, 2, 8, 9, 11 };
-        int[] result = quickSort(array);
-        for (int i = 1; i < result.length; i++) {
-            assert result[i] >= result[i - 1];
-        }
     }
 }
