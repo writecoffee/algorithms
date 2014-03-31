@@ -1,53 +1,35 @@
 public class median_of_two_sorted_arrays {
-    static double findMedianSortedArrays(int[] A, int[] B) {
-        int m = A.length;
-        int n = B.length;
+    static double findMedianSortedArrays(int[] a, int[] b) {
+        int m = a.length;
+        int n = b.length;
 
         if (((m + n) & 0x1) == 1) {
-            return findMedianSortedArraysSub(A, 0, m, B, 0, n, (m + n) / 2 + 1);
+            return explore(a, 0, m, b, 0, n, (m + n) / 2 + 1);
         } else {
-            return (findMedianSortedArraysSub(A, 0, m, B, 0, n, (m + n) / 2)
-                  + findMedianSortedArraysSub(A, 0, m, B, 0, n, (m + n) / 2 + 1)) / 2;
+            return (explore(a, 0, m, b, 0, n, (m + n) / 2)
+                  + explore(a, 0, m, b, 0, n, (m + n) / 2 + 1)) / 2;
         }
     }
 
-    private static double findMedianSortedArraysSub(int[] A, int aStart, int aEnd, int[] B, int bStart, int bEnd, int k) {
-        int m = aEnd - aStart;
-        int n = bEnd - bStart;
+    private static double explore(int[] a, int ai, int aj, int[] b, int bi, int bj, int k) {
+        int m = aj - ai;
+        int n = bj - bi;
 
         if (m > n) {
-            return findMedianSortedArraysSub(B, bStart, bEnd, A, aStart, aEnd, k);
+            return explore(b, bi, bj, a, ai, aj, k);
+        } else if (m == 0) {
+            return b[k - 1];
+        } else if (k == 1) {
+            return Math.min(a[ai], b[bi]);
         }
 
-        if (m == 0) {
-            return B[k - 1];
-        }
+        int aMid = Math.min(k / 2, m);
+        int bMid = k - aMid;
 
-        if (k == 1) {
-            return Math.min(A[aStart], B[bStart]);
-        }
-
-        int i = Math.min(k / 2, m);
-        int j = k - i;
-        int a = A[aStart + i - 1];
-        int b = B[bStart + j - 1];
-
-        if (a < b) {
-            return findMedianSortedArraysSub(A, aStart + i, aEnd, B, bStart, bEnd, k - i);
+        if (a[ai + aMid - 1] < b[bi + bMid - 1]) {
+            return explore(a, ai + aMid, aj, b, bi, bj, k - aMid);
         } else {
-            return findMedianSortedArraysSub(A, aStart, aEnd, B, bStart + j, bEnd, k - j);
+            return explore(a, ai, aj, b, bi + bMid, bj, k - bMid);
         }
-    }
-
-    public static void main(String[] args) {
-        System.out.println(findMedianSortedArrays(new int[] { }, new int[] { 1 }));
-        System.out.println(findMedianSortedArrays(new int[] { 100000 }, new int[] { 100001 }));
-        System.out.println(findMedianSortedArrays(new int[] { 3, 4 }, new int[] { 1, 2 }));
-        System.out.println(findMedianSortedArrays(new int[] { 1, 2 }, new int[] { 1, 2 }));
-        System.out.println(findMedianSortedArrays(new int[] { 1, 5, 6, 7 }, new int[] { 2, 3, 4, 8 }));
-        System.out.println(findMedianSortedArrays(new int[] { 1, 2, 3, 4 }, new int[] { 5, 6, 7, 8, 9, 10 }));
-        System.out.println(findMedianSortedArrays(new int[] { 4 }, new int[] { 1, 2, 3 }));
-        System.out.println(findMedianSortedArrays(new int[] { 1, 2, 2 }, new int[] { 1, 2, 3 }));
-        System.out.println(findMedianSortedArrays(new int[] { 1 }, new int[] { 2, 3, 4, 5, 6 }));
     }
 }
