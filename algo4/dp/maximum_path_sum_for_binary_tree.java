@@ -15,17 +15,17 @@ public class maximum_path_sum_for_binary_tree {
 
     public int maxPathSum(TreeNode root) {
         gMax = Integer.MIN_VALUE;
-        maxPathSumRecur(root);
+        explore(root);
         return gMax;
     }
 
-    private int maxPathSumRecur(TreeNode root) {
+    private int explore(TreeNode root) {
         if (root == null) {
             return 0;
         }
 
-        int l = maxPathSumRecur(root.left);
-        int r = maxPathSumRecur(root.right);
+        int l = explore(root.left);
+        int r = explore(root.right);
 
         int lMax;
         if (l < 0 && r < 0) {

@@ -12,12 +12,12 @@ public class maximum_path_sum_for_general_tree {
         }
     }
 
-    private int result;
+    private int gMax;
 
     public int maxTreePathSum(TreeNode root) {
-        result = 0;
+        gMax = 0;
         explore(root);
-        return result;
+        return gMax;
     }
 
     public int explore(TreeNode root) {
@@ -37,8 +37,15 @@ public class maximum_path_sum_for_general_tree {
                 second = pathSum;
             }
         }
+        
+        int lMax;
+        if (first < 0 && second < 0) {
+            lMax = root.val;
+        } else {
+            lMax = first + root.val;
+        }
 
-        result = Math.max(result, first + root.val + second);
-        return root.val + first;
+        gMax = Math.max(Math.max(gMax, lMax), first + root.val + second);
+        return lMax;
     }
 }
