@@ -1,5 +1,4 @@
 public class unique_paths {
-
     public static int uniquePaths(int m, int n) {
         int[][] mem = new int[m][n];
 
@@ -7,8 +6,8 @@ public class unique_paths {
             mem[i][0] = 1;
         }
 
-        for (int j = 0; j < n; j++) {
-            mem[0][j] = 1;
+        for (int i = 0; i < n; i++) {
+            mem[0][i] = 1;
         }
 
         for (int i = 1; i < m; i++) {
@@ -20,7 +19,38 @@ public class unique_paths {
         return mem[m - 1][n - 1];
     }
 
-    public static void main(String[] args) {
-        uniquePaths(3, 2);
+    public static int uniquePathsImproved(int m, int n) {
+        int[][] mem = new int[2][n];
+
+        for (int i = 0; i < n; i++) {
+            mem[0][i] = 1;
+        }
+        mem[1][0] = 1;
+
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                mem[i % 2][j] = mem[(i - 1) % 2][j] + mem[i % 2][j - 1];
+            }
+        }
+
+        return mem[(m - 1) % 2][n - 1];
+    }
+
+    public static int uniquePathsOptimized(int m, int n) {
+        int[] dp = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            dp[i] = 1;
+        }
+
+        for (int i = 1; i < m; i++) {
+            dp[0] = 1;
+
+            for (int j = 1; j < n; j++) {
+                dp[j] = dp[j] + dp[j - 1];
+            }
+        }
+
+        return dp[n - 1];
     }
 }

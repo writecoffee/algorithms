@@ -23,28 +23,24 @@ public class minimum_path_sum {
         return table[m - 1][n - 1];
     }
 
-    public static int minPathSumImprov(int[][] grid) {
+    public static int minPathSumOptimized(int[][] grid) {
         int m = grid.length;
         int n = grid[0].length;
-        int[] table = new int[n];
+        int[] dp = new int[n];
 
-        table[0] = grid[0][0];
+        dp[0] = grid[0][0];
         for (int i = 1; i < n; i++) {
-            table[i] = grid[0][i] + table[i - 1];
+            dp[i] = grid[0][i] + dp[i - 1];
         }
 
         for (int i = 1; i < m; i++) {
-            table[0] += grid[i][0];
+            dp[0] += grid[i][0];
 
             for (int j = 1; j < n; j++) {
-                table[j] = Math.min(table[j - 1], table[j]) + grid[i][j];
+                dp[j] = Math.min(dp[j - 1], dp[j]) + grid[i][j];
             }
         }
 
-        return table[n - 1];
-    }
-
-    public static void main(String[] args) {
-
+        return dp[n - 1];
     }
 }
