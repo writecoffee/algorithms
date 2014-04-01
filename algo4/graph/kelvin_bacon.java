@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.IdentityHashMap;
 import java.util.LinkedList;
@@ -20,11 +21,22 @@ public class kelvin_bacon {
         }
     }
 
-    public int calculateDegree(Actor u, Actor v) {
+    class Result {
+        final int degree;
+        final ArrayList<Actor> path;
+
+        Result(int _degree, ArrayList<Actor> _path) {
+            degree = _degree;
+            path = _path;
+        }
+    }
+
+    public Result calculateDegree(Actor u, Actor v) {
         Queue<Actor> q = new LinkedList<Actor>();
         q.add(u);
-        IdentityHashMap<Actor, Boolean> visitedActors = new IdentityHashMap<Actor, Boolean>();
+        IdentityHashMap<Actor, Actor> visitedActors = new IdentityHashMap<Actor, Actor>();
         IdentityHashMap<Movie, Boolean> visitedMovies = new IdentityHashMap<Movie, Boolean>();
+        visitedActors.put(u, null);
         int degree = 0;
 
         while (!q.isEmpty()) {
@@ -41,11 +53,11 @@ public class kelvin_bacon {
                     if (visitedActors.containsKey(a)) {
                         continue;
                     } else {
-                        visitedActors.put(a, true);
+                        visitedActors.put(a, c);
                     }
 
                     if (a == u) {
-                        return degree;
+                        return new Result(degree, backtrack(v, visitedActors));
                     } else {
                         q.add(a);
                     }
@@ -55,6 +67,18 @@ public class kelvin_bacon {
             degree++;
         }
 
-        return degree;
+        return null;
+    }
+
+    private ArrayList<Actor> backtrack(Actor v, IdentityHashMap<Actor, Actor> visitedActors) {
+        Actor c = v;
+        ArrayList<Actor> result = new ArrayList<Actor>();
+
+        while (c != null) {
+            result.add(c);
+            c = visitedActors.get(c);
+        }
+
+        return result;
     }
 }
