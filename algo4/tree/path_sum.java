@@ -1,5 +1,6 @@
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.IdentityHashMap;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class path_sum {
     public static class TreeNode {
@@ -25,51 +26,42 @@ public class path_sum {
                hasPathSum(root.right, sum - root.val);
     }
 
-    public static class MyTreeNode {
-        final TreeNode treeNode;
-        final int sumSoFar;
-        MyTreeNode(TreeNode treeNode, int sumSoFar) {
-            this.sumSoFar = sumSoFar;
-            this.treeNode = treeNode;
-        }
-    }
-
-    public static boolean hasPathSumNonrecur(TreeNode root, int sum) {
+    public static boolean hasPathSumOptimized(TreeNode root, int sum) {
         if (root == null) {
             return false;
         }
 
-        Deque<MyTreeNode> intermediate = new ArrayDeque<MyTreeNode>();
-        Deque<MyTreeNode> innerIntermediate = new ArrayDeque<MyTreeNode>();
-        intermediate.addLast(new MyTreeNode(root, 0));
-        while (!intermediate.isEmpty()) {
-            Deque<MyTreeNode> temp = intermediate;
-            intermediate = innerIntermediate;
-            innerIntermediate = temp;
+        IdentityHashMap<TreeNode, Integer> h = new IdentityHashMap<TreeNode, Integer>();
+        Queue<TreeNode> q = new LinkedList<TreeNode>();
+        q.add(root);
+        h.put(root, root.val);
 
-            while (!innerIntermediate.isEmpty()) {
-                MyTreeNode current = innerIntermediate.pollFirst();
+        while (!q.isEmpty()) {
+            Queue<TreeNode> p = new LinkedList<TreeNode>(q);
+            q.clear();
 
-                if (current.treeNode.left == null &&
-                    current.treeNode.right == null &&
-                    sum - current.sumSoFar - current.treeNode.val == 0) {
+            while (!p.isEmpty()) {
+                TreeNode c = p.poll();
+                TreeNode l = c.left;
+                TreeNode r = c.right;
+                int cSum = h.get(c);
+
+                if (l == null && r == null && cSum == sum) {
                     return true;
                 }
 
-                if (current.treeNode.left != null) {
-                    intermediate.addLast(new MyTreeNode(current.treeNode.left, current.sumSoFar + current.treeNode.val));
+                if (l != null) {
+                    q.add(l);
+                    h.put(l, l.val + cSum);
                 }
 
-                if (current.treeNode.right != null) {
-                    intermediate.addLast(new MyTreeNode(current.treeNode.right, current.sumSoFar + current.treeNode.val));
+                if (r != null) {
+                    q.add(r);
+                    h.put(r, r.val + cSum);
                 }
             }
         }
 
         return false;
-    }
-
-    public static void main(String[] args) {
-        hasPathSumNonrecur(new TreeNode(1), 1);
     }
 }

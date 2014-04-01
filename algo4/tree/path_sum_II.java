@@ -1,6 +1,8 @@
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Deque;
+import java.util.IdentityHashMap;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class path_sum_II {
     public class TreeNode {
@@ -20,7 +22,8 @@ public class path_sum_II {
         return result;
     }
 
-    public void probe(TreeNode root, int sum, ArrayList<ArrayList<Integer>> result, ArrayList<Integer> path) {
+    public void probe(TreeNode root, int sum, ArrayList<ArrayList<Integer>> result,
+                    ArrayList<Integer> path) {
         if (root == null) {
             return;
         }
@@ -43,57 +46,65 @@ public class path_sum_II {
         path.remove(path.size() - 1);
     }
 
-    public static class MyTreeNode {
-        final TreeNode treeNode;
-        final ArrayList<Integer> pathSoFar;
-        final int sumSoFar;
-        MyTreeNode(TreeNode treeNode, ArrayList<Integer> pathSoFar, int sumSoFar) {
-            this.pathSoFar = pathSoFar;
-            this.treeNode = treeNode;
-            this.sumSoFar = sumSoFar;
+    private class BtInfo {
+        private final int cSum;
+        private final TreeNode parent;
+
+        private BtInfo(int _cSum, TreeNode _parent) {
+            cSum = _cSum;
+            parent = _parent;
         }
     }
 
-    public ArrayList<ArrayList<Integer>> pathSumNonrecur(TreeNode root, int sum) {
+    public ArrayList<ArrayList<Integer>> pathSumOptimized(TreeNode root, int sum) {
         ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
 
         if (root == null) {
             return result;
         }
 
-        Deque<MyTreeNode> intermediate = new ArrayDeque<MyTreeNode>();
-        Deque<MyTreeNode> innerIntermediate = new ArrayDeque<MyTreeNode>();
-        intermediate.addLast(new MyTreeNode(root, new ArrayList<Integer>(), 0));
-        while (!intermediate.isEmpty()) {
-            Deque<MyTreeNode> temp = intermediate;
-            intermediate = innerIntermediate;
-            innerIntermediate = temp;
+        Queue<TreeNode> q = new LinkedList<TreeNode>();
+        IdentityHashMap<TreeNode, BtInfo> h = new IdentityHashMap<TreeNode, BtInfo>();
+        q.add(root);
+        h.put(root, new BtInfo(root.val, null));
 
-            while (!innerIntermediate.isEmpty()) {
-                MyTreeNode current = innerIntermediate.pollFirst();
-                if (current.treeNode.left == null &&
-                    current.treeNode.right == null &&
-                    sum - current.sumSoFar - current.treeNode.val == 0) {
-                    ArrayList<Integer> newPath = new ArrayList<Integer>(current.pathSoFar);
-                    newPath.add(current.treeNode.val);
-                    result.add(newPath);
-                    continue;
+        while (!q.isEmpty()) {
+            Queue<TreeNode> p = new LinkedList<TreeNode>(q);
+            q.clear();
+
+            while (!p.isEmpty()) {
+                TreeNode c = p.poll();
+                TreeNode l = c.left;
+                TreeNode r = c.right;
+                int cSum = h.get(c).cSum;
+
+                if (l == null && r == null && cSum == sum) {
+                    result.add(backtrack(c, h));
                 }
 
-                if (current.treeNode.left != null) {
-                    ArrayList<Integer> newPath = new ArrayList<Integer>(current.pathSoFar);
-                    newPath.add(current.treeNode.val);
-                    intermediate.addLast(new MyTreeNode(current.treeNode.left, newPath, current.sumSoFar + current.treeNode.val));
+                if (l != null) {
+                    q.add(l);
+                    h.put(l, new BtInfo(cSum + l.val, c));
                 }
 
-                if (current.treeNode.right != null) {
-                    ArrayList<Integer> newPath = new ArrayList<Integer>(current.pathSoFar);
-                    newPath.add(current.treeNode.val);
-                    intermediate.addLast(new MyTreeNode(current.treeNode.right, newPath, current.sumSoFar + current.treeNode.val));
+                if (r != null) {
+                    q.add(r);
+                    h.put(r, new BtInfo(cSum + r.val, c));
                 }
             }
         }
 
         return result;
+    }
+
+    private ArrayList<Integer> backtrack(TreeNode c, IdentityHashMap<TreeNode, BtInfo> h) {
+        ArrayDeque<Integer> r = new ArrayDeque<Integer>();
+
+        while (c != null) {
+            r.addFirst(c.val);
+            c = h.get(c).parent;
+        }
+
+        return new ArrayList<Integer>(r);
     }
 }
