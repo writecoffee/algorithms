@@ -1,8 +1,5 @@
-import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Deque;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Stack;
 
 class binary_tree_inorder_traversal {
     public static class TreeNode {
@@ -41,32 +38,17 @@ class binary_tree_inorder_traversal {
             return result;
         }
 
-        Deque<TreeNode> intermediate = new ArrayDeque<TreeNode>();
-        Set<TreeNode> isVisited = new HashSet<TreeNode>();
-        intermediate.addLast(root);
-        while (!intermediate.isEmpty()) {
-            TreeNode current = intermediate.pollLast();
+        Stack<TreeNode> s = new Stack<TreeNode>();
+        TreeNode c = root;
 
-            if (current.left != null && isVisited.contains(current.left)) {
-                isVisited.add(current);
-                result.add(current.val);
-                continue;
-            }
-
-            if (current.left == null) {
-                isVisited.add(current);
-                result.add(current.val);
-
-                if (current.right != null && !isVisited.contains(current.right)) {
-                    intermediate.addLast(current.right);
-                }
-            } else {
-                if (current.right != null && !isVisited.contains(current.right)) {
-                    intermediate.addLast(current.right);
-                }
-
-                intermediate.addLast(current);
-                intermediate.addLast(current.left);
+        while (c != null || !s.isEmpty()) {
+            if (c != null) {
+                s.push(c);
+                c = c.left;
+            } else if (!s.isEmpty()) {
+                TreeNode next = s.pop();
+                result.add(next.val);
+                c = next.right;
             }
         }
 
