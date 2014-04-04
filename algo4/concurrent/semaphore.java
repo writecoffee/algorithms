@@ -17,7 +17,7 @@ public class semaphore {
 
     public synchronized void acquire() throws InterruptedException {
         count--;
-        if (count < 0) {
+        while (count < 0) {
             notEmpty.wait();
         }
     }
@@ -25,7 +25,7 @@ public class semaphore {
     public synchronized void release() throws InterruptedException {
         if (count < 0) {
             count++;
-            notEmpty.notify();
+            notEmpty.notifyAll();
         } else if (count < available) {
             count++;
         }
