@@ -1,6 +1,7 @@
-import java.util.ArrayDeque;
+package traversal;
+
 import java.util.ArrayList;
-import java.util.Deque;
+import java.util.Stack;
 
 public class binary_tree_preorder_traversal {
 
@@ -40,24 +41,22 @@ public class binary_tree_preorder_traversal {
             return result;
         }
 
-        Deque<TreeNode> intermediate = new ArrayDeque<TreeNode>();
-        intermediate.addLast(root);
-        while (!intermediate.isEmpty()) {
-            TreeNode curr = intermediate.pollLast();
-            result.add(curr.val);
-            if (curr.right != null) {
-                intermediate.addLast(curr.right);
+        Stack<TreeNode> s = new Stack<TreeNode>();
+        s.push(root);
+
+        while (!s.isEmpty()) {
+            TreeNode c = s.pop();
+            result.add(c.val);
+
+            if (c.right != null) {
+                s.push(c.right);
             }
-            if (curr.left != null) {
-                intermediate.addLast(curr.left);
+
+            if (c.left != null) {
+                s.push(c.left);
             }
         }
 
         return result;
     }
-
-    public static void main(String[] args) {
-
-    }
-
 }

@@ -1,5 +1,6 @@
-public class construct_binary_tree_from_preorder_and_inorder_traversal {
+package traversal;
 
+public class construct_binary_tree_from_preorder_and_inorder_traversal {
     public static class TreeNode {
         int val;
         TreeNode left;

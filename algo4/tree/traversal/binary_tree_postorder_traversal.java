@@ -1,8 +1,9 @@
-import java.util.ArrayDeque;
+package traversal;
+
 import java.util.ArrayList;
-import java.util.Deque;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Stack;
 
 public class binary_tree_postorder_traversal {
     public class TreeNode {
@@ -39,34 +40,29 @@ public class binary_tree_postorder_traversal {
             return result;
         }
 
-        Set<TreeNode> isVisited = new HashSet<TreeNode>();
-        Deque<TreeNode> intermediate = new ArrayDeque<TreeNode>();
-        intermediate.addLast(root);
+        Set<TreeNode> visited = new HashSet<TreeNode>();
+        Stack<TreeNode> s = new Stack<TreeNode>();
+        s.push(root);
 
-        while (!intermediate.isEmpty()) {
-            TreeNode currNode = intermediate.peekLast();
+        while (!s.isEmpty()) {
+            TreeNode c = s.peek();
 
-            if (isVisited.contains(currNode) || (currNode.left == null && currNode.right == null)) {
-                result.add(intermediate.pollLast().val);
+            if (visited.contains(c)) {
+                result.add(s.pop().val);
                 continue;
             }
 
-            if (currNode.right != null) {
-                intermediate.addLast(currNode.right);
+            if (c.right != null) {
+                s.push(c.right);
             }
 
-            if (currNode.left != null) {
-                intermediate.addLast(currNode.left);
+            if (c.left != null) {
+                s.push(c.left);
             }
 
-            isVisited.add(currNode);
+            visited.add(c);
         }
 
-        isVisited.clear();
         return result;
-    }
-
-    public static void main(String[] args) {
-
     }
 }
