@@ -1,4 +1,6 @@
-public class populating_next_right_pointers_in_each_node {
+package comprehensive;
+
+public class threading_same_level_nodes_on_perfect_binary_tree {
 
     public static class TreeLinkNode {
         int val;
