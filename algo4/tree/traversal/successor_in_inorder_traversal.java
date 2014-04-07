@@ -1,4 +1,6 @@
-public class next_node {
+package traversal;
+
+public class successor_in_inorder_traversal {
     public static class TreeNode {
         public final int v;
         public final TreeNode left;
@@ -13,25 +15,25 @@ public class next_node {
         }
     }
 
-    TreeNode next(TreeNode n, TreeNode node) {
-        if (n == null) {
+    TreeNode next(TreeNode c) {
+        if (c == null) {
             return null;
         }
 
-        if (n.right != null) {
-            TreeNode current = n.right;
-            while (current.left != null) {
-                current = current.left;
+        if (c.right != null) {
+            TreeNode i = c.right;
+            while (i.left != null) {
+                i = i.left;
             }
 
-            return current;
+            return i;
         }
 
-        TreeNode current = n;
-        while (current.parent != null && current == current.parent.right) {
-            current = current.parent;
+        TreeNode i = c;
+        while (i.parent != null && i == i.parent.right) {
+            i = i.parent;
         }
 
-        return current.parent;
+        return i.parent;
     }
 }
