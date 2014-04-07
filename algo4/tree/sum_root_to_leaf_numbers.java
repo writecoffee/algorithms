@@ -1,5 +1,5 @@
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.HashMap;
+import java.util.Stack;
 
 public class sum_root_to_leaf_numbers {
     public class TreeNode {
@@ -12,48 +12,57 @@ public class sum_root_to_leaf_numbers {
         }
     }
 
-    public class MyTreeNode {
-        public final TreeNode treeNode;
-        public final int sum;
-
-        MyTreeNode(int sum, final TreeNode treeNode) {
-            this.treeNode = treeNode;
-            this.sum = sum;
-        }
-    }
-
+    /**
+     *     1
+     *    / \
+     *   2   3
+     *   
+     * The root-to-leaf path 1->2 represents the number 12.
+     * The root-to-leaf path 1->3 represents the number 13.
+     * 
+     * Return the sum = 12 + 13 = 25.
+     */ 
     public int sumNumbers(TreeNode root) {
         if (root == null) {
             return 0;
         }
 
         int result = 0;
-        Deque<MyTreeNode> q = new ArrayDeque<MyTreeNode>();
-        q.addLast(new MyTreeNode(0, root));
+        Stack<TreeNode> s = new Stack<TreeNode>();
+        s.push(root);
+        HashMap<TreeNode, TreeNode> h = new HashMap<TreeNode, TreeNode>();
+        h.put(root, null);
+        while (!s.isEmpty()) {
+            TreeNode c = s.pop();
 
-        while (!q.isEmpty()) {
-            MyTreeNode myNode = q.pollLast();
-            int sum = myNode.sum * 10 + myNode.treeNode.val;
-            TreeNode currNode = myNode.treeNode;
-
-            if (currNode.left == null && currNode.right == null) {
-                result += sum;
+            if (c.left == null && c.right == null) {
+                result += backtrack(c, h);
                 continue;
             }
 
-            if (currNode.left != null) {
-                q.addLast(new MyTreeNode(sum, currNode.left));
+            if (c.right != null) {
+                s.push(c.right);
+                h.put(c.right, c);
             }
 
-            if (currNode.right != null) {
-                q.addLast(new MyTreeNode(sum, currNode.right));
+            if (c.left != null) {
+                s.push(c.left);
+                h.put(c.left, c);
             }
         }
 
         return result;
     }
 
-    public static void main(String[] args) {
+    private int backtrack(TreeNode c, HashMap<TreeNode, TreeNode> h) {
+        int t = 0;
+        int i = 1;
+        while (c != null) {
+            t += i * c.val;
+            i *= 10;
+            c = h.get(c);
+        }
 
+        return t;
     }
 }
