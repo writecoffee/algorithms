@@ -1,3 +1,6 @@
+import java.util.HashMap;
+import java.util.Stack;
+
 public class count_nodes_for_complete_binary_tree {
     public static class TreeNodeUtil {
         static boolean isNullNode(TreeNode n) {
@@ -60,5 +63,45 @@ public class count_nodes_for_complete_binary_tree {
             height++;
         }
         return height;
+    }
+
+    public int countNodesNonrecur(TreeNode root) {
+        if (TreeNodeUtil.isNullNode(root)) {
+            return 0;
+        }
+
+        int h = getHeight(root);
+        Stack<TreeNode> s = new Stack<TreeNode>();
+        HashMap<TreeNode, Integer> levelMap = new HashMap<TreeNode, Integer>();
+        HashMap<TreeNode, Integer> idMap = new HashMap<TreeNode, Integer>();
+        s.push(root);
+        levelMap.put(root, 0);
+        idMap.put(root, 0);
+
+        while (!s.isEmpty()) {
+            TreeNode c = s.pop();
+            int level = levelMap.get(c);
+            int id = idMap.get(c);
+            TreeNode l = TreeNodeUtil.getLeftChildNode(root);
+            TreeNode r = TreeNodeUtil.getRightChildNode(root);
+
+            if (TreeNodeUtil.isNullNode(l) && TreeNodeUtil.isNullNode(r)) {
+                if (level == h - 1) {
+                    return id;
+                }
+            } else {
+                s.push(l);
+                idMap.put(l, id * 2 + 1);
+                levelMap.put(l, level + 1);
+
+                if (!TreeNodeUtil.isNullNode(r)) {
+                    s.push(r);
+                    idMap.put(r, id * 2 + 2);
+                    levelMap.put(r, level + 1);
+                }
+            }
+        }
+
+        return -1;
     }
 }

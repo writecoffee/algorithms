@@ -47,7 +47,7 @@ public class possible_binary_tree_given_preorder_postorder_traversals {
         return count;
     }
 
-    public int countValidTreeDP(int[] preorder, int[] postorder) {
+    public static int countValidTreeDP(int[] preorder, int[] postorder) {
         if (preorder.length != postorder.length) {
             return 0;
         }
@@ -58,20 +58,14 @@ public class possible_binary_tree_given_preorder_postorder_traversals {
         for (int k = 0; k <= n; k++) {
             for (int i = 0; i <= n - k; i++) {
                 for (int j = 0; j <= n - k; j++) {
-                    dp[k][i][j] = 1;
-
                     if (k == 0) {
-                        continue;
-                    }
-
-                    if (preorder[i] != postorder[j + k - 1]) {
+                        dp[k][i][j] = 1;
+                    } else if (preorder[i] != postorder[j + k - 1]) {
                         dp[k][i][j] = 0;
-                        continue;
-                    }
-
-                    dp[k][i][j] = 0;
-                    for (int l = 0; l < k; l++) {
-                        dp[k][i][j] += dp[l][i + 1][j] * dp[k - 1 - l][i + 1 + l][j + l];
+                    } else {
+                        for (int l = 0; l < k; l++) {
+                            dp[k][i][j] += dp[l][i + 1][j] * dp[k - 1 - l][i + 1 + l][j + l];
+                        }
                     }
                 }
             }
