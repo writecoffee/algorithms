@@ -2,7 +2,6 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 public class sudoku_solver {
-
     public class Pair {
         public int row;
         public int col;
@@ -11,35 +10,36 @@ public class sudoku_solver {
             row = a;
             col = b;
         }
+    }
 
-        public String toString() {
-            return "(" + row + ", " + col + ")";
-        }
-
-        public boolean equals(Pair pp) {
-            return (pp != null && row == pp.row && col == pp.col);
-        }
+    public void solveSudoku(char[][] board) {
+        Deque<Pair> availableCells = findAllEmptyGrid(board);
+        explore(board, availableCells.pollFirst(), availableCells);
     }
 
     /**
-     * Check whether the board is still valid after fill in a cell. Only need to check the current
-     * row/column/box
+     * Check whether the board is still valid after fill in a cell.
+     * Only need to check the current row/column/box.
      */
-    public boolean isValidSudoku(char[][] board, Pair cell) {
-        int boxLength = (int) Math.sqrt(board.length);
+    private boolean isValidSudoku(char[][] board, int row, int col) {
+        int n = 9;
 
-        for (int i = 0; i < board.length; i++) {
-            if (i != cell.col && board[cell.row][cell.col] == board[cell.row][i]) {
+        for (int i = 0; i < n; i++) {
+            if (i != col && board[row][col] == board[row][i]) {
                 return false;
             }
+        }
 
-            if (i != cell.row && board[i][cell.col] == board[cell.row][cell.col]) {
+        for (int i = 0; i < n; i++) {
+            if (i != row && board[row][col] == board[i][col]) {
                 return false;
             }
+        }
 
-            int boxRow = cell.row / boxLength * boxLength + i / boxLength;
-            int boxCol = cell.col / boxLength * boxLength + i % boxLength;
-            if (boxRow != cell.row && boxCol != cell.col && board[boxRow][boxCol] == board[cell.row][cell.col]) {
+        int rStart = row / 3 * 3;
+        int cStart = col / 3 * 3;
+        for (int i = 0, ri = rStart, ci = cStart; i < n; i++, ri = rStart + i / 3, ci = cStart + i % 3) {
+            if (ri != row && ci != col && board[row][col] == board[ri][ci]) {
                 return false;
             }
         }
@@ -47,28 +47,26 @@ public class sudoku_solver {
         return true;
     }
 
-    public boolean helper(char[][] board, Pair newCell, Deque<Pair> availableCells) {
+    private boolean explore(char[][] board, Pair newCell, Deque<Pair> emptyGrids) {
         for (int i = 1; i < 10; i++) {
             board[newCell.row][newCell.col] = (char) ('0' + i);
-            if (isValidSudoku(board, newCell)
-                            && (availableCells.isEmpty() || helper(board, availableCells.pollFirst(), availableCells))) {
-                return true;
-            } else {
-                board[newCell.row][newCell.col] = '.';
+
+            if (isValidSudoku(board, newCell.row, newCell.col)) {
+                if (emptyGrids.isEmpty() || explore(board, emptyGrids.pollFirst(), emptyGrids)) {
+                    return true;
+                }
             }
+
+            board[newCell.row][newCell.col] = '.';
         }
 
-        availableCells.addFirst(newCell);
+        emptyGrids.addFirst(newCell);
         return false;
     }
 
-    public void solveSudoku(char[][] board) {
-        Deque<Pair> availableCells = findAllAvailableCells(board);
-        helper(board, availableCells.pollFirst(), availableCells);
-    }
-
-    private Deque<Pair> findAllAvailableCells(char[][] board) {
+    private Deque<Pair> findAllEmptyGrid(char[][] board) {
         Deque<Pair> result = new ArrayDeque<Pair>();
+
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board.length; j++) {
                 if (board[i][j] == '.') {
