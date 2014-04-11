@@ -7,7 +7,7 @@ public class word_break {
         dp[0] = true;
 
         for (int i = 1; i < n + 1; ++i) {
-            for (int j = i - 1; j >= 0; --j) {
+            for (int j = 0; j < i; ++j) {
                 if (dp[j] && dict.contains(s.substring(j, i))) {
                     dp[i] = true;
                     break;
