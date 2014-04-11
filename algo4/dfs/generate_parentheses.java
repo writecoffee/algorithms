@@ -1,8 +1,8 @@
 import java.util.ArrayList;
-
+import java.util.HashMap;
+import java.util.Stack;
 
 public class generate_parentheses {
-
     public static ArrayList<String> generateParenthesis(int n) {
         ArrayList<String> result = new ArrayList<String>();
         if (n == 0) {
@@ -11,7 +11,6 @@ public class generate_parentheses {
 
         String str = "";
         getParenthesis(n, n, str, result);
-
         return result;
     }
 
@@ -31,79 +30,46 @@ public class generate_parentheses {
         }
     }
 
-    public static ArrayList<String> generateParenthesisImprov(int n) {
+    public static ArrayList<String> generateParenthesisNonrecur(int n) {
         ArrayList<String> result = new ArrayList<String>();
         if (n == 0) {
             return result;
         }
 
-        int[] stack = new int[2 * n];
-        int stackPointer = 0;
-        int cl = n;
-        int cr = n;
-        StringBuilder sb = new StringBuilder();
-        while (true) {
-            if (stackPointer == 2 * n) {
-                result.add(sb.toString());
-                stackPointer--;
-            } else if (stack[stackPointer] > 2) {
-                if (stackPointer == 0) {
-                    break;
-                }
+        Stack<String> s = new Stack<String>();
+        HashMap<String, Integer> hl = new HashMap<String, Integer>();
+        HashMap<String, Integer> hr = new HashMap<String, Integer>();
+        s.push("(");
+        hl.put("(", n - 1);
+        hr.put("(", n);
 
-                assert sb.length() == stackPointer + 1;
+        while (!s.isEmpty()) {
+            String c = s.pop();
+            int lc = hl.get(c);
+            int rc = hr.get(c);
 
-                stack[stackPointer] = 0;
+            if (lc == 0 && rc == 0) {
+                result.add(c);
+                continue;
+            }
 
-                if (sb.charAt(stackPointer) == ')') {
-                    cr++;
-                } else {
-                    cl++;
-                }
-
-                sb.delete(sb.length() - 1, sb.length());
-                stackPointer--;
+            if (lc == 0) {
+                s.push(c + ")");
+                hl.put(c + ")", lc);
+                hr.put(c + ")", rc - 1);
             } else {
-                stack[stackPointer]++;
-                if (stack[stackPointer] == 1) {
-                    if (cl == 0) {
-                        continue;
-                    } else {
-                        sb.append('(');
-                        cl--;
-                    }
-                } else if (stack[stackPointer] == 2) {
-                    boolean backtracked = false;
-                    if (sb.length() - 1 == stackPointer) {
-                        cl++;
-                        sb.delete(sb.length() - 1, sb.length());
-                        backtracked = true;
-                    }
-
-                    if (cl < cr) {
-                        sb.append(')');
-                        cr--;
-                    } else {
-                        stack[stackPointer]++;
-                        if (backtracked) {
-                            sb.append('(');
-                            cl--;
-                        }
-                        continue;
-                    }
-                } else {
-                    continue;
+                if (rc > lc) {
+                    s.push(c + ")");
+                    hl.put(c + ")", lc);
+                    hr.put(c + ")", rc - 1);
                 }
 
-                stackPointer++;
+                s.push(c + "(");
+                hl.put(c + "(", lc - 1);
+                hr.put(c + "(", rc);
             }
         }
 
         return result;
-    }
-
-    public static void main(String[] args) {
-        generateParenthesis(3);
-        generateParenthesisImprov(3);
     }
 }
