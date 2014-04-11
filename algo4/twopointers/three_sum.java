@@ -6,46 +6,34 @@ public class three_sum {
         ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
         Arrays.sort(num);
 
-        int N = num.length;
-        for (int i = 0; i < N - 2 && num[i] <= 0; i++) {
-            if (i > 0 && num[i] == num[i - 1]) {
-                continue;
-            }
+        int n = num.length;
+        for (int k = 0; k < n - 1; ++k) {
+            int iOrig = k + 1, jOrig = n - 1, i = iOrig, j = jOrig;
+            while (i < j) {
+                int t = num[i] + num[j] + num[k];
 
-            int expectedTwoSum = 0 - num[i];
-            int l = i + 1;
-            int r = N - 1;
-            while (l < r) {
-                int sum = num[l] + num[r];
-                if (sum < expectedTwoSum) {
-                    ++l;
-                } else if (sum > expectedTwoSum) {
-                    --r;
+                if (iOrig != i && num[i] == num[i - 1]) {
+                    i++;
+                } else if (jOrig != j && num[j] == num[j + 1]) {
+                    j--;
+                } else if (t < 0) {
+                    i++;
+                } else if (t > 0) {
+                    j--;
                 } else {
-                    ArrayList<Integer> triple = new ArrayList<Integer>();
-                    triple.add(num[i]);
-                    triple.add(num[l]);
-                    triple.add(num[r]);
-                    result.add(triple);
-
-                    l++;
-                    r--;
-                    while (l < r && num[l] == num[l - 1]) {
-                        l++;
-                    }
-                    while (l < r && num[r] == num[r + 1]) {
-                        r--;
-                    }
+                    ArrayList<Integer> tr = new ArrayList<Integer>();
+                    tr.add(num[k]);
+                    tr.add(num[i++]);
+                    tr.add(num[j--]);
+                    result.add(tr);
                 }
             }
 
+            while (k < n - 1 && num[k + 1] == num[k]) {
+                k++;
+            }
         }
 
         return result;
-    }
-
-    public static void main(String[] args) {
-        threeSum(new int[] { -1, 0, 1, 2, -1, -4 });
-        threeSum(new int[] { -2, 0, 1, 1, 2 });
     }
 }
