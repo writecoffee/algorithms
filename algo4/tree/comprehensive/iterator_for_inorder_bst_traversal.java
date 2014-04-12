@@ -15,31 +15,28 @@ public class iterator_for_inorder_bst_traversal {
     }
 
     static class TreeIterator {
-        private final Stack<Integer> s;
+        private final Stack<TreeNode> s;
+        private TreeNode current;
 
         TreeIterator(TreeNode root) {
             if (root == null) {
                 throw new IllegalArgumentException();
             }
 
-            s = new Stack<Integer>();
-
-            Stack<TreeNode> ts = new Stack<TreeNode>();
-            TreeNode c = root;
-            while (c != null || !ts.isEmpty()) {
-                if (c != null) {
-                    ts.push(c);
-                    c = c.right;
-                } else {
-                    TreeNode i = ts.pop();
-                    s.add(i.val);
-                    c = i.left;
-                }
-            }
+            s = new Stack<TreeNode>();
+            exploreLeftSubTree(root);
         }
 
         public boolean hasNext() {
             return !s.isEmpty();
+        }
+
+        private void exploreLeftSubTree(TreeNode root) {
+            TreeNode c = root;
+            while (c != null) {
+                s.push(c);
+                c = c.left;
+            }
         }
 
         public Integer next() {
@@ -47,7 +44,12 @@ public class iterator_for_inorder_bst_traversal {
                 throw new NoSuchElementException("The tree has been fully explored");
             }
 
-            return s.pop();
+            current = s.pop();
+            if (current.right != null) {
+                exploreLeftSubTree(current.right);
+            }
+
+            return current.val;
         }
     }
 }
