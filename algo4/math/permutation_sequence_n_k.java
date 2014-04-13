@@ -1,4 +1,4 @@
-public class permutation_sequence {
+public class permutation_sequence_n_k {
     public String getPermutation(int n, int k) {
         StringBuilder result = new StringBuilder(), t = new StringBuilder();
 
