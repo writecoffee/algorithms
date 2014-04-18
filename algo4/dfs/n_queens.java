@@ -12,21 +12,23 @@ public class n_queens {
         return result;
     }
 
-    private void explore(StringBuilder clearRow, int n, int bitsRows, int bitsLds, int bitsRds, ArrayList<String> c, ArrayList<String[]> result) {
-        if (bitsRows == (1 << n) - 1) {
+    private void explore(StringBuilder cleanRow, int n, int bitsCols, int bitsLds, int bitsRds, ArrayList<String> c, ArrayList<String[]> result) {
+        /**
+         * It could also be terminated using a "depth" parameter.
+         */
+        if (bitsCols == (1 << n) - 1) {
             result.add(c.toArray(new String[n]));
             return;
         }
 
-        int bitsAvailable = ~(bitsRows | bitsLds | bitsRds);
+        int bitsAvailable = ~(bitsCols | bitsLds | bitsRds);
         for (int i = 0; i < n; ++i) {
-            int col = 1 << i;
-            if ((bitsAvailable & col) != 0) {
-                clearRow.setCharAt(i, 'Q');
-                c.add(clearRow.toString());
-                clearRow.setCharAt(i, '.');
-                explore(clearRow, n, bitsRows | col, (bitsLds | col) << 1, (bitsRds | col) >> 1, c,
-                                result);
+            int bCol = 1 << i;
+            if ((bitsAvailable & bCol) != 0) {
+                cleanRow.setCharAt(i, 'Q');
+                c.add(cleanRow.toString());
+                cleanRow.setCharAt(i, '.');
+                explore(cleanRow, n, bitsCols | bCol, (bitsLds | bCol) << 1, (bitsRds | bCol) >> 1, c, result);
                 c.remove(c.size() - 1);
             }
         }
