@@ -1,53 +1,52 @@
 public class search_for_a_range {
-
-    public static int[] searchRange(int[] A, int target) {
+    public int[] searchRange(int[] array, int target) {
         int[] range = { -1, -1 };
+        int n = array.length;
 
-        int low = 0, high = A.length - 1;
-        while (low <= high) {
-            int mid = (low + high) / 2;
+        int lower = getLowerBound(array, n, target);
+        int upper = getUpperBound(array, n, target);
 
-            if (A[mid] == target) {
-                if (mid == 0 || A[mid - 1] < target) {
-                    range[0] = mid;
-                    low = mid;
-                    high = A.length - 1;
-                }
-
-                if (mid == A.length - 1 || A[mid + 1] > target) {
-                    range[1] = mid;
-                    low = 0;
-                    high = mid;
-                }
-
-                if (range[0] > -1 && range[1] > -1) {
-                    return range;
-                }
-
-                if (range[0] < 0) {
-                    high = mid - 1;
-                } else {
-                    low = mid + 1;
-                }
-            } else if (A[mid] < target) {
-                low = mid + 1;
-            } else {
-                high = mid - 1;
-            }
+        if (lower <= upper) {
+            range[0] = lower;
+            range[1] = upper;
         }
 
         return range;
     }
 
-    static int[] result = searchRange(new int[] { 1, 1, 2, 3, 4, 5 }, 1);
-    static int[] result2 = searchRange(new int[] { 1 }, 0);
-    static int[] result3 = searchRange(new int[] { 2, 2 }, 3);
-    static int[] result4 = searchRange(new int[] { 2, 2 }, 2);
+    private int getLowerBound(int[] array, int n, int target) {
+        int l = 0, r = n - 1;
 
-    public static void main(String[] args) {
-        System.out.println(String.format("%d, %d", result[0], result[1]));
-        System.out.println(String.format("%d, %d", result2[0], result2[1]));
-        System.out.println(String.format("%d, %d", result3[0], result3[1]));
-        System.out.println(String.format("%d, %d", result4[0], result4[1]));
+        while (l <= r) {
+            int mid = (l + r) / 2;
+
+            if (array[mid] == target) {
+                r = mid - 1;
+            } else if (array[mid] > target) {
+                r = mid - 1;
+            } else {
+                l = mid + 1;
+            }
+        }
+
+        return l;
+    }
+
+    private int getUpperBound(int[] array, int n, int target) {
+        int l = 0, r = n - 1;
+
+        while (l <= r) {
+            int mid = (l + r) / 2;
+
+            if (array[mid] == target) {
+                l = mid + 1;
+            } else if (array[mid] > target) {
+                r = mid - 1;
+            } else {
+                l = mid + 1;
+            }
+        }
+
+        return r;
     }
 }
