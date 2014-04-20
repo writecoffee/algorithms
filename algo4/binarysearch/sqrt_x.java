@@ -1,32 +1,32 @@
-
 public class sqrt_x {
     /**
-     * 46341 = Math.floor(2^31 - 1)
+     * Note that the goal is not to find the exact square root r but to find the floor(r).
+     * So we terminate the loop when narrowing down the range to 1. A necessary testing case
+     * for this is let x = 2.
      * 
+     * Notice that we calculate the matching target to be x / mid so as to avoid data overflow.
      */
-    public static final int MAX_INT_SQRT = 46340;
-
-    public static int sqrt(int x) {
-        if (x < 0) {
-            throw new IllegalArgumentException("x should never be negative!");
-        }
-        if (x < 1) {
-            return 0;
-        }
-        if (x == 1) {
-            return 1;
+    public int sqrt(int x) {
+        if (x < 2) {
+            return x;
         }
 
-        int mid = x / 2;
+        int low = 0;
+        int high = x;
 
-        while (mid * mid > x || mid > MAX_INT_SQRT) {
-            mid = (mid + x / mid) / 2;
+        while (high > low + 1) {
+            int mid = low + (high - low) / 2;
+            int div = x / mid;
+
+            if (mid == div) {
+                return mid;
+            } else if (mid < div) {
+                low = mid;
+            } else {
+                high = mid;
+            }
         }
 
-        return mid;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(sqrt(10));
+        return low;
     }
 }
