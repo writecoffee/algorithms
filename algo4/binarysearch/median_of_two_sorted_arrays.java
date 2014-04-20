@@ -1,35 +1,89 @@
 public class median_of_two_sorted_arrays {
-    static double findMedianSortedArrays(int[] a, int[] b) {
+    public double findMedianSortedArrays(int[] a, int[] b) {
         int m = a.length;
         int n = b.length;
 
         if (((m + n) & 0x1) == 1) {
-            return explore(a, 0, m, b, 0, n, (m + n) / 2 + 1);
+            return explore(a, 0, m - 1, b, 0, n - 1, (m + n) / 2 + 1);
         } else {
-            return (explore(a, 0, m, b, 0, n, (m + n) / 2)
-                  + explore(a, 0, m, b, 0, n, (m + n) / 2 + 1)) / 2;
+            return (explore(a, 0, m - 1, b, 0, n - 1, (m + n) / 2)
+                  + explore(a, 0, m - 1, b, 0, n - 1, (m + n) / 2 + 1)) / 2;
         }
     }
 
-    private static double explore(int[] a, int ai, int aj, int[] b, int bi, int bj, int k) {
-        int m = aj - ai;
-        int n = bj - bi;
+    private double explore(int[] a, int al, int ar, int[] b, int bl, int br, int k) {
+        int m = ar - al + 1;
+        int n = br - bl + 1;
 
         if (m > n) {
-            return explore(b, bi, bj, a, ai, aj, k);
+            return explore(b, bl, br, a, al, ar, k);
         } else if (m == 0) {
             return b[k - 1];
         } else if (k == 1) {
-            return Math.min(a[ai], b[bi]);
+            return Math.min(a[al], b[bl]);
         }
 
         int aMid = Math.min(k / 2, m);
         int bMid = k - aMid;
 
-        if (a[ai + aMid - 1] < b[bi + bMid - 1]) {
-            return explore(a, ai + aMid, aj, b, bi, bj, k - aMid);
+        if (a[al + aMid - 1] < b[bl + bMid - 1]) {
+            return explore(a, al + aMid, ar, b, bl, br, k - aMid);
         } else {
-            return explore(a, ai, aj, b, bi + bMid, bj, k - bMid);
+            return explore(a, al, ar, b, bl + bMid, br, k - bMid);
+        }
+    }
+
+    public double findMedianSortedArraysNonrecur(int[] a, int[] b) {
+        int m = a.length;
+        int n = b.length;
+
+        if (((m + n) & 0x1) == 1) {
+            return getKthNumber(m < n ? a : b, m < n ? b : a, (m + n) / 2 + 1);
+        } else {
+            return (getKthNumber(m < n ? a : b, m < n ? b : a, (m + n) / 2)
+                  + getKthNumber(m < n ? a : b, m < n ? b : a, (m + n) / 2 + 1)) / 2;
+        }
+    }
+
+    private double getKthNumber(int[] a, int[] b, int k) {
+        int m = a.length;
+        int n = b.length;
+        int al = 0, ar = m - 1;
+        int bl = 0, br = n - 1;
+
+        while (m > 0 && k != 1) {
+            int aMid = Math.min(k / 2, m);
+            int bMid = k - aMid;
+
+            if (a[al + aMid - 1] < b[bl + bMid - 1]) {
+                al = al + aMid;
+                k = k - aMid;
+                m = ar - al + 1;
+            } else {
+                bl = bl + bMid;
+                k = k - bMid;
+                n = br - bl + 1;
+            }
+
+            if (n < m) {
+                int[] tmp = a;
+                a = b;
+                b = tmp;
+                int lTmp = al;
+                al = bl;
+                bl = lTmp;
+                int rTmp = ar;
+                ar = br;
+                br = rTmp;
+                m = ar - al + 1;
+                n = br - bl + 1;
+            }
+        }
+
+        if (m == 0) {
+            return b[bl + k - 1];
+        } else {
+            return Math.min(a[al], b[bl]);
         }
     }
 }
