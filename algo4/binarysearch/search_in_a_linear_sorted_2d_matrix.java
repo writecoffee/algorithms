@@ -1,4 +1,4 @@
-public class search_in_a_sorted_2d_matrix {
+public class search_in_a_linear_sorted_2d_matrix {
     public boolean searchMatrix(int[][] matrix, int target) {
         if (matrix.length == 0 || matrix[0].length == 0) {
             return false;
