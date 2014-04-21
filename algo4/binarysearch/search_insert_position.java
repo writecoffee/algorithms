@@ -6,9 +6,7 @@ public class search_insert_position {
         while (l <= r) {
             int mid = l + (r - l) / 2;
 
-            if (array[mid] == target) {
-                return mid;
-            } else if (array[mid] < target) {
+            if (array[mid] < target) {
                 l = mid + 1;
             } else {
                 r = mid - 1;
