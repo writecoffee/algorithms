@@ -2,6 +2,20 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 
+/**
+ * You're given a large string T. And a stream of smaller string S1, S2, S3 ...
+ * 
+ * Determine whether Si is a subsequence of T.
+ * 
+ * |T| < 10 000 000 |Si| < 100 alphabet is 'a' - 'z'
+ * 
+ * T = abcdefg 
+ * S1 = abc  yes
+ * S2 = ag   yes
+ * S3 = ga   no 
+ * S4 = aa   no
+ * 
+ */
 public class process_query {
     ArrayList<String> sortedData;
 
