@@ -2,14 +2,17 @@ import java.util.Map;
 
 public class hashtable<K, V> {
     private Entry<K, V>[] table;
-    private int size;
-    private int capacity;
-    static final int DEFAULT_INITIAL_CAPACITY = 16;
+    private int count;
+    private float loadFactor;
+    private int threshold;
+    private static final int DEFAULT_INITIAL_CAPACITY = 16;
 
+    @SuppressWarnings("unchecked")
     public hashtable(int _capacity) {
-        capacity = _capacity;
         table = new Entry[_capacity];
-        size = 0;
+        loadFactor = .75f;
+        threshold = (int) (_capacity * loadFactor);
+        count = 0;
     }
 
     public hashtable() {
@@ -17,24 +20,19 @@ public class hashtable<K, V> {
     }
 
     public int size() {
-        return size;
+        return count;
     }
 
-    private int hash(K key) {
-        return key.hashCode() % capacity;
-    }
-
-    void addEntry(int hash, K key, V value) {
-        Entry<K, V> e = table[hash];
-        table[hash] = new Entry<K, V>(key, value, e);
+    private int hashToBucket(K key) {
+        return key.hashCode() % table.length;
     }
 
     public V get(K key) {
         if (key == null) {
-            return getForNullKey();
+            throw new NullPointerException();
         }
 
-        for (Entry<K, V> e = table[hash(key)]; e != null; e = e.next) {
+        for (Entry<K, V> e = table[hashToBucket(key)]; e != null; e = e.next) {
             K k;
             if ((k = e.key) == key || key.equals(k)) {
                 return e.value;
@@ -46,41 +44,71 @@ public class hashtable<K, V> {
 
     public V put(K key, V value) {
         if (key == null) {
-            return putForNullKey(value);
+            throw new NullPointerException();
         }
 
-        int hash = hash(key);
-        for (Entry<K, V> e = table[hash]; e != null; e = e.next) {
+        int index = hashToBucket(key);
+        for (Entry<K, V> e = table[index]; e != null; e = e.next) {
             K k = e.key;
             if (k == key || key.equals(k)) {
                 return e.setValue(value);
             }
         }
 
-        addEntry(hash, key, value);
+        count++;
+        if (count >= threshold) {
+            rehash();
+            index = hashToBucket(key);
+        }
+
+        Entry<K, V> e = table[index];
+        table[index] = new Entry<K, V>(key, value, e);
         return null;
     }
 
-    private V putForNullKey(V value) {
-        for (Entry<K, V> e = table[0]; e != null; e = e.next) {
-            if (e.key == null) {
+    public V remove(K key) {
+        if (key == null) {
+            throw new IllegalArgumentException("Unsupported");
+        }
+
+        int index = hashToBucket(key);
+        for (Entry<K, V> e = table[index], prev = null; e != null; prev = e, e = e.next) {
+            if ((e.key.hashCode() == key.hashCode()) && e.key.equals(key)) {
+                if (prev != null) {
+                    prev.next = e.next;
+                } else {
+                    table[index] = e.next;
+                }
+
+                count--;
                 V oldValue = e.value;
-                e.value = value;
+                e.value = null;
                 return oldValue;
             }
         }
 
-        addEntry(0, null, value);
         return null;
     }
 
-    private V getForNullKey() {
-        for (Entry<K, V> e = table[0]; e != null; e = e.next) {
-            if (e.key == null)
-                return e.value;
-        }
+    private void rehash() {
+        int newCapacity = (table.length << 1) + 1;
+        int oldCapacity = table.length;
+        @SuppressWarnings("unchecked")
+        Entry<K, V>[] newMap = new Entry[newCapacity];
+        Entry<K, V>[] oldMap = table;
+        threshold = (int) (newCapacity * loadFactor);
+        table = newMap;
 
-        return null;
+        for (int i = oldCapacity - 1; i >= 0; --i) {
+            for (Entry<K, V> old = oldMap[i]; old != null;) {
+                Entry<K, V> e = old;
+                // move to the next entry first
+                old = old.next;
+                int index = hashToBucket(old.key);
+                e.next = newMap[index];
+                newMap[index] = e;
+            }
+        }
     }
 
     private class Entry<M, L> implements Map.Entry<M, L> {
@@ -109,14 +137,6 @@ public class hashtable<K, V> {
             L oldValue = value;
             value = newValue;
             return oldValue;
-        }
-
-        /**
-         * This ensures that e1.equals(e2) implies that e1.hashCode()==e2.hashCode() for any
-         * two Entries e1 and e2, as required by the general contract of Object.hashCode.
-         */
-        public final int hashCode() {
-            return (key == null ? 0 : key.hashCode()) ^ (value == null ? 0 : value.hashCode());
         }
     }
 }
