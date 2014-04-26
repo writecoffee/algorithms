@@ -30,10 +30,9 @@ public class word_ladder {
                     cStr[i] = j;
                     String t = new String(cStr);
 
-                    if (dict.contains(t)) {
+                    if (!hDist.containsKey(t) && dict.contains(t)) {
                         q.add(t);
                         hDist.put(t, d + 1);
-                        dict.remove(t);
                     }
                 }
             }
