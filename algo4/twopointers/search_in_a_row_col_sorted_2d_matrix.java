@@ -9,11 +9,11 @@ public class search_in_a_row_col_sorted_2d_matrix {
         int i = 0, j = n - 1;
 
         while (i < m && j >= 0) {
-            int t = matrix[i][j];
+            int lastElement = matrix[i][j];
 
-            if (t == target) {
+            if (lastElement == target) {
                 return true;
-            } else if (t < target) {
+            } else if (lastElement < target) {
                 i++;
             } else {
                 j--;
