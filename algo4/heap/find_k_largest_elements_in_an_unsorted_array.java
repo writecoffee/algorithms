@@ -4,7 +4,7 @@ import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
-public class k_largest_elements_in_an_unsorted_array {
+public class find_k_largest_elements_in_an_unsorted_array {
     /**
      * Time: O(n log n)
      * Space: O(n)

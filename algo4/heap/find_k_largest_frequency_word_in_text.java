@@ -4,7 +4,7 @@ import java.util.Map.Entry;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
-public class find_kth_frequency_word_in_text {
+public class find_k_largest_frequency_word_in_text {
     class WordNode {
         final String s;
         private int freq;
