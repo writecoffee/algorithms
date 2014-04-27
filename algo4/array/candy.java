@@ -85,9 +85,4 @@ public class candy {
 
         return sum + Math.max(l, r) + 1;
     }
-
-    public static void main(String[] args) {
-        assert new candy().calculateImprov(new int[] { 2, 2 }) == 2;
-        assert new candy().calculateImprov(new int[] { 1, 3, 2, 2, 1, 9 }) == 9;
-    }
 }
