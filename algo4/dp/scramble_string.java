@@ -1,37 +1,41 @@
 public class scramble_string {
-    public static boolean isScramble(String s1, String s2) {
-        int len = s1.length();
+    /**
+     * We can construct a 3-d table using k to denote the length of the substring
+     * of s1 and s2, and use i, j to denote the starting point in s1 and s2 respectively.
+     * 
+     * R(k, i, j) holds only when there is a p within range [1, k - 1] such that
+     * 
+     *      (1) R(p, i, j) && R(k - p, i + p, j + p) holds
+     *   or (2) R(k - p, i, j + p) && R(p, i + k - p, j) holds
+     *   
+     * So we are filling the table in a bottom-up manner.
+     * 
+     */
+    public boolean isScramble(String s1, String s2) {
+        int n = s1.length();
+        boolean[][][] dp = new boolean[n + 1][n + 1][n + 1];
+        dp[0][0][0] = true;
 
-        if (len != s2.length()) {
-            return false;
-        }
-
-        boolean[][][] dp = new boolean[len + 1][len][len];
-        for (int i = 0; i < len; i++) {
-            for (int j = 0; j < len; j++) {
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
                 dp[1][i][j] = s1.charAt(i) == s2.charAt(j);
             }
         }
 
-        for (int k = 2; k < len + 1; k++) {
-            for (int i = 0; i < len - k + 1; i++) {
-                for (int j = 0; j < len - k + 1; j++) {
-                    for (int p = 1; p < k; p++) {
-                        if ((dp[p][i][j] && dp[k - p][i + p][j + p])
-                         || (dp[p][i][j + k - p] && dp[k - p][i + p][j])) {
+        for (int k = 2; k <= n; ++k) {
+            for (int i = 0; i < n - k + 1; ++i) {
+                for (int j = 0; j < n - k + 1; ++j) {
+                    for (int p = 1; p < k; ++p) {
+                        if ((dp[p][i][j] && dp[k - p][i + p][j + p]) ||
+                            (dp[k - p][i][j + p] && dp[p][i + k - p][j])) {
                             dp[k][i][j] = true;
+                            break;
                         }
                     }
                 }
             }
         }
 
-        return dp[len][0][0];
-    }
-
-    public static void main(String[] args) {
-        assert isScramble("great", "rgtae");
-        assert isScramble("a", "a");
-        assert isScramble("ba", "ab");
+        return dp[n][0][0];
     }
 }
