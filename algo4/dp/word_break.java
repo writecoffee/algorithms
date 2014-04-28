@@ -1,6 +1,10 @@
 import java.util.Set;
 
 public class word_break {
+    /**
+     * R(i): is true only when there is a j from 0 to i - 1 (inclusively),
+     *       s.substring(j, i) is in dictionary and R(j) holds.
+     */
     public boolean wordBreak(String s, Set<String> dict) {
         int n = s.length();
         boolean[] dp = new boolean[n + 1];
