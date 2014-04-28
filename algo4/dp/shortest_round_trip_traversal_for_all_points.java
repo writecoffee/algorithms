@@ -1,5 +1,5 @@
 public class shortest_round_trip_traversal_for_all_points {
-    static class Point {
+    class Point {
         int x, y;
 
         Point(int _x, int _y) {
@@ -8,49 +8,52 @@ public class shortest_round_trip_traversal_for_all_points {
         }
     }
 
-    private static double dist(Point p1, Point p2) {
+    private double dist(Point p1, Point p2) {
         int x = p1.x - p2.x;
         int y = p1.y - p2.y;
         return Math.sqrt(x * x + y * y);
     }
 
     /**
-     * dp[i][j]: two shortest paths stem from point(0) and end at point(i) and point(j) respectively,
-     *           where all nodes within range [0, j] have been explored in the paths.
+     * dp[k][i]: two disjoint bitonic paths, one from point(0) to point(i) and, the other from
+     *           point(0) to point(j). When i = k we have a minimum cost bitonic tour through
+     *           the first i nodes. When i = k = n we have a minimum cost bitonic tour through
+     *           all n points.
+     *           
+     *  We are filling the table from top to the bottom, from left to the right, and thus we can
+     *  remove duplicate paths (i, k swapped).
      * 
      */
-    public static double minDist(Point[] points) {
+    public double minDist(Point[] points) {
         int n = points.length;
         double[][] dp = new double[n][n];
 
-        for (int i = 0; i < n; ++i) {
-            for (int j = i; j < n; ++j) {
+        for (int k = 0; k < n; ++k) {
+            for (int i = k; i < n; ++i) {
                 /**
-                 * Path-j has at least 2-hop larger x position than path-i, then path-j
-                 * can be directly computed 1-hop further from dp[i][j - 1].
+                 * Case 1: i > k + 1. The minimum cost disjoint paths from 1 to i and from 1 to k
+                 * must contain the edge (i - 1, i).
                  * 
-                 * So dp[0][j] can be interpreted as a path from point(0) to point(j) having
-                 * explored all intermediate points.
+                 * Case 2: i == k. The edge ending in i comes from u, 0 <= u < k.
+                 * 
+                 * Case 3: i == k + 1. The two edges entering k + 1 must come from k and from some
+                 * u, 0 <= u <= k.
                  * 
                  */
-                if (j - i > 1) {
-                    dp[i][j] = dp[i][j - 1] + dist(points[j - 1], points[j]);
+                if (i - k > 1) {
+                    dp[k][i] = dp[k][i - 1] + dist(points[i - 1], points[i]);
                 } else {
-                    double minD = dp[0][i] + dist(points[0], points[j]);
+                    double minD = dp[0][k] + dist(points[0], points[i]);
 
-                    for (int k = 1; k < i; k++) {
-                        minD = Math.min(minD, dp[k][i] + dist(points[k], points[j]));
+                    for (int u = 1; u < k; u++) {
+                        minD = Math.min(minD, dp[u][k] + dist(points[u], points[i]));
                     }
 
-                    dp[i][j] = minD;
+                    dp[k][i] = minD;
                 }
             }
         }
 
         return dp[n - 1][n - 1];
-    }
-
-    public static void main(String[] args) {
-        minDist(new Point[] { new Point(0, 0), new Point(10, -5), new Point(30, 40), new Point(31, 0) });
     }
 }
