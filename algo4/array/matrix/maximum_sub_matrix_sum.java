@@ -1,4 +1,16 @@
+package matrix;
+
 public class maximum_sub_matrix_sum {
+    /**
+     * The brute-force solution is that we need to enumerate through all possible starting
+     * position (i, j) and all possible width, height of that window to compute the maximum
+     * sum. That is O(m * n * m * n) time complexity.
+     * 
+     * This problem can be tackled by looking at the one-dimension problem. After applying
+     * the one-dimension view, we can know the starting column and the width of that window.
+     * 
+     * So we just need to enumerate all possible start row and height of the window.
+     */
     public int maxRectSum(int[][] matrix) {
         int m = matrix.length, n = matrix[0].length;
         int gMax = 0;
