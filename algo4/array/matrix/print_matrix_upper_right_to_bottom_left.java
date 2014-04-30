@@ -1,21 +1,24 @@
+package matrix;
+
 import java.util.ArrayList;
 
 public class print_matrix_upper_right_to_bottom_left {
-    public static ArrayList<Integer> printArray(int[][] A) {
+    public static ArrayList<Integer> printArray(int[][] matrix) {
         ArrayList<Integer> result = new ArrayList<Integer>();
-        int k = A.length + A[0].length - 1;
-        int m = A.length;
-        int n = A[0].length;
 
-        for (int i = 0, diff = n - 1; i < k; i++, diff--) {
-            for (int row = Math.max(0, i - (n - 1)), col = row + diff; row < m && col < n; row++, col++) {
-                result.add(A[row][col]);
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int k = m + n - 1;
+
+        for (int i = 0; i < k; ++i) {
+            for (int row = i < n ? 0 : i - n + 1, col = n - i > 0 ? n - i - 1 : 0; row < m && col < n; ++row, ++col) {
+                result.add(matrix[row][col]);
             }
         }
 
         return result;
     }
-    
+
     public static void main(String[] args) {
         int[][] A = new int[][] {
                         { 2, 3, 1 },
