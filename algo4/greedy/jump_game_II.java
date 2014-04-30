@@ -1,27 +1,26 @@
 public class jump_game_II {
+    public int jump(int[] array) {
+        int n = array.length;
+        int i = n - 1;
+        int result = 0;
 
-    public static int jump(int[] A) {
-        int steps = 0;
-        int max = 0;
-        int next = 0;
+        while (i > 0) {
+            int maxJmp = -1;
 
-        for (int i = 0; i < A.length - 1 && next < A.length - 1; ++i) {
-            max = Math.max(max, i + A[i]);
-
-            if (i == next) {
-                if (max == next) {
-                    return -1;
+            for (int j = i - 1; j >= 0; --j) {
+                if (array[j] >= i - j) {
+                    maxJmp = i - j;
                 }
+            }
 
-                next = max;
-                ++steps;
+            if (maxJmp == -1) {
+                return -1;
+            } else {
+                i -= maxJmp;
+                result++;
             }
         }
 
-        return steps;
-    }
-
-    public static void main(String[] args) {
-        jump(new int[] { 2, 3, 1, 1, 4 });
+        return result;
     }
 }
