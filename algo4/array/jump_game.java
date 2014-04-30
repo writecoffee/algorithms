@@ -1,19 +1,17 @@
 public class jump_game {
+    public boolean canJump(int[] array) {
+        int n = array.length;
 
-    public static boolean canJump(int[] A) {
-        int next = A.length - 1;
-
-        for (int i = A.length - 2; i >= 0; --i) {
-            if (A[i] >= (next - i)) {
-                next = i;
+        int i = 0;
+        while (i < n) {
+            int jmp = array[i];
+            if (jmp == 0) {
+                break;
             }
+
+            i += jmp;
         }
 
-        return (next == 0);
-    }
-
-    public static void main(String[] args) {
-        System.out.println(canJump(new int[] { 2, 3, 1, 1, 4 }));
-        System.out.println(canJump(new int[] { 3, 2, 1, 0, 4 }));
+        return i >= n - 1;
     }
 }
