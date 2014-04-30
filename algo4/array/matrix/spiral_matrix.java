@@ -12,39 +12,39 @@ public class spiral_matrix {
 
         int m = matrix.length;
         int n = matrix[0].length;
-        int imin = 0, imax = m - 1;
-        int jmin = 0, jmax = n - 1;
+        int iMin = 0, iMax = m - 1;
+        int jMin = 0, jMax = n - 1;
 
         while (true) {
-            for (int j = jmin; j <= jmax; ++j) {
-                result.add(matrix[imin][j]);
+            for (int j = jMin; j <= jMax; ++j) {
+                result.add(matrix[iMin][j]);
             }
 
-            if (++imin > imax) {
+            if (++iMin > iMax) {
                 break;
             }
 
-            for (int i = imin; i <= imax; ++i) {
-                result.add(matrix[i][jmax]);
+            for (int i = iMin; i <= iMax; ++i) {
+                result.add(matrix[i][jMax]);
             }
 
-            if (jmin > --jmax) {
+            if (--jMax < jMin) {
                 break;
             }
 
-            for (int j = jmax; j >= jmin; --j) {
-                result.add(matrix[imax][j]);
+            for (int j = jMax; j >= jMin; --j) {
+                result.add(matrix[iMax][j]);
             }
 
-            if (imin > --imax) {
+            if (--iMax < iMin) {
                 break;
             }
 
-            for (int i = imax; i >= imin; --i) {
-                result.add(matrix[i][jmin]);
+            for (int i = iMax; i >= iMin; --i) {
+                result.add(matrix[i][jMin]);
             }
 
-            if (++jmin > jmax) {
+            if (++jMin > jMax) {
                 break;
             }
         }
