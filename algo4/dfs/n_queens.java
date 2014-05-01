@@ -3,34 +3,44 @@ import java.util.ArrayList;
 public class n_queens {
     public ArrayList<String[]> solveNQueens(int n) {
         ArrayList<String[]> result = new ArrayList<String[]>();
-        StringBuilder row = new StringBuilder();
+
+        char[][] board = new char[n][n];
         for (int i = 0; i < n; ++i) {
-            row.append('.');
+            for (int j = 0; j < n; ++j) {
+                board[i][j] = '.';
+            }
         }
 
-        explore(row, n, 0, 0, 0, new ArrayList<String>(), result);
+        explore(n, 0, 0, 0, 0, board, result);
         return result;
     }
 
-    private void explore(StringBuilder cleanRow, int n, int bitsCols, int bitsLds, int bitsRds, ArrayList<String> c, ArrayList<String[]> result) {
-        /**
-         * It could also be terminated using a "depth" parameter.
-         */
-        if (bitsCols == (1 << n) - 1) {
-            result.add(c.toArray(new String[n]));
+    private void explore(int n, int i, int colMask, int ldMask, int rdMask, char[][] board, ArrayList<String[]> result) {
+        if (i == n) {
+            result.add(convert(board));
             return;
         }
 
-        int bitsAvailable = ~(bitsCols | bitsLds | bitsRds);
-        for (int i = 0; i < n; ++i) {
-            int bCol = 1 << i;
-            if ((bitsAvailable & bCol) != 0) {
-                cleanRow.setCharAt(i, 'Q');
-                c.add(cleanRow.toString());
-                cleanRow.setCharAt(i, '.');
-                explore(cleanRow, n, bitsCols | bCol, (bitsLds | bCol) << 1, (bitsRds | bCol) >> 1, c, result);
-                c.remove(c.size() - 1);
+        int mask = colMask | ldMask | rdMask;
+        for (int j = 0; j < n; ++j) {
+            int p = 1 << j;
+
+            if ((p & mask) == 0) {
+                board[i][n - 1 - j] = 'Q';
+                explore(n, i + 1, p | colMask, (p | ldMask) << 1, (p | rdMask) >> 1, board, result);
+                board[i][n - 1 - j] = '.';
             }
         }
+    }
+
+    private String[] convert(char[][] board) {
+        int n = board.length;
+        String[] result = new String[n];
+
+        for (int i = 0; i < n; ++i) {
+            result[i] = new String(board[i].clone());
+        }
+
+        return result;
     }
 }
