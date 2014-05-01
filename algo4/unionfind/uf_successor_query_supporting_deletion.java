@@ -1,4 +1,4 @@
-public class successor_query_supporting_deletion {
+public class uf_successor_query_supporting_deletion {
     private int[] leaders;
     private int[] nexts;
     private int[] sizes;
