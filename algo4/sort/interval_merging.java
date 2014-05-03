@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class merge_intervals {
+public class interval_merging {
     public class Interval {
         int start;
         int end;

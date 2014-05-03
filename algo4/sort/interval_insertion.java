@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class insert_interval {
+public class interval_insertion {
     public class Interval {
         int start;
         int end;
@@ -16,28 +16,27 @@ public class insert_interval {
         }
     }
 
-    public static ArrayList<Interval> insert(ArrayList<Interval> intervals, Interval newInterval) {
-        ArrayList<Interval> result = new ArrayList<Interval>();
+    public ArrayList<Interval> insert(ArrayList<Interval> intervals, Interval nxt) {
         int n = intervals.size();
+        ArrayList<Interval> result = new ArrayList<Interval>();
 
         int i = 0;
-        for (; i < n; i++) {
+        for (; i < n; ++i) {
             Interval c = intervals.get(i);
 
-            if (c.end < newInterval.start) {
+            if (c.end < nxt.start) {
                 result.add(c);
-            } else if (c.start > newInterval.end) {
+            } else if (c.start > nxt.end) {
                 break;
             } else {
-                newInterval.start = Math.min(c.start, newInterval.start);
-                newInterval.end = Math.max(c.end, newInterval.end);
+                nxt.start = Math.min(c.start, nxt.start);
+                nxt.end = Math.max(c.end, nxt.end);
             }
         }
 
-        result.add(newInterval);
-        while (i < n) {
+        result.add(nxt);
+        for (; i < n; ++i) {
             result.add(intervals.get(i));
-            i++;
         }
 
         return result;
