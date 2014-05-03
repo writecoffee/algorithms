@@ -1,5 +1,5 @@
 public class longest_palindromic_substring {
-    private static String findPalindrome(String s, int left, int right) {
+    private String findPalindrome(String s, int left, int right) {
         while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
             left--;
             right++;
@@ -8,17 +8,17 @@ public class longest_palindromic_substring {
         return s.substring(left + 1, right);
     }
 
-    public static String longestPalindrome(String s) {
+    public String longestPalindrome(String s) {
         String longest = "";
 
-        for (int i = 0; i < s.length(); ++i) {
+        for (int i = 0; i < s.length() - longest.length() / 2; ++i) {
             String palindrome = findPalindrome(s, i, i);
             if (palindrome.length() > longest.length()) {
                 longest = palindrome;
             }
         }
 
-        for (int i = 1; i < s.length(); ++i) {
+        for (int i = 1; i < s.length() - longest.length() / 2; ++i) {
             String palindrome = findPalindrome(s, i - 1, i);
             if (palindrome.length() > longest.length()) {
                 longest = palindrome;
@@ -60,9 +60,5 @@ public class longest_palindromic_substring {
         }
 
         return longest;
-    }
-
-    public static void main(String[] args) {
-        longestPalindrome("aabaa");
     }
 }
