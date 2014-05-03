@@ -3,7 +3,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class merge_intervals {
-    public static class Interval {
+    public class Interval {
         int start;
         int end;
 
@@ -19,36 +19,29 @@ public class merge_intervals {
     }
 
     public ArrayList<Interval> merge(ArrayList<Interval> intervals) {
-        Collections.sort(intervals, new Comparator<Interval>() {
-            @Override
-            public int compare(Interval l, Interval r) {
-                return l.start - r.start;
-            }
-        });
-
         int n = intervals.size();
         ArrayList<Interval> result = new ArrayList<Interval>();
-
         if (n == 0) {
             return result;
         }
 
-        Interval newInterval = new Interval(intervals.get(0).start, intervals.get(0).end);
+        Collections.sort(intervals, new Comparator<Interval>() {
+            @Override
+            public int compare(Interval a, Interval b) {
+                return a.start - b.start;
+            }
+        });
 
-        if (n == 1) {
-            result.add(newInterval);
-            return result;
-        }
+        result.add(new Interval(intervals.get(0).start, intervals.get(0).end));
+        for (int i = 0; i < n - 1; ++i) {
+            Interval a = result.get(result.size() - 1), b = intervals.get(i + 1);
 
-        for (int i = 1; i < n; ++i) {
-            if (newInterval.end < intervals.get(i).start) {
-                result.add(newInterval);
-                newInterval = new Interval(intervals.get(i).start, intervals.get(i).end);
-            } else {
-                newInterval.end = Math.max(intervals.get(i).end, newInterval.end);
+            if (a.end < b.start) {
+                result.add(b);
+            } else if (a.end >= b.start) {
+                a.end = Math.max(a.end, b.end);
             }
         }
-        result.add(newInterval);
 
         return result;
     }
