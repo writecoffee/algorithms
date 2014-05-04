@@ -1,13 +1,13 @@
 import java.util.ArrayList;
 
-public class palindrome_partitioning {
-    public static ArrayList<ArrayList<String>> partition(String s) {
+public class all_palindrome_partitioning {
+    public ArrayList<ArrayList<String>> partition(String s) {
         ArrayList<ArrayList<String>> result = new ArrayList<ArrayList<String>>();
         explore(s, 0, new ArrayList<String>(), result);
         return result;
     }
 
-    public static void explore(String s, int start, ArrayList<String> path, ArrayList<ArrayList<String>> result) {
+    public void explore(String s, int start, ArrayList<String> path, ArrayList<ArrayList<String>> result) {
         int n = s.length();
 
         if (start == n) {
@@ -16,17 +16,20 @@ public class palindrome_partitioning {
         }
 
         for (int i = start + 1; i <= n; ++i) {
-            path.add(s.substring(start, i));
-            if (isPalindrome(s, start, i)) {
+            String t = s.substring(start, i);
+
+            if (isPalindrome(t)) {
+                path.add(t);
                 explore(s, i, path, result);
+                path.remove(path.size() - 1);
             }
-            path.remove(path.size() - 1);
         }
     }
 
-    public static boolean isPalindrome(String s, int start, int end) {
-        int i = start;
-        int j = end - 1;
+    public boolean isPalindrome(String s) {
+        int i = 0;
+        int j = s.length() - 1;
+
         while (i < j) {
             if (s.charAt(i) != s.charAt(j)) {
                 return false;
@@ -36,9 +39,5 @@ public class palindrome_partitioning {
         }
 
         return true;
-    }
-    
-    public static void main(String[] args) {
-        partition("aa");
     }
 }
