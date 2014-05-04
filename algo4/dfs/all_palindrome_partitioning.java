@@ -3,11 +3,11 @@ import java.util.ArrayList;
 public class all_palindrome_partitioning {
     public ArrayList<ArrayList<String>> partition(String s) {
         ArrayList<ArrayList<String>> result = new ArrayList<ArrayList<String>>();
-        explore(s, 0, new ArrayList<String>(), result);
+        explore(s, 0, new ArrayList<String>(), preprocess(s, s.length()), result);
         return result;
     }
 
-    public void explore(String s, int start, ArrayList<String> path, ArrayList<ArrayList<String>> result) {
+    private void explore(String s, int start, ArrayList<String> path, boolean[][] isPalin, ArrayList<ArrayList<String>> result) {
         int n = s.length();
 
         if (start == n) {
@@ -15,29 +15,34 @@ public class all_palindrome_partitioning {
             return;
         }
 
-        for (int i = start + 1; i <= n; ++i) {
-            String t = s.substring(start, i);
+        for (int i = start; i < n; ++i) {
+            String t = s.substring(start, i + 1);
 
-            if (isPalindrome(t)) {
+            if (isPalin[start][i]) {
                 path.add(t);
-                explore(s, i, path, result);
+                explore(s, i + 1, path, isPalin, result);
                 path.remove(path.size() - 1);
             }
         }
     }
 
-    public boolean isPalindrome(String s) {
-        int i = 0;
-        int j = s.length() - 1;
+    private boolean[][] preprocess(String s, int n) {
+        boolean[][] isPalin = new boolean[n][n];
 
-        while (i < j) {
-            if (s.charAt(i) != s.charAt(j)) {
-                return false;
-            }
-            i++;
-            j--;
+        for (int i = 0; i < n; ++i) {
+            isPalin[i][i] = true;
         }
 
-        return true;
+        for (int i = 0; i < n - 1; ++i) {
+            isPalin[i][i + 1] = s.charAt(i) == s.charAt(i + 1);
+        }
+
+        for (int k = 3; k <= n; ++k) {
+            for (int i = 0; i <= n - k; ++i) {
+                isPalin[i][i + k - 1] = s.charAt(i) == s.charAt(i + k - 1) && isPalin[i + 1][i + k - 2];
+            }
+        }
+
+        return isPalin;
     }
 }
