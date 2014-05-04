@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class gray_code {
+public class bit_gray_code {
     public ArrayList<Integer> grayCode(int n) {
         ArrayList<Integer> result = new ArrayList<Integer>();
 

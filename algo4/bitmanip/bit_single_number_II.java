@@ -1,4 +1,4 @@
-public class single_number_II {
+public class bit_single_number_II {
     int singleNumber(int A[]) {
         int result = 0;
         int n = A.length;
