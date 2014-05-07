@@ -1,21 +1,20 @@
-public class best_time_to_buy_and_sell_stock {
-    public static int maxProfit(int[] prices) {
-        int iMin = 0;
-        int result = 0;
+package gmax;
 
-        for (int i = 0; i < prices.length; i++) {
-            if (prices[i] < prices[iMin]) {
-                iMin = i;
-            }
-
-            result = Math.max(result, prices[i] - prices[iMin]);
+public class buy_and_sell_stock_buy_sell_once {
+    public int maxProfit(int[] prices) {
+        int n = prices.length;
+        if (n == 0) {
+            return 0;
         }
 
-        return result;
-    }
+        int minPrice = prices[0];
+        int gMax = 0;
 
-    public static void main(String[] args) {
-        maxProfit(new int[] { 1, 4, 3, 2 });
-        maxProfit(new int[] { 4, 3, 2, 7 });
+        for (int i = 1; i < n; ++i) {
+            minPrice = Math.min(minPrice, prices[i]);
+            gMax = Math.max(gMax, prices[i] - minPrice);
+        }
+
+        return gMax;
     }
 }
