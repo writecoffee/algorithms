@@ -1,3 +1,5 @@
+package gmax;
+
 public class maximum_sub_array {
 
     public static int maxSubArray(int[] A) {
