@@ -1,3 +1,5 @@
+package string;
+
 public class scramble_string {
     /**
      * We can construct a 3-d table using k to denote the length of the substring
