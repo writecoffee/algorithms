@@ -43,6 +43,26 @@ public class recover_bst {
         r.val = temp;
     }
 
+    /**
+     * Firstly, in-order traversal will give us a sorted array of numbers. Now the question becomes
+     * to recover a sorted array where two elements were swapped wrongly.
+     * 
+     * E.g. Given [1, 4, 3, 2, 5], which two shall we swap to fix the array?
+     * 
+     * One way is starting from the second element in the list and comparing it with its previous
+     * one. If it is smaller than its previous one, then we know at least one of the two is in wrong
+     * spot. So, the larger one in the first pair and the smaller one in the second pair are the
+     * ones we are looking for.
+     * 
+     * But, how about [1, 3, 2, 4, 5]?
+     * 
+     * This tells us that if there is only one such pair where the latter one is greater than the
+     * previous one. That pair is actually the two element we are looking for.
+     * 
+     * Since we only need to compare with previous node, we don't need to store all nodes during a
+     * traversal. We only need to keep track of the previously visited node. The algorithm is quite
+     * similar to the ones in the post of validating BST.
+     */
     public void recoverTreeNonrecur(TreeNode root) {
         if (root == null || (root.left == null && root.right == null)) {
             return;
@@ -50,22 +70,27 @@ public class recover_bst {
 
         Stack<TreeNode> s = new Stack<TreeNode>();
         TreeNode[] t = new TreeNode[2];
-        TreeNode last = null;
-        TreeNode next = root;
+        TreeNode pre = null, nxt = root;
 
-        while (next != null || !s.isEmpty()) {
-            if (next != null) {
-                s.push(next);
-                next = next.left;
+        while (nxt != null || !s.isEmpty()) {
+            if (nxt != null) {
+                s.push(nxt);
+                nxt = nxt.left;
             } else {
                 TreeNode c = s.pop();
-                if (last != null && last.val > c.val) {
-                    t[1] = c;
-                    t[0] = t[0] == null ? last : t[0];
+
+                if (pre != null && c.val < pre.val) {
+                    if (t[0] == null) {
+                        t[0] = pre;
+                        t[1] = c;
+                    } else {
+                        t[1] = c;
+                        break;
+                    }
                 }
 
-                last = c;
-                next = c.right;
+                pre = c;
+                nxt = c.right;
             }
         }
 
