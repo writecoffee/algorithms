@@ -47,9 +47,7 @@ public class validate_bst {
     boolean checkBSTWithMaxMinRange(TreeNode root, int min, int max) {
         if (root == null) {
             return true;
-        }
-
-        if (root.val <= min || root.val > max) {
+        } else if (root.val <= min || root.val > max) {
             return false;
         }
 
