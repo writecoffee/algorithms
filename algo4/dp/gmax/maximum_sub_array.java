@@ -1,8 +1,7 @@
 package gmax;
 
 public class maximum_sub_array {
-
-    public static int maxSubArray(int[] A) {
+    public int maxSubArray(int[] A) {
         int globalMaxSum = A[0];
         int localMaxSum = A[0];
         for (int i = 1; i < A.length; i++) {
@@ -13,7 +12,7 @@ public class maximum_sub_array {
         return globalMaxSum;
     }
 
-    public static int[] maxSubArrayWithIndices(int[] A) {
+    public int[] maxSubArrayWithIndices(int[] A) {
         int globalMaxSum = A[0];
         int localMaxSum = A[0];
         int start = 0;
@@ -38,7 +37,7 @@ public class maximum_sub_array {
         return new int[] { globalMaxSum, start, end };
     }
 
-    public static int maxSubArrayLength(int[] A) {
+    public int maxSubArrayLength(int[] A) {
         int gMaxSum = A[0];
         int lMaxSum = A[0];
         int len = 1;
@@ -65,27 +64,19 @@ public class maximum_sub_array {
      * A variance of this problem: if the maximum sum is negative, return 0. 
      * 
      */
-    public static int maxConsSum(int[] arr) {
+    public int maxConsSum(int[] arr) {
         int n = arr.length;
-        if (n == 0) {
-            return 0;
-        }
 
-        int lMax = 0;
-        int gMax = 0;
+        int lMax = arr[0];
+        int gMax = arr[0];
 
-        for (int i = 0; i < n; ++i) {
+        for (int i = 1; i < n; ++i) {
             lMax += arr[i];
-
-            if (lMax < 0) {
-                lMax = 0;
-                continue;
-            }
-
-            gMax = lMax > gMax ? lMax : gMax;
+            lMax = Math.max(0, lMax);
+            gMax = Math.max(gMax, lMax);
         }
 
-        return gMax;
+        return Math.max(0, gMax);
     }
 
     /**
@@ -93,13 +84,13 @@ public class maximum_sub_array {
      * This solution uses two arrays to store maximum sum for arr[0 .. i]
      * and arr[i .. n - 1].
      */
-    public static int maxConsSumInCircle(int[] arr) {
+    public int maxConsSumInCircle(int[] arr) {
         int n = arr.length;
         if (n == 0) {
             return 0;
         }
 
-        int nMax = maxConsSum(arr);
+        int gMax = maxConsSum(arr);
 
         int[] l2r = new int[n];
         int[] r2l = new int[n];
@@ -119,22 +110,9 @@ public class maximum_sub_array {
         }
 
         for (int i = 0; i < n - 1; ++i) {
-            nMax = Math.max(nMax, l2r[i] + r2l[i + 1]);
+            gMax = Math.max(gMax, l2r[i] + r2l[i + 1]);
         }
 
-        return nMax;
-    }
-
-    public static void main(String[] args) {
-        System.out.println("Max Sum: " + maxSubArray(new int[] { -2, 1, -3, 4, -1, 2, 1, -5, 4 }));
-        System.out.println("Sum Len: " + maxSubArrayLength(new int[] { -1, -1, -1, 4, -1, 2, 1, -5, 4 }));
-
-        maxSubArrayWithIndices(new int[] { -1, -1, -1, 4, -1, 2, 1, -5, 4 });
-        maxSubArrayWithIndices(new int[] { -2, 1, -3, 4, -1, 2, 1, -5, 4 });
-
-        System.out.println(maxConsSumInCircle(new int[] { 1, 2, -3, 4, -1, 0, 2 }));
-        System.out.println(maxConsSumInCircle(new int[] { 1, -2, 100, -1, 2, -3 }));
-        
-
+        return gMax;
     }
 }
