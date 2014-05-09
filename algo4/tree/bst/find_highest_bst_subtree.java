@@ -32,6 +32,18 @@ public class find_highest_bst_subtree {
         return gMax;
     }
 
+    /**
+     * If current sub-tree(c) satisfy the BST structure,
+     * 
+     * LMAX(c) = max(LMAX(c.left), LMAX(c.right)) + 1
+     * L(c) = L(c.left)
+     * R(c) = R(c.right)
+     * 
+     * Otherwise
+     * 
+     * LMAX(c) = Integer.MIN_VALUE
+     * 
+     */
     private Result explore(TreeNode root) {
         int depth = 0, lBound = root.val, rBound = root.val;
 
@@ -48,7 +60,7 @@ public class find_highest_bst_subtree {
         }
 
         if (root.right != null) {
-            rr = explore(root.right);
+            Result rr = explore(root.right);
             if (!rr.isBst) {
                 return rr;
             } else if (root.val > rr.lBound) {
