@@ -21,6 +21,11 @@ public class maximum_path_sum_for_binary_tree {
         return hMax.get(root);
     }
 
+    /**
+     * LMAX(c) = max(c, c + PATH(c.left), c + PATH(c.right), c + PATH(c.left) + PATH(c.right))
+     * PATH(c) = max(c, PATH(c.left), c + PATH(c.right))
+     * 
+     */
     private int explore(TreeNode root, HashMap<TreeNode, Integer> hMax) {
         if (root == null) {
             return 0;
