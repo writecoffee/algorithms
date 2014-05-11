@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class place_windows {
-    static class Rect {
+    private class Rect {
         public Rect(int _x1, int _y1, int _x2, int _y2) {
             x1 = _x1;
             x2 = _x2;
@@ -18,25 +18,25 @@ public class place_windows {
         }
 
         ArrayList<Integer> x = new ArrayList<Integer>(), y = new ArrayList<Integer>();
-        y.add(0);
-        y.add(H - h);
         x.add(0);
-        x.add(W - w);
+        x.add(H - h);
+        y.add(0);
+        y.add(W - w);
 
         for (int i = 0; i < rects.length; ++i) {
-            if (rects[i].x1 - w >= 0) {
-                x.add(rects[i].x1 - w);
+            if (rects[i].x1 - h >= 0) {
+                x.add(rects[i].x1 - h);
             }
 
-            if (rects[i].y1 - h >= 0) {
-                y.add(rects[i].y1 - h);
+            if (rects[i].y1 - w >= 0) {
+                y.add(rects[i].y1 - w);
             }
 
-            if (rects[i].x2 + w <= W) {
+            if (rects[i].x2 + h <= H) {
                 x.add(rects[i].x2);
             }
 
-            if (rects[i].y2 + h <= H) {
+            if (rects[i].y2 + w <= W) {
                 y.add(rects[i].y2);
             }
         }
@@ -44,21 +44,21 @@ public class place_windows {
         int gMin = w * h;
         for (int i = 0; i < x.size(); ++i) {
             for (int j = 0; j < y.size(); ++j) {
-                Rect r = new Rect(x.get(i), y.get(j), x.get(i) + w, y.get(j) + h);
+                Rect t = new Rect(x.get(i), y.get(j), x.get(i) + h, y.get(j) + w);
 
-                int tOverlap = 0;
-                for (int k = 0; k < rects.length; ++k) {
-                    tOverlap += getOverlappingArea(rects[k], r);
+                int overlap = 0;
+                for (Rect rect : rects) {
+                    overlap += calculateOverlappingRegion(rect, t);
                 }
 
-                gMin = Math.min(gMin, tOverlap);
+                gMin = Math.min(overlap, gMin);
             }
         }
 
         return gMin;
     }
 
-    private int getOverlappingArea(Rect a, Rect b) {
+    private int calculateOverlappingRegion(Rect a, Rect b) {
         int x = Math.max(0, Math.min(a.x2, b.x2) - Math.max(a.x1, b.x1));
         int y = Math.max(0, Math.min(a.y2, b.y2) - Math.max(a.y1, b.y1));
         return x * y;
