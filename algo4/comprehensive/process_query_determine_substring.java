@@ -2,29 +2,25 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 
-/**
- * You're given a large string T. And a stream of smaller string S1, S2, S3 ...
- * 
- * Determine whether Si is a subsequence of T.
- * 
- * |T| < 10 000 000 |Si| < 100 alphabet is 'a' - 'z'
- * 
- * T = abcdefg 
- * S1 = abc  yes
- * S2 = ag   yes
- * S3 = ga   no 
- * S4 = aa   no
- * 
- */
-public class process_query {
+public class process_query_determine_substring {
     ArrayList<String> sortedData;
 
+    /**
+     * The length of the data string is of length n. There are many query
+     * which length is no bigger than 10. To determine whether the input
+     * query string is a substring of the data string.
+     * 
+     * Pre-process the data then do binary search. O(10 n) space complexity
+     * and O(log n + 10) time complexity for each query.
+     */
     public void initWithString(String data) {
         int n = data.length();
         HashSet<String> allStrs = new HashSet<String>();
+
         for (int i = 0; i < n; i++) {
             allStrs.add(data.substring(i, Math.min(n, i + 10)));
         }
+
         sortedData = new ArrayList<String>(allStrs);
         Collections.sort(sortedData);
     }
