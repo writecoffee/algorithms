@@ -1,6 +1,6 @@
 package string;
 
-public class scramble_string {
+public class dp_scramble_string {
     /**
      * We can construct a 3-d table using k to denote the length of the substring
      * of s1 and s2, and use i, j to denote the starting point in s1 and s2 respectively.
