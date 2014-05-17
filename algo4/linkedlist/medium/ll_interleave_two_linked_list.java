@@ -1,4 +1,6 @@
-public class interleave_two_linked_list {
+package medium;
+
+public class ll_interleave_two_linked_list {
     public static class ListNode {
         int val;
         ListNode next;
