@@ -1,4 +1,6 @@
-public class interleaving_string {
+package string;
+
+public class dp_interleaving_string {
     public boolean isInterleave(String s1, String s2, String s3) {
         int m = s1.length();
         int n = s2.length();

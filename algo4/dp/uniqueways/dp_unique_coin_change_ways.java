@@ -1,4 +1,11 @@
-public class coin_change {
+package uniqueways;
+
+public class dp_unique_coin_change_ways {
+    /**
+     * R(v, j) = { R(v, j - 1)                      (if d[j] > v)
+     *             R(v - d[j], j) + R(v, j - 1)     (otherwise)   }
+     * 
+     */
     public int count(int[] denomination, int value) {
         int m = denomination.length;
         int[][] dp = new int[value + 1][m];

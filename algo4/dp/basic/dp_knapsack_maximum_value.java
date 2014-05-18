@@ -1,4 +1,6 @@
-public class knapsack_zero_one {
+package basic;
+
+public class dp_knapsack_maximum_value {
     public int getMax(int capacity, int[] weights, int[] values) {
         int m = weights.length;
         int[][] dp = new int[m + 1][capacity + 1];

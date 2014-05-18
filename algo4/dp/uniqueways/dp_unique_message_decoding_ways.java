@@ -1,6 +1,6 @@
-package string;
+package uniqueways;
 
-public class dp_count_number_message_decoding_ways {
+public class dp_unique_message_decoding_ways {
     public int numDecodings(String s) {
         int n = s.length();
 

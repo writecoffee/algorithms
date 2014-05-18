@@ -1,4 +1,6 @@
-public class unique_binary_search_tree {
+package uniqueways;
+
+public class dp_unique_binary_search_tree {
     /**
      * For a given number n, there will be 0 to n - 1 number of node(s)
      * in the left sub-tree. Let this number be k, and there will be

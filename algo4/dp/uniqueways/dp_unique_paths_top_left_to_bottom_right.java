@@ -1,4 +1,6 @@
-public class unique_paths {
+package uniqueways;
+
+public class dp_unique_paths_top_left_to_bottom_right {
     public static int uniquePaths(int m, int n) {
         int[][] mem = new int[m][n];
 

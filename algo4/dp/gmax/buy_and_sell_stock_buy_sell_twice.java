@@ -1,6 +1,6 @@
 package gmax;
 
-public class best_time_to_buy_and_sell_stock_twice {
+public class buy_and_sell_stock_buy_sell_twice {
     public int maxProfit(int[] prices) {
         int n = prices.length;
         int result = 0;

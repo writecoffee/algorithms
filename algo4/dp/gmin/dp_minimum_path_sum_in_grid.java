@@ -1,6 +1,7 @@
-public class minimum_path_sum {
+package gmin;
 
-    public static int minPathSum(int[][] grid) {
+public class dp_minimum_path_sum_in_grid {
+    public int minPathSum(int[][] grid) {
         int m = grid.length;
         int n = grid[0].length;
         int[][] table = new int[m][n];
@@ -23,7 +24,7 @@ public class minimum_path_sum {
         return table[m - 1][n - 1];
     }
 
-    public static int minPathSumOptimized(int[][] grid) {
+    public int minPathSumOptimized(int[][] grid) {
         int m = grid.length;
         int n = grid[0].length;
         int[] dp = new int[n];

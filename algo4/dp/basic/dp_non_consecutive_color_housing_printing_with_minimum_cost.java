@@ -1,4 +1,6 @@
-public class non_consecutive_color_housing_printing_with_minimum_cost {
+package basic;
+
+public class dp_non_consecutive_color_housing_printing_with_minimum_cost {
     static int calculate(int[][] A) {
         assert A.length > 0 && A[0].length > 0;
 

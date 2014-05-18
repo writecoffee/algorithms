@@ -1,4 +1,6 @@
-public class unique_paths_II {
+package uniqueways;
+
+public class dp_unique_paths_top_left_to_bottom_right_with_obstacles {
     int uniquePathsWithObstacles(int[][] obstacleGrid) {
         int m = obstacleGrid.length;
         int n = obstacleGrid[0].length;

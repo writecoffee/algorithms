@@ -1,4 +1,6 @@
-public class possible_binary_tree_given_preorder_postorder_traversals {
+package uniqueways;
+
+public class dp_unique_binary_trees_given_preorder_postorder_traversals {
     /**
      * Pre-order： [1, 2]
      * Post-order：[2, 1]

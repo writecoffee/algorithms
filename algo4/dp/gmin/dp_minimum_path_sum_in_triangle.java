@@ -1,6 +1,8 @@
+package gmin;
+
 import java.util.ArrayList;
 
-public class triangle {
+public class dp_minimum_path_sum_in_triangle {
     public int minimumTotalInplace(ArrayList<ArrayList<Integer>> triangle) {
         for (int i = triangle.size() - 2; i >= 0; --i) {
             for (int j = 0; j < i + 1; j++) {

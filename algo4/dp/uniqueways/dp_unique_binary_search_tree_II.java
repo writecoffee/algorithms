@@ -1,6 +1,8 @@
+package uniqueways;
+
 import java.util.ArrayList;
 
-public class unique_binary_search_tree_II {
+public class dp_unique_binary_search_tree_II {
     public static class TreeNode {
         int val;
         TreeNode left;

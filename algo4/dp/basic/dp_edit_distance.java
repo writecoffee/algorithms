@@ -1,4 +1,6 @@
-public class edit_distance {
+package basic;
+
+public class dp_edit_distance {
     public static int minDistance(String word1, String word2) {
         int m = word1.length();
         int n = word2.length();
