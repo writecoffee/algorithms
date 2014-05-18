@@ -1,49 +1,65 @@
 package window;
 
+/**
+ * Given a string S and a string T, find the minimum window in S which will contain all the
+ * characters in T in complexity O(n).
+ * 
+ * For example,
+ * 
+ * S = "ADOBECODEBANC"
+ * 
+ * T = "ABC"
+ * 
+ * Minimum window is "BANC".
+ * 
+ */
 public class tp_minimum_window_substring {
-    String minWindow(String s, String t) {
+    /**
+     * Firstly, we keep expanding the right boundary until we have all characters need for string t.
+     * Then when continue moving the right pointer we would get duplicate characters. We can chop
+     * off character on the left boundary only if that is not in string t or is redundant (since
+     * we are accepting more characters when we are expanding the right boundary).
+     * 
+     */
+    public String minWindow(String s, String t) {
+        int m = s.length(), n = t.length();
         int[] needed = new int[256];
         int[] found = new int[256];
-
-        int m = s.length(), n = t.length();
-        String result = "";
 
         for (int i = 0; i < n; ++i) {
             needed[t.charAt(i)]++;
         }
 
-        int i = 0, j = 0, needCnt = 0, l = -1, r = m - 1;
-
-        for (; j < m; ++j) {
-            char c = s.charAt(j);
+        int start = -1, end = m, needCnt = 0;
+        for (int l = 0, r = 0; r < m; ++r) {
+            char c = s.charAt(r);
 
             if (needed[c] == 0) {
                 continue;
+            } else {
+                found[c]++;
+
+                if (found[c] <= needed[c]) {
+                    needCnt++;
+                }
             }
 
-            needCnt = found[c] < needed[c] ? needCnt + 1 : needCnt;
-            found[c]++;
-
             if (needCnt == n) {
-                while (i < j) {
-                    if (needed[s.charAt(i)] == 0) {
-                        i++;
-                    } else if (found[s.charAt(i)] == needed[s.charAt(i)]) {
-                        break;
+                for (; l < r; ++l) {
+                    if (needed[s.charAt(l)] == 0) {
+                        continue;
+                    } else if (found[s.charAt(l)] > needed[s.charAt(l)]) {
+                        found[s.charAt(l)]--;
                     } else {
-                        found[s.charAt(i)]--;
-                        i++;
+                        break;
                     }
                 }
 
-                if (j - i + 1 < r - l + 1) {
-                    l = i;
-                    r = j;
-                    result = s.substring(l, r + 1);
-                }
+                end = r - l < end - start ? r : end;
+                start = r - l < end - start ? l : start;
             }
         }
 
-        return result;
+        return start == -1 ? "" : s.substring(start, end + 1);
     }
 }
