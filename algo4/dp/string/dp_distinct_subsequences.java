@@ -48,6 +48,10 @@ public class dp_distinct_subsequences {
      * Otherwise, we can only inherit the result from sub-problem s[0 .. i - 1], t[0 .. j]
      * and expect there would be a character after s[i] to match t[j].
      * 
+     * Also note that when t[0 .. j] is longer than s[0 .. i], we are assured that there
+     * will be no possible subsequence for that situation. Thus we have smaller boundary for
+     * the inner column iteration.
+     * 
      */
     public int numDistinctImproved(String s, String t) {
         int m = s.length(), n = t.length();
