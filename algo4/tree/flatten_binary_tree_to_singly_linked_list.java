@@ -1,7 +1,7 @@
 import java.util.Stack;
 
 public class flatten_binary_tree_to_singly_linked_list {
-    private class TreeNode {
+    public class TreeNode {
         int val;
         TreeNode left;
         TreeNode right;

@@ -1,39 +1,53 @@
 package basic;
 
 public class dp_non_consecutive_color_housing_printing_with_minimum_cost {
-    static int calculate(int[][] A) {
-        assert A.length > 0 && A[0].length > 0;
+    /**
+     * matrix[i][j]: the cost for printing house i with color j.
+     *
+     */
+    public static int calculate(int[][] matrix) {
+        assert matrix.length > 0 && matrix[0].length > 0;
 
-        int m = A.length;
-        int n = A[0].length;
+        int m = matrix.length;
+        int n = matrix[0].length;
 
-        int[] dp = new int[n];
-        for (int i = 0; i < n; i++) {
-            dp[i] = A[0][i];
+        int[] l2r = new int[n + 2];
+        int[] r2l = new int[n + 2];
+
+        l2r[0] = Integer.MAX_VALUE;
+        l2r[n + 1] = Integer.MAX_VALUE;
+        r2l[0] = Integer.MAX_VALUE;
+        r2l[n + 1] = Integer.MAX_VALUE;
+
+        for (int j = 1; j <= n; ++j) {
+            l2r[j] = Math.min(matrix[0][j - 1], l2r[j - 1]);
         }
 
-        for (int i = 1; i < m; i++) {
-            int[] temp = new int[n];
+        for (int j = n; j >= 1; --j) {
+            r2l[j] = Math.min(matrix[0][j - 1], r2l[j + 1]);
+        }
 
-            for (int j = 0; j < n; j++) {
-                temp[j] = A[i][j] + pollMin(dp, j);
+        for (int i = 1; i < m; ++i) {
+            int[] c = new int[n + 2];
+            c[0] = Integer.MAX_VALUE;
+            c[n + 1]  = Integer.MAX_VALUE;
+
+            for (int j = 1; j <= n; ++j) {
+                c[j] = Math.min(l2r[j - 1], r2l[j + 1]) + matrix[i][j - 1];
             }
 
-            dp = temp;
-        }
+            l2r[0] = Integer.MAX_VALUE;
+            for (int j = 1; j <= n; ++j) {
+                l2r[j] = Math.min(c[j], l2r[j - 1]);
+            }
 
-        return pollMin(dp, 0);
-    }
-
-    public static int pollMin(int[] A, int except) {
-        int min = Integer.MAX_VALUE;
-        for (int i = 0; i < A.length; i++) {
-            if (i != except && A[i] < min) {
-                min = A[i];
+            r2l[n + 1] = Integer.MAX_VALUE;
+            for (int j = n; j >= 1; --j) {
+                r2l[j] = Math.min(c[j], r2l[j + 1]);
             }
         }
 
-        return min;
+        return l2r[n];
     }
 
     public static void main(String[] args) {

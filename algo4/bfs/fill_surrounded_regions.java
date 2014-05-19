@@ -2,6 +2,28 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 
+/**
+ * Given a 2D board containing 'X' and 'O', capture all regions surrounded by 'X'.
+ * 
+ * A region is captured by flipping all 'O's into 'X's in that surrounded region.
+ * 
+ * For example,
+ * 
+ *     X X X X
+ *     X O O X
+ *     X X O X
+ *     X O X X
+ * 
+ * After running your function, the board should be:
+ * 
+ *     X X X X
+ *     X X X X
+ *     X X X X
+ *     X O X X
+ *     
+ * http://oj.leetcode.com/problems/surrounded-regions/
+ * 
+ */
 public class fill_surrounded_regions {
     public void solveFromBorder(char[][] board) {
         if (board == null || board.length == 0 || board[0].length == 0) {
