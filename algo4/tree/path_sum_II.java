@@ -4,6 +4,29 @@ import java.util.IdentityHashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 
+/**
+ * Given a binary tree and a sum, find all root-to-leaf paths where each path's sum equals the given sum.
+ * 
+ * For example:
+ * Given the below binary tree and sum = 22,
+ * 
+ *               5
+ *              / \
+ *             4   8
+ *            /   / \
+ *           11  13  4
+ *          /  \    / \
+ *         7    2  5   1
+ *         
+ * return
+ * [
+ *    [5,4,11,2],
+ *    [5,8,4,5]
+ * ]
+ *
+ * http://oj.leetcode.com/problems/path-sum-ii/
+ *
+ */
 public class path_sum_II {
     public class TreeNode {
         int val;
@@ -17,33 +40,34 @@ public class path_sum_II {
 
     public ArrayList<ArrayList<Integer>> pathSum(TreeNode root, int sum) {
         ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+
+        if (root == null) {
+            return result;
+        }
+
         ArrayList<Integer> path = new ArrayList<Integer>();
-        probe(root, sum, result, path);
+        path.add(root.val);
+        explore(root, sum - root.val, path, result);
         return result;
     }
 
-    public void probe(TreeNode root, int sum, ArrayList<ArrayList<Integer>> result,
-                    ArrayList<Integer> path) {
-        if (root == null) {
+    private void explore(TreeNode root, int sum, ArrayList<Integer> path, ArrayList<ArrayList<Integer>> result) {
+        if (root.left == null && root.right == null && sum == 0) {
+            result.add(new ArrayList<Integer>(path));
             return;
         }
 
-        path.add(root.val);
-
-        if (root.left == null && root.right == null) {
-            if (root.val == sum) {
-                ArrayList<Integer> newResult = new ArrayList<Integer>(path);
-                result.add(newResult);
-            }
-
+        if (root.left != null) {
+            path.add(root.left.val);
+            explore(root.left, sum - root.left.val, path, result);
             path.remove(path.size() - 1);
-            return;
         }
 
-        probe(root.left, sum - root.val, result, path);
-        probe(root.right, sum - root.val, result, path);
-
-        path.remove(path.size() - 1);
+        if (root.right != null) {
+            path.add(root.right.val);
+            explore(root.right, sum - root.right.val, path, result);
+            path.remove(path.size() - 1);
+        }
     }
 
     private class BtInfo {
