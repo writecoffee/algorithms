@@ -3,7 +3,7 @@ package bst;
 import java.util.Stack;
 
 public class find_kth_smallest_number_in_bst {
-    public static class TreeNode {
+    public class TreeNode {
         int val;
         TreeNode left;
         TreeNode right;
