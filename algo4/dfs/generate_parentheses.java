@@ -3,34 +3,34 @@ import java.util.HashMap;
 import java.util.Stack;
 
 public class generate_parentheses {
-    public static ArrayList<String> generateParenthesis(int n) {
+    public ArrayList<String> generateParenthesis(int n) {
         ArrayList<String> result = new ArrayList<String>();
         if (n == 0) {
             return result;
         }
 
-        String str = "";
-        getParenthesis(n, n, str, result);
+        explore(n, n, new StringBuilder(), result);
         return result;
     }
 
-    public static void getParenthesis(int leftCounter, int rightCounter, String str, ArrayList<String> result) {
+    private void explore(int leftCounter, int rightCounter, StringBuilder s, ArrayList<String> result) {
         if (leftCounter == 0 && rightCounter == 0) {
-            result.add(str);
+            result.add(s.toString());
             return;
         }
 
-        if (leftCounter == 0) {
-            getParenthesis(0, rightCounter - 1, str + ")", result);
-        } else if (leftCounter > 0) {
-            getParenthesis(leftCounter - 1, rightCounter, str + "(", result);
-            if (rightCounter > leftCounter) {
-                getParenthesis(leftCounter, rightCounter - 1, str + ")", result);
-            }
+        if (leftCounter > 0) {
+            explore(leftCounter - 1, rightCounter, s.append("("), result);
+            s.deleteCharAt(s.length() - 1);
+        }
+
+        if (rightCounter > leftCounter) {
+            explore(leftCounter, rightCounter - 1, s.append(")"), result);
+            s.deleteCharAt(s.length() - 1);
         }
     }
 
-    public static ArrayList<String> generateParenthesisNonrecur(int n) {
+    public ArrayList<String> generateParenthesisNonrecur(int n) {
         ArrayList<String> result = new ArrayList<String>();
         if (n == 0) {
             return result;
