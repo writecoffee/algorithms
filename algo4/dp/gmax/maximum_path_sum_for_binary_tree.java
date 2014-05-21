@@ -22,8 +22,8 @@ public class maximum_path_sum_for_binary_tree {
     }
 
     /**
-     * LMAX(c) = max(c, c + PATH(c.left), c + PATH(c.right), c + PATH(c.left) + PATH(c.right))
-     * PATH(c) = max(c, PATH(c.left), c + PATH(c.right))
+     * LMAX(c) = max(c, c + LMAX(c.left), c + LMAX(c.right))
+     * GMAX(c) = max(GMAX(c.left), GMAX(c.right), LMAX(c), c + LMAX(c.left) + LMAX(c.right))
      * 
      */
     private int explore(TreeNode root, HashMap<TreeNode, Integer> hMax) {
@@ -31,27 +31,23 @@ public class maximum_path_sum_for_binary_tree {
             return 0;
         }
 
-        int l = explore(root.left, hMax);
-        int r = explore(root.right, hMax);
+        int ll = explore(root.left, hMax);
+        int lr = explore(root.right, hMax);
 
-        int lMax;
-        if (l < 0 && r < 0) {
-            lMax = root.val;
-        } else {
-            lMax = Math.max(l, r) + root.val;
-        }
+        int lMax = Math.max(root.val, Math.max(ll, lr) + root.val);
 
-        int gMax = Integer.MIN_VALUE;
+        int gl = Integer.MIN_VALUE;
+        int gr = Integer.MIN_VALUE;
 
         if (root.left != null) {
-            gMax = Math.max(gMax, hMax.get(root.left));
+            gl = hMax.get(root.left);
         }
 
         if (root.right != null) {
-            gMax = Math.max(gMax, hMax.get(root.right));
+            gr = hMax.get(root.right);
         }
 
-        hMax.put(root, Math.max(Math.max(gMax, lMax), l + r + root.val));
+        hMax.put(root, Math.max(Math.max(Math.max(gl, gr), lMax), ll + lr + root.val));
         return lMax;
     }
 }
