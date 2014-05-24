@@ -1,78 +1,34 @@
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.ArrayList;
 
 public class simplify_path {
-    public static String simplifyPath(String path) {
-        Deque<String> stack = new ArrayDeque<String>();
+    public String simplifyPath(String path) {
+        String[] dirs = path.split("/");
+        int n = dirs.length;
+        ArrayList<String> stk = new ArrayList<String>();
 
-        for (int i = 0; i < path.length(); i++) {
-            if (path.charAt(i) == '/') {
+        for (int i = 0; i < n; ++i) {
+            String c = dirs[i];
+
+            if (c.equals(".") || c.equals("") || (c.equals("..") && stk.isEmpty())) {
                 continue;
-            } else if (path.charAt(i) == '.' && (
-                            (i < path.length() - 2 && path.charAt(i + 1) == '.' && path.charAt(i + 2) == '/') ||
-                            (i == path.length() - 2 && path.charAt(i + 1) == '.'))) {
-                stack.pollLast();
-                i += 2;
-            } else if (path.charAt(i) == '.' && (
-                            (i < path.length() - 1 && path.charAt(i + 1) == '/') ||
-                            (i == path.length() - 1))) {
-                i += 1;
+            } else if (c.equals("..") && !stk.isEmpty()) {
+                stk.remove(stk.size() - 1);
             } else {
-                int j = i + 1;
-                while (j < path.length() && path.charAt(j) != '/') {
-                    j++;
-                }
-
-                stack.addLast(path.substring(i, j));
-
-                i = j - 1;
+                stk.add(c);
             }
         }
 
-        StringBuilder result = new StringBuilder();
-        for (Object s : stack.toArray()) {
-            result.append('/');
-            result.append((String) s);
+        StringBuilder sb = new StringBuilder();
+
+        if (stk.isEmpty()) {
+            return "/";
         }
 
-        return result.length() == 0 ? "/" : result.toString();
-    }
-
-    public static String simplifyPathRightWay(String path) {
-        Deque<String> stack = new ArrayDeque<String>();
-        int last = 1;
-
-        for (int i = path.indexOf("/", 1); i > 0 && i < path.length(); last = i + 1, i = path.indexOf("/", i + 1)) {
-            String s = path.substring(last, i);
-            if (s.equals("..")) {
-                stack.pollLast();
-            } else if (!s.isEmpty() && !s.equals(".") && !s.equals("/")) {
-                stack.addLast(s);
-            }
+        for (String dir : stk) {
+            sb.append("/");
+            sb.append(dir);
         }
 
-        if (last != path.length()) {
-            if (path.substring(last).equals("..")) {
-                stack.pollLast();
-            } else if (!path.substring(last).equals(".")) {
-                stack.addLast(path.substring(last));
-            }
-        }
-
-        StringBuilder result = new StringBuilder();
-        for (Object o : stack.toArray()) {
-            result.append("/" + (String) o);
-        }
-
-        return result.length() == 0 ? "/" : result.toString();
-    }
-
-    public static void main(String[] args) {
-        System.out.println(simplifyPathRightWay("///"));
-        System.out.println(simplifyPathRightWay("/a/./b/../../c/"));
-        System.out.println(simplifyPathRightWay("/..."));
-        System.out.println(simplifyPathRightWay("/."));
-        System.out.println(simplifyPathRightWay("/.."));
-        System.out.println(simplifyPathRightWay("/abc/..."));
+        return sb.toString();
     }
 }
