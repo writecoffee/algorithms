@@ -6,7 +6,21 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Queue;
 
-public class job_scheduling {
+/**
+ * There are n tasks need to be done (labeled from 1 to n). There are dependency relationship
+ * between some of these tasks. If there is a possible topology output for these tasks, output
+ * it to the result; otherwise, return false.
+ * 
+ * For example:
+ * 
+ * n = 5
+ * 1->2,3
+ * 3->4
+ * 
+ * One possible result would be 4, 3, 2, 1, 5.
+ * 
+ */
+public class job_scheduling_with_bfs {
     public boolean jobSchedule(Map<Integer, List<Integer>> deps, int n, int[] result) {
         HashMap<Integer, ArrayList<Integer>> hNotify = new HashMap<Integer, ArrayList<Integer>>();
         HashMap<Integer, Integer> hInDegrees = new HashMap<Integer, Integer>();
