@@ -1,4 +1,6 @@
-public class circular_buffer_II {
+package circle;
+
+public class rotatable_buffer {
     private Object[] buffer;
     private int head = 0;
 
@@ -7,7 +9,7 @@ public class circular_buffer_II {
      * can be efficiently rotated.
      * 
      */
-    public circular_buffer_II(int capacity) {
+    public rotatable_buffer(int capacity) {
         buffer = new Object[capacity];
     }
 
