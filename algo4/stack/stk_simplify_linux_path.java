@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class simplify_path {
+public class stk_simplify_linux_path {
     public String simplifyPath(String path) {
         String[] dirs = path.split("/");
         int n = dirs.length;

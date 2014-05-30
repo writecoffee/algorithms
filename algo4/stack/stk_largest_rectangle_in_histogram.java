@@ -17,7 +17,7 @@ import java.util.Stack;
  * return 10.
  * 
  */
-public class largest_rectangle_in_histogram {
+public class stk_largest_rectangle_in_histogram {
     /**
      * For each height we can look backwards to find the "bottleneck" height and find the maximum
      * rectangle over all n * n possible sizes of rectangles.
