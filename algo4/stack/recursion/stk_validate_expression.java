@@ -1,6 +1,26 @@
+package recursion;
 import java.util.Stack;
 
-public class valid_expression {
+/**
+ * Validate an expression.
+ * 
+ * The expression only includes:
+ * 
+ * digit: '0' - '9'
+ * binary operator: '+', '-'
+ * parenthesis: '(', ')'
+ * 
+ * For example:
+ * 
+ * "1"                 true
+ * "10+(2-(31+(4)))"   true
+ * "-1"                false
+ * "1+"                false
+ * 
+ * {@linkplain http://www.itint5.com/oj/41/#41}
+ *
+ */
+public class stk_validate_expression {
     private enum Token {
         EMPTY, NUMBER, OPERATOR, L_PAREN, R_PAREN
     }
