@@ -10,7 +10,7 @@ import java.util.Stack;
  * {@linkplain https://oj.leetcode.com/problems/valid-parentheses/}
  * 
  */
-public class stk_validate_parentheses {
+public class stk_validate_parentheses_sequence {
     public boolean isValid(String s) {
         int n = s.length();
         Stack<Character> stk = new Stack<Character>();
