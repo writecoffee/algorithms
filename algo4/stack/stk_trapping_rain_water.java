@@ -2,22 +2,18 @@ import java.util.Stack;
 
 public class stk_trapping_rain_water {
     public int trap(int[] heights) {
-        Stack<Integer> stk = new Stack<Integer>();
         int n = heights.length;
-        int water = 0;
-        int i = 0;
+        Stack<Integer> stk = new Stack<Integer>();
+        int water = 0, i = 0;
 
         while (i < n) {
-            if (stk.isEmpty() || heights[i] < heights[stk.peek()]) {
+            if (stk.isEmpty() || heights[stk.peek()] > heights[i]) {
                 stk.push(i++);
-            } else if (stk.size() == 1) {
-                stk.pop();
             } else {
                 int bottom = heights[stk.pop()];
-                int bar = Math.min(heights[stk.peek()], heights[i]);
-                int width = i - stk.peek() - 1;
+                int left = stk.isEmpty() ? i - 1 : stk.peek();
 
-                water += (bar - bottom) * width;
+                water += (Math.min(heights[left], heights[i]) - bottom) * (i - left - 1);
             }
         }
 
