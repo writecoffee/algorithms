@@ -52,14 +52,12 @@ public class tp_two_sum {
         int n = numbers.length;
 
         for (int i = 0; i < n; ++i) {
-            h.put(numbers[i], i + 1);
-        }
-
-        for (int i = 0; i < n; ++i) {
             int other = target - numbers[i];
 
             if (h.containsKey(other) && h.get(other) != i + 1) {
                 return new int[] { Math.min(i + 1, h.get(other)), Math.max(i + 1, h.get(other)) };
+            } else {
+                h.put(numbers[i], i + 1);
             }
         }
 
