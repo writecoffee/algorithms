@@ -1,35 +1,28 @@
+import java.util.NoSuchElementException;
 import java.util.Stack;
 
-public class stack_with_min_function {
-
-    public static class UnderflowException extends Exception {
-        private static final long serialVersionUID = 4805333897944620573L;
-        UnderflowException(String message) {
-            super(message);
-        }
-    }
-
+public class stk_stack_with_min_function {
     public static class MinStack {
-        public final Stack<Integer> s;
+        private final Stack<Integer> s;
         private final Stack<Integer> minStack;
 
-        public int min() throws UnderflowException {
+        public int min() {
             if (s.isEmpty()) {
-                throw new UnderflowException("Stack underflow");
+                throw new NoSuchElementException("Stack underflow");
             }
 
             return minStack.peek();
         }
 
-        MinStack() {
+        public MinStack() {
             s = new Stack<Integer>();
             minStack = new Stack<Integer>();
             minStack.push(Integer.MAX_VALUE);
         }
 
-        public int pop() throws UnderflowException {
+        public int pop() {
             if (s.isEmpty()) {
-                throw new UnderflowException("Stack underflow");
+                throw new NoSuchElementException("Stack underflow");
             }
 
             int result = s.pop();
@@ -52,9 +45,9 @@ public class stack_with_min_function {
             s.push(v);
         }
 
-        public int peek() throws UnderflowException {
+        public int peek() {
             if (s.isEmpty()) {
-                throw new UnderflowException("Stack underflow");
+                throw new NoSuchElementException("Stack underflow");
             }
 
             return s.peek();
@@ -67,11 +60,12 @@ public class stack_with_min_function {
         s.push(3);
 
         try {
+            assert s.min() == 3;
             assert s.pop() == 3;
             assert s.min() == 4;
             assert s.pop() == 4;
             s.min();
-        } catch (UnderflowException e) {
+        } catch (NoSuchElementException e) {
             System.out.println(e.getMessage());
         }
     }
