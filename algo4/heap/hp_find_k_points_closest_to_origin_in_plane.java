@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 
-public class hp_find_k_closest_points_in_plane {
+public class hp_find_k_points_closest_to_origin_in_plane {
     class Point implements Comparable<Point> {
         final int x, y;
 
