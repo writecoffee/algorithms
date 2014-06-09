@@ -1,9 +1,19 @@
-import java.util.ArrayDeque;
-import java.util.Deque;
+package bfs;
+
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class minimum_depth {
+/**
+ * Given a binary tree, find its minimum depth.
+ * 
+ * The minimum depth is the number of nodes along the shortest path from the root node down to the
+ * nearest leaf node.
+ * 
+ * [Difficulty] - Easy
+ * [Source]     - {@linkplain https://oj.leetcode.com/problems/minimum-depth-of-binary-tree/}
+ * 
+ */
+public class tr_bfs_minimum_depth {
     public class TreeNode {
         int val;
         TreeNode left;
@@ -21,19 +31,18 @@ public class minimum_depth {
 
         Queue<TreeNode> q = new LinkedList<TreeNode>();
         q.add(root);
+        q.add(null);
         int level = 1;
 
-        while (!q.isEmpty()) {
-            Deque<TreeNode> p = new ArrayDeque<TreeNode>(q);
-            q.clear();
+        while (true) {
+            TreeNode c = q.poll();
 
-            while (!p.isEmpty()) {
-                TreeNode c = p.poll();
-
-                if (c.left == null && c.right == null) {
-                    return level;
-                }
-
+            if (c == null) {
+                level++;
+                q.add(null);
+            } else if (c.left == null && c.right == null) {
+                return level;
+            } else {
                 if (c.left != null) {
                     q.add(c.left);
                 }
@@ -42,10 +51,6 @@ public class minimum_depth {
                     q.add(c.right);
                 }
             }
-
-            level++;
         }
-
-        return level;
     }
 }

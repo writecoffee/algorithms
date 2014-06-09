@@ -4,29 +4,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Given a root node of a tree, find the longest path that can start from any node in
- * the tree and terminate at any node in the tree (be more specific, terminate at any
- * leave in the tree).
+ * Given a root node of a tree, each node in the tree contains a value, calculate the
+ * maximum non-negative sum of any possible path starting from any node and terminating
+ * at any node in the tree.
  * 
  * For example: 
  * 
- *         *
+ *       -10
  *      /  |  \
- *     *   *   *
+ *     2   3   4
  *        / \
- *       *   *
+ *       5  -1
  *          /
- *         *
+ *         6
  *        /
- *       *
- * 
- * The result should be 6.
+ *       -1
+ *       
+ * The result should be 13, route from node(5) to node(6).
  * 
  * [Difficulty] - Medium
- * [Source]     - A variation of {@linkplain http://www.itint5.com/oj/#13}
+ * [Source]     - {@linkplain http://www.itint5.com/oj/#13}
  *
  */
-public class tr_diameter_of_tree {
+public class tr_recur_maximum_path_sum_for_general_tree_I {
     public class TreeNode {
         public final int val;
         public final List<TreeNode> children;
@@ -39,7 +39,7 @@ public class tr_diameter_of_tree {
 
     private int gMax;
 
-    public int getDiameter(TreeNode root) {
+    public int maxTreePathSum(TreeNode root) {
         if (root == null) {
             return 0;
         }
@@ -58,9 +58,9 @@ public class tr_diameter_of_tree {
             cp1 = Math.max(cp1, cp);
             cp2 = Math.max(cp2, t);
         }
-
-        int lMax = 1 + Math.max(cp1, cp2);
-        gMax = Math.max(gMax, 1 + cp1 + cp2);
+ 
+        int lMax = r.val + Math.max(cp1, cp2);
+        gMax = Math.max(gMax, r.val + cp1 + cp2);
         return lMax;
     }
 }

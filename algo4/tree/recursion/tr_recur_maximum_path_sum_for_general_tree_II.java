@@ -29,7 +29,7 @@ import java.util.List;
  * [Source]     - {@linkplain http://www.itint5.com/oj/#13}
  *
  */
-public class tr_maximum_path_sum_for_general_tree_II {
+public class tr_recur_maximum_path_sum_for_general_tree_II {
     public class TreeNode {
         public final int val;
         public final List<TreeNode> children;

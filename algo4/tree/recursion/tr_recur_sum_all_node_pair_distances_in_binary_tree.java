@@ -32,7 +32,7 @@ import java.util.HashMap;
  * [Source]     - facebook interview
  *
  */
-public class tr_sum_all_node_pair_distances_in_binary_tree {
+public class tr_recur_sum_all_node_pair_distances_in_binary_tree {
     public static class TreeNode {
         public final char val;
         private TreeNode left, right;
