@@ -3,9 +3,8 @@ package recursion;
 import java.util.HashMap;
 
 /**
- * Given a binary tree, sum the distances between any pair of nodes
- * in the tree. The definition of the distance is the length of the
- * path from node a to node b.
+ * Given a binary tree, sum the distances between any pair of nodes in the tree. The definition of the
+ * distance is the length of the path from node a to node b.
  *
  * For example,
  *
@@ -33,7 +32,7 @@ import java.util.HashMap;
  * [Source]     - facebook interview
  *
  */
-public class sum_all_node_pair_distances_in_binary_tree {
+public class tr_sum_all_node_pair_distances_in_binary_tree {
     public static class TreeNode {
         public final char val;
         private TreeNode left, right;
@@ -58,17 +57,47 @@ public class sum_all_node_pair_distances_in_binary_tree {
     }
 
     /**
-     * Get how many number of flows that start off from node 'c'.
+     * Get the sum of length of flows which can start from node 'c'.
      * 
-     * Flow(c) = Flow(c.left) * 2 + 
-     *           Flow(c.right) * 2 +
-     *           1 - Flow(c.left.left) - Flow(c.left.right)             (if c.left not null)   (1)
-     *           1 - Flow(c.right.left) - Flow(c.right.right)           (if c.right not null)  (2)
+     * F_SUM(c) = NUM_FLOW(c.left) * 2 + 
+     *            NUM_FLOW(c.right) * 2 +
+     *            1 - NUM_FLOW(c.left.left) - NUM_FLOW(c.left.right)       (if c.left not null, 0 otherwise)
+     *            1 - NUM_FLOW(c.right.left) - NUM_FLOW(c.right.right)     (if c.right not null, 0 otherwise)  (a)
      * 
-     * In terms of (1) and (2), because those flows do not start from 'c', so we have to 
-     * eliminate them from the result.
-     *
-     * For the sum of all flow lengths, we can simply accumulate all Flow(c_i), i in [0, n).
+     * Also, the key theorem here is that F_SUM means not only the sum of length of flows which
+     * start from 'c', but also means the number of flows within sub-tree 'c'.
+     * 
+     * Now we'll prove the theorem above: F_SUM(c) = NUM_FLOW(c)
+     * 
+     * (1) Base Case
+     * 
+     *     When the tree has only three levels, it's straightforward that in level 1 and level 2,
+     *     F_SUM = NUM_FLOW. So for the root, we can compute F_SUM(root) by 
+     * 
+     *     NUM_FLOW(level-1 node) * 2 + NUMBER_OF_CHILDREN
+     * 
+     *     Because for level-1 nodes, doubling the number of flows is equivalent to getting the
+     *     lengths of paths that start from the root and end at the leaf. So for base case, the
+     *     formula holds.
+     * 
+     * (2) Inductive Hypothesis
+     * 
+     *     For tree with k - 1 levels (where k > 4), we assume F_SUM(root_{k - 1}) = NUM_FLOW(root_{k - 1}).
+     * 
+     *     For level k, firstly, F_SUM(root_k) can be computed by the formula (a) as listed above.
+     *     As all flows in its left and right sub-trees got doubled, that can also be regarded as the
+     *     length of all flows plus one. But some flows that are 2 levels away from rook_k can not be
+     *     linked by root_k. These can be simply eliminated by the third and fourth line in formula (a).
+     * 
+     *     For NUM_FLOW(root_k), formula (a) can also be illustrated in another way: from left and right
+     *     sub-tree of root_k, after multiplying by 2, we get the new flows that start from root_k, also
+     *     together with some redundant flows which cannot linked by root_k but just got taken into
+     *     account for the sum redundantly. After we eliminate these flows, we can get the exact result.
+     * 
+     *     So, for level k, we can also get the same result F_SUM(root_k) = NUM_FLOW(root_k).
+     * 
+     * Finally, we need to get the sum of all flow lengths, we can just simply accumulate all F_SUM(c_i)
+     * results, where i lies within [0, n), n is the number of nodes in the tree.
      * 
      */
     private static int getFlow(TreeNode c, HashMap<TreeNode, Integer> h) {
