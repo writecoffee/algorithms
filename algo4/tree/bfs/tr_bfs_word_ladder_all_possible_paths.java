@@ -1,3 +1,5 @@
+package bfs;
+
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -6,7 +8,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class word_ladder_II {
+public class tr_bfs_word_ladder_all_possible_paths {
     /**
      * This becomes a graph problem:
      * 
