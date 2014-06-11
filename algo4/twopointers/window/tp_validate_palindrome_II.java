@@ -17,7 +17,7 @@ package window;
  * 
  * "" is also not a palindrom.
  * 
- * [Difficulty] - Easy
+ * [Difficulty] - Hard
  * [Source]     - facebook interview
  * 
  */
