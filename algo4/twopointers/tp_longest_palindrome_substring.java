@@ -7,31 +7,30 @@
  * 
  * It needs O(n ^ 2) time complexity and O(1) space complexity.
  * 
+ * [Difficulty] - Medium
+ * [Source]     - {@linkplain https://oj.leetcode.com/problems/longest-palindromic-substring/}
+ * 
  */
 public class tp_longest_palindrome_substring {
     public String longestPalindrome(String s) {
+        int n = s.length(), l, r;
         String result = "";
-        int n = s.length();
 
         for (int i = 0; i < n - result.length() / 2; ++i) {
-            String t = expand(s, i, i);
-            result = t.length() > result.length() ? t : result;
-        }
-
-        for (int i = 1; i < n - result.length() / 2; ++i) {
-            String t = expand(s, i - 1, i);
-            result = t.length() > result.length() ? t : result;
+            result = expand(i - 1, i + 1, n, s, result);
+            result = expand(i, i + 1, n, s, result);
         }
 
         return result;
     }
 
-    private String expand(String s, int l, int r) {
-        while (l >= 0 && r < s.length() && s.charAt(l) == s.charAt(r)) {
-            l--;
-            r++;
+    private String expand(int l, int r, int n, String s, String result) {
+        for (; l >= 0 && r < n; --l, ++r) {
+            if (s.charAt(l) != s.charAt(r)) {
+                break;
+            }
         }
 
-        return s.substring(l + 1, r);
+        return (result = r - l - 1 > result.length() ? s.substring(l + 1, r) : result);
     }
 }
