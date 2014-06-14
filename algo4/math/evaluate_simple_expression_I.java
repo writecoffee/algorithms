@@ -7,7 +7,7 @@
  * {@linkplain http://www.itint5.com/oj/#26}
  *
  */
-public class evaluate_simple_expression {
+public class evaluate_simple_expression_I {
     public int evaluateNonrecur(String expr) {
         int result = 0;
         int n = expr.length();
@@ -53,7 +53,7 @@ public class evaluate_simple_expression {
         }
 
         if (i == n) {
-            return k;
+            return k * operand;
         } else if (expr.charAt(i) == '+') {
             return k * operand + evaluate(expr, i + 1, 1);
         } else if (expr.charAt(i) == '-') {
