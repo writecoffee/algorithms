@@ -1,3 +1,12 @@
+/**
+ * Implement int sqrt(int x).
+ * 
+ * Compute and return the square root of x.
+ * 
+ * [Difficulty] - Medium
+ * [Source]     - {@linkplain https://oj.leetcode.com/problems/sqrtx/}
+ * 
+ */
 public class sqrt_x {
     /**
      * Note that the goal is not to find the exact square root r but to find the floor(r).
@@ -5,38 +14,22 @@ public class sqrt_x {
      * for this is let x = 2.
      * 
      * Notice that we calculate the matching target to be x / mid so as to avoid data overflow.
+     * 
      */
     public int sqrt(int x) {
-        if (x < 2) {
-            return x;
-        }
+        int l = 1, r = x;
 
-        int l = 1;
-        int r = x;
-
-        /**
-         * Here we need the while loop terminates, if a^2 is slightly smaller than x and b^2
-         * is slightly larger than x, we will return a as square root. An apparent test case
-         * for this is let x = 2.
-         */
-        while (r > l + 1) {
-            /**
-             * Here we can come with test x = 2147483647 to let (l + r) overflow.
-             */
-            int a = l + (r - l) / 2;
-            int b = x / a;
+        while (l < r - 1) {
+            int a = l + (r - l) / 2, b = x / a;
 
             if (a == b) {
                 return a;
-            } else if (a < b) {
-                l = a;
-                r = b;
             } else {
-                l = b;
-                r = a;
+                l = Math.min(a, b);
+                r = Math.max(a, b);
             }
         }
 
-        return l;
+        return x == 0 ? 0 : l;
     }
 }
