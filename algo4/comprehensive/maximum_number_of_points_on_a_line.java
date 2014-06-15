@@ -6,7 +6,8 @@ import java.util.HashMap;
  * 
  * Be careful about NaN, Infinity and -Infinity.
  * 
- * [Difficulty] - Medium [Source] - {@linkplain https://oj.leetcode.com/problems/max-points-on-a-line/}
+ * [Difficulty] - Hard
+ * [Source]     - {@linkplain https://oj.leetcode.com/problems/max-points-on-a-line/}
  * 
  */
 public class maximum_number_of_points_on_a_line {
@@ -20,11 +21,25 @@ public class maximum_number_of_points_on_a_line {
         }
     }
 
+    /**
+     * A naive thought is that any two points in the plane can form a line. So we can choose
+     * (n + 1) * n / 2 number of possible edges to calculate their slope k. For each k we can
+     * add up the number of edges. Let the number of points be m, we can derive that
+     * (m + 1) * m / 2 = k and hence eventually we can derive m from the maximum k.
+     * 
+     * However, there would be case when point a and point b can coincide then we can not
+     * determine which k it belongs to.
+     * 
+     * Now, each time we can pick a specific point in the point set and iterate through other
+     * points in the set to find the maximum number of points share the same line. It's just
+     * (n + 1) * n / 2 number of pairs.
+     * 
+     */
     public int maxPoints(Point[] points) {
         int n = points.length;
         int gMax = 0;
 
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n - gMax; i++) {
             HashMap<Double, Integer> h = new HashMap<Double, Integer>();
             int lMax = 1, nan = 0;
 
