@@ -7,6 +7,9 @@
  * 
  * O(n * n) time complexity is acceptable.
  *
+ * [Difficulty] - Medium
+ * [Source]     - cc150-17.2
+ *
  */
 public class tic_tac_tou_II {
     private enum State {
