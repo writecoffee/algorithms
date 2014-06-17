@@ -6,7 +6,7 @@ import java.util.Random;
  * (inclusive).
  * 
  * [Difficulty] - Medium
- * [Source]     - cc150-17.11
+ * [Source]     - {@linkplain CC150-17.11}
  * 
  */
 public class rand7_given_rand5 {

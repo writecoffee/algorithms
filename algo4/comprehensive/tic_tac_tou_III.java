@@ -10,7 +10,7 @@
  * and preprocessing is required.
  *
  * [Difficulty] - Medium
- * [Source]     - cc150-17.2
+ * [Source]     - {@linkplain CC150-17.2}
  *
  */
 public class tic_tac_tou_III {
