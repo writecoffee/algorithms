@@ -30,7 +30,7 @@ import java.util.ArrayList;
  * [Source]     - {@linkplain https://www.hackerrank.com/challenges/quicksort1}
  * 
  */
-public class quick_sort_partition {
+public class quick_sort_no_swap_I {
     public static void printArray(PrintWriter out, int[] array) {
         for (int number : array) {
             out.print(number);
