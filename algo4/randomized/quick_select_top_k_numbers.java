@@ -14,7 +14,7 @@ import java.util.Random;
  * [Source]     - Classical problem
  *
  */
-public class quick_select {
+public class quick_select_top_k_numbers {
     private static Random r = new Random();
 
     public ArrayList<Integer> quickSelect(int[] array, int k) {
@@ -49,16 +49,15 @@ public class quick_select {
     }
 
     private int partition(int[] array, int start, int end) {
-        int pivot = array[start];
-        int i = start + 1;
+        int pivot = array[end - 1], i = start;
 
-        for (int j = i; j < end; ++j) {
+        for (int j = i; j < end - 1; ++j) {
             if (array[j] < pivot) {
                 swap(array, i++, j);
             }
         }
 
-        swap(array, i - 1, start);
+        swap(array, i, end - 1);
         return i;
     }
 
