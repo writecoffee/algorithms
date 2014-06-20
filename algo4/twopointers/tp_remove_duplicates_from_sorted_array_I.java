@@ -1,4 +1,4 @@
-public class tp_remove_duplicates_from_sorted_array {
+public class tp_remove_duplicates_from_sorted_array_I {
     public int removeDuplicates(int[] array) {
         int n = array.length;
 
