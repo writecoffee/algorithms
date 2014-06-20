@@ -1,46 +1,38 @@
-public class candy {
-    /**
-     * O(n) time and O(n) space complexity.
-     * 
-     */
+/**
+ * There are N children standing in a line. Each child is assigned a rating value.
+ * 
+ * You are giving candies to these children subjected to the following requirements:
+ * 
+ *    - Each child must have at least one candy.
+ *    - Children with a higher rating get more candies than their neighbors.
+ * 
+ * What is the minimum candies you must give?
+ * 
+ * [Difficulty] - Medium
+ * [Source]     - {@linkplain https://oj.leetcode.com/problems/candy/}
+ *
+ */
+public class minimum_candies_to_assign {
     public int calculate(int[] ratings) {
-        int n = ratings.length;
+        int n = ratings.length, result = 0;
         int[] candy = new int[n];
 
-        for (int i = 0; i < candy.length; i++) {
-            candy[i] = 1;
-        }
-
-        for (int i = 1; i < candy.length; i++) {
-            if (ratings[i] > ratings[i - 1]) {
-                candy[i] = candy[i - 1] + 1;
-            }
+        for (int i = 0; i < n; i++) {
+            candy[i] = i > 0 && ratings[i] > ratings[i - 1] ? candy[i] = candy[i - 1] + 1 : 1;
         }
 
         for (int i = n - 2; i >= 0; i--) {
-            /**
-             * Filter out the case "candy[i] > candy[i + 1]" because the child at
-             * position i is the summit and her candy number is higher than the
-             * child at position (i + 1).
-             */
             if (ratings[i] > ratings[i + 1] && candy[i] <= candy[i + 1]) {
                 candy[i] = candy[i + 1] + 1;
             }
+
+            result += i == n - 2 ? candy[i] + candy[i + 1] : candy[i];
         }
 
-        long result = 0;
-        for (int j = 0; j < n; j++) {
-            result += candy[j];
-        }
-
-        return (int) result;
+        return result;
     }
 
-    /**
-     * O(n) time and O(1) space complexity.
-     * 
-     */
-    public int calculateImprov(int[] ratings) {
+    public int calculateImproved(int[] ratings) {
         int n = ratings.length;
 
         if (n == 0) {
