@@ -18,13 +18,13 @@ import java.util.Stack;
 public class dfs_permutate_an_array_I {
     public ArrayList<ArrayList<Integer>> permute(int[] nums) {
         ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
-        explore(nums, 0, nums.length, result, new HashSet<Integer>(), new Stack<Integer>());
+        explore(nums, nums.length, result, new HashSet<Integer>(), new Stack<Integer>());
         return result;
     }
 
-    private void explore(int[] nums, int i, int n, ArrayList<ArrayList<Integer>> result, HashSet<Integer> visited, Stack<Integer> stk) {
-        if (i == n) {
-            result.add(new ArrayList<Integer>(stk));
+    private void explore(int[] nums, int n, ArrayList<ArrayList<Integer>> result, HashSet<Integer> visited, Stack<Integer> path) {
+        if (path.size() == n) {
+            result.add(new ArrayList<Integer>(path));
             return;
         }
 
@@ -32,11 +32,11 @@ public class dfs_permutate_an_array_I {
             int val = nums[j];
 
             if (!visited.contains(val)) {
-                stk.push(val);
+                path.push(val);
                 visited.add(val);
-                explore(nums, i + 1, n, result, visited, stk);
+                explore(nums, n, result, visited, path);
                 visited.remove(val);
-                stk.pop();
+                path.pop();
             }
         }
     }
