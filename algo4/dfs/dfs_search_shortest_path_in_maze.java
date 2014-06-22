@@ -16,52 +16,52 @@ import java.util.ArrayList;
  * \/
  * Increasing Y
  *
- *
  * Note:
  *
  * 1. The steps in the path can only horizontal or vertical. 
  * 2. The input grid is in a text file
  * 
- * [Difficulty]	- Medium
- * [Source]		- google interview
+ * [Difficulty] - Medium
+ * [Source]     - google interview
  * 
  */
 public class dfs_search_shortest_path_in_maze {
-	private class Point {
-		private final int x, y;
-		private Point(int _x, int _y) {
-			x = _x;
-			y = _y;
-		}
-	}
+    public class Point {
+        public final int x, y;
 
-	public ArrayList<Point> searchShortestPath(int startX, int startY, int endX, int endY, char[][] grid) {
-		ArrayList<Point> minPath = new ArrayList<Point>();
-		explore(grid, grid.length, grid[0].length, startX, startY, endX, endY, new Stack<Point>(), minPath);
-		return minPath;
-	}
+        private Point(int _x, int _y) {
+            x = _x;
+            y = _y;
+        }
+    }
 
-	private void explore(char[][] grid, int m, int n, int startX, int startY, int endX, int endY, Stack<Point> path, ArrayList<Point> minPath) {
-		if (startX < 0 || startX == n || startY < 0 || startY == m || grid[startY][startX] == 'x' || grid[startY][startX] == 'v') {
-			return;
-		} else if (startX == endX && startY == endY) {
-			if (minPath.isEmpty() || path.size() < minPath.size()) {
-				minPath = new ArrayList<Point>(path);
-				minPath.add(new Point(endX, endY));
-			}
+    public ArrayList<Point> searchShortestPath(int startX, int startY, int endX, int endY, char[][] grid) {
+        ArrayList<Point> minPath = new ArrayList<Point>();
+        explore(grid, grid.length, grid[0].length, startX, startY, endX, endY, new Stack<Point>(), minPath);
+        return minPath;
+    }
 
-			return;
-		}
+    private void explore(char[][] grid, int m, int n, int startX, int startY, int endX, int endY, Stack<Point> path, ArrayList<Point> minPath) {
+        if (startX < 0 || startX == n || startY < 0 || startY == m || grid[startY][startX] == 'x' || grid[startY][startX] == 'v') {
+            return;
+        } else if (startX == endX && startY == endY) {
+            if (minPath.isEmpty() || path.size() < minPath.size()) {
+                minPath = new ArrayList<Point>(path);
+                minPath.add(new Point(endX, endY));
+            }
 
-		grid[startY][startX] = 'v';
-		path.push(new Point(startX, startY));
+            return;
+        }
 
-		explore(grid, m, n, startX + 1, startY, endX, endY, path, minPath);
-		explore(grid, m, n, startX, startY + 1, endX, endY, path, minPath);
-		explore(grid, m, n, startX - 1, startY, endX, endY, path, minPath);
-		explore(grid, m, n, startX, startY - 1, endX, endY, path, minPath);
+        grid[startY][startX] = 'v';
+        path.push(new Point(startX, startY));
 
-		path.pop();
-		grid[startY][startX] = 'o';
-	}
+        explore(grid, m, n, startX + 1, startY, endX, endY, path, minPath);
+        explore(grid, m, n, startX, startY + 1, endX, endY, path, minPath);
+        explore(grid, m, n, startX - 1, startY, endX, endY, path, minPath);
+        explore(grid, m, n, startX, startY - 1, endX, endY, path, minPath);
+
+        path.pop();
+        grid[startY][startX] = 'o';
+    }
 }
