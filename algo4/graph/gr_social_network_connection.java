@@ -6,13 +6,14 @@ import java.util.Queue;
 
 /**
  * How would you design the data structures for a very large social network like Facebook or
- * Linked/n? Describe how you would design an algorithm to show the connection, or path, between two
+ * Linkedin? Describe how you would design an algorithm to show the connection, or path, between two
  * people (e.g., Me -> Bob -> Susan -> Jason -> You).
  * 
- * {@linkplain CC150-10.2}
+ * [Difficulty] - Medium
+ * [Source]     - {@linkplain CC150-10.2}
  * 
  */
-public class social_network_connection {
+public class gr_social_network_connection {
     public class Person {
         private ArrayList<Integer> friendIDs;
         private int personID;
