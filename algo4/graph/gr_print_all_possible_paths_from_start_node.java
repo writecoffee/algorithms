@@ -1,7 +1,35 @@
 import java.util.ArrayList;
 import java.util.HashSet;
 
-public class all_path_from_root_to_non_root_nodes {
+/**
+ * Given a directed connected graph, starting off from a given node 's', each time we reach a node 'c',
+ * print the path from root to 'c'.
+ * 
+ * For example: 
+ * 
+ *      A
+ *     / \
+ *    B---C
+ *   /
+ *  D
+ * 
+ *     A->B, C
+ *     B->D
+ *     C->B
+ * 
+ * We should output:
+ * 
+ *   AB
+ *   ABD
+ *   AC
+ *   ACB
+ *   ACBD
+ * 
+ * [Difficulty] - Easy
+ * [Source]     - turn interview
+ *
+ */
+public class gr_print_all_possible_paths_from_start_node {
     public class Node<T> {
         public final T value;
         public final ArrayList<Node<T>> neighbors;
@@ -12,17 +40,17 @@ public class all_path_from_root_to_non_root_nodes {
         }
     }
 
-    public ArrayList<ArrayList<Integer>> printPaths(Node<Integer> root) {
-        if (root == null) {
+    public ArrayList<ArrayList<Integer>> printPaths(Node<Integer> s) {
+        if (s == null) {
             return new ArrayList<ArrayList<Integer>>();
         }
 
         ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
         ArrayList<Node<Integer>> path = new ArrayList<Node<Integer>>();
-        path.add(root);
+        path.add(s);
         HashSet<Node<Integer>> visited = new HashSet<Node<Integer>>();
-        visited.add(root);
-        explore(root, path, visited, result);
+        visited.add(s);
+        explore(s, path, visited, result);
         return result;
     }
 
