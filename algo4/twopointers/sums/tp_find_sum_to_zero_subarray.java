@@ -19,7 +19,8 @@ import java.util.HashSet;
  * Output: false
  * There is no subarray with zero sum.
  * 
- * {@linkplain http://www.geeksforgeeks.org/find-if-there-is-a-subarray-with-0-sum/}
+ * [Difficulty] - Medium
+ * [Source]     - {@linkplain http://www.geeksforgeeks.org/find-if-there-is-a-subarray-with-0-sum/}
  * 
  */
 public class tp_find_sum_to_zero_subarray {
