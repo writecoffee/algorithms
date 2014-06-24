@@ -3,12 +3,19 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class clone_graph {
-    class UndirectedGraphNode {
-        int label;
-        ArrayList<UndirectedGraphNode> neighbors;
+/**
+ * Clone an undirected graph. Each node in the graph contains a label and a list of its neighbors.
+ * 
+ * [Difficulty] - Medium
+ * [Source]     - {@linkplain https://oj.leetcode.com/problems/clone-graph/}
+ *
+ */
+public class gr_clone_graph {
+    private class UndirectedGraphNode {
+        private int label;
+        private ArrayList<UndirectedGraphNode> neighbors;
 
-        UndirectedGraphNode(int x) {
+        private UndirectedGraphNode(int x) {
             label = x;
             neighbors = new ArrayList<UndirectedGraphNode>();
         }
@@ -25,17 +32,17 @@ public class clone_graph {
         h.put(node.label, new UndirectedGraphNode(node.label));
 
         while (!q.isEmpty()) {
-            UndirectedGraphNode v = q.poll();
-            UndirectedGraphNode vCloned = h.get(v.label);
+            UndirectedGraphNode c1 = q.poll();
+            UndirectedGraphNode c2 = h.get(c1.label);
 
-            for (UndirectedGraphNode u : v.neighbors) {
+            for (UndirectedGraphNode u : c1.neighbors) {
                 if (!h.containsKey(u.label)) {
                     UndirectedGraphNode uCloned = new UndirectedGraphNode(u.label);
-                    vCloned.neighbors.add(uCloned);
+                    c2.neighbors.add(uCloned);
                     h.put(u.label, uCloned);
                     q.add(u);
                 } else {
-                    vCloned.neighbors.add(h.get(u.label));
+                    c2.neighbors.add(h.get(u.label));
                 }
             }
         }
@@ -55,15 +62,15 @@ public class clone_graph {
         return nodeCloned;
     }
 
-    private void explore(UndirectedGraphNode c, UndirectedGraphNode cCloned, HashMap<Integer, UndirectedGraphNode> h) {
-        for (UndirectedGraphNode n : c.neighbors) {
+    private void explore(UndirectedGraphNode c1, UndirectedGraphNode c2, HashMap<Integer, UndirectedGraphNode> h) {
+        for (UndirectedGraphNode n : c1.neighbors) {
             if (!h.containsKey(n.label)) {
                 UndirectedGraphNode nCloned = new UndirectedGraphNode(n.label);
                 h.put(n.label, nCloned);
-                cCloned.neighbors.add(nCloned);
+                c2.neighbors.add(nCloned);
                 explore(n, nCloned, h);
             } else {
-                cCloned.neighbors.add(h.get(n.label));
+                c2.neighbors.add(h.get(n.label));
             }
         }
     }
