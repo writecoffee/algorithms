@@ -5,7 +5,24 @@ import java.util.HashSet;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-public class count_spanning_trees_in_cactus_graph {
+/**
+ * Count how many spanning tree in a cactus graph.
+ * 
+ * Cactus graph is like this:
+ * 
+ *                   3
+ *                 /   \
+ *          1 --- 2     4
+ *                 \   /
+ *                   5
+ *                 /   \
+ *                6 --- 7
+ * 
+ * [Difficulty] - Hard
+ * [Source]     - imo.im interview
+ * 
+ */
+public class gr_count_spanning_trees_in_cactus_graph {
     class GraphNode {
         public ArrayList<GraphNode> neighbors;
         public final int label;
@@ -46,18 +63,6 @@ public class count_spanning_trees_in_cactus_graph {
         }
     }
 
-    /**
-     * Cactus graph is like this:
-     * 
-     *                   3
-     *                 /   \
-     *          1 --- 2     4
-     *                 \   /
-     *                   5
-     *                 /   \
-     *                6 --- 7
-     * 
-     */
     public int countSpanningTrees(ArrayList<GraphNode> nodes) {
         HashMap<GraphNode, GraphNode> visited = new HashMap<GraphNode, GraphNode>();
         visited.put(nodes.get(0), null);
