@@ -15,8 +15,11 @@ import java.util.Map;
  * 
  * One possible result would be 4, 3, 2, 1, 5.
  * 
+ * [Difficulty] - Medium
+ * [Source]     - facebook interview, {@linkplain http://www.itint5.com/oj/#10}
+ * 
  */
-public class job_scheduling_with_dfs {
+public class gr_job_scheduling_with_dfs {
     /**
      * Given directed acyclic graph, order vertices so that all edges point from
      * lower order to higher order.

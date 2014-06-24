@@ -19,8 +19,11 @@ import java.util.Queue;
  * 
  * One possible result would be 4, 3, 2, 1, 5.
  * 
+ * [Difficulty] - Medium
+ * [Source]     - facebook interview, {@linkplain http://www.itint5.com/oj/#10}
+ * 
  */
-public class job_scheduling_with_bfs {
+public class gr_job_scheduling_with_bfs {
     public boolean jobSchedule(Map<Integer, List<Integer>> deps, int n, int[] result) {
         HashMap<Integer, ArrayList<Integer>> hNotify = new HashMap<Integer, ArrayList<Integer>>();
         HashMap<Integer, Integer> hInDegrees = new HashMap<Integer, Integer>();
