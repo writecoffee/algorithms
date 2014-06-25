@@ -2,11 +2,15 @@ package string;
 
 import java.util.Set;
 
+/**
+ * R(i): is true only when there is a j from 0 to i - 1 (inclusively),
+ *       s.substring(j, i) is in dictionary and R(j) holds.
+ *
+ * [Difficulty] - Medium
+ * [Source]     - {@linkplain https://oj.leetcode.com/problems/word-break/}
+ * 
+ */
 public class dp_word_break_possible_partitioning {
-    /**
-     * R(i): is true only when there is a j from 0 to i - 1 (inclusively),
-     *       s.substring(j, i) is in dictionary and R(j) holds.
-     */
     public boolean wordBreak(String s, Set<String> dict) {
         int n = s.length();
         boolean[] dp = new boolean[n];
