@@ -1,6 +1,7 @@
 package pruning;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 /**
  * Given a string s, partition s such that every substring of the partition is a palindrome.
@@ -16,34 +17,34 @@ import java.util.ArrayList;
  *     ["a", "a", "b"]
  *   ]
  *
+ * [Difficulty] - Medium
+ * [Source]     - {@linkplain https://oj.leetcode.com/problems/palindrome-partitioning/}
+ * 
  */
-public class all_palindrome_partitioning {
+public class dfs_all_palindrome_partitioning {
     public ArrayList<ArrayList<String>> partition(String s) {
         ArrayList<ArrayList<String>> result = new ArrayList<ArrayList<String>>();
-        explore(s, 0, new ArrayList<String>(), preprocess(s, s.length()), result);
+        explore(s, 0, s.length(), new Stack<String>(), result, preprocess(s));
         return result;
     }
 
-    private void explore(String s, int start, ArrayList<String> path, boolean[][] isPalin, ArrayList<ArrayList<String>> result) {
-        int n = s.length();
-
-        if (start == n) {
+    private void explore(String s, int i, int n, Stack<String> path, ArrayList<ArrayList<String>> result, boolean[][] isPalin) {
+        if (i == n) {
             result.add(new ArrayList<String>(path));
             return;
         }
 
-        for (int i = start; i < n; ++i) {
-            String t = s.substring(start, i + 1);
-
-            if (isPalin[start][i]) {
-                path.add(t);
-                explore(s, i + 1, path, isPalin, result);
-                path.remove(path.size() - 1);
+        for (int j = i + 1; j <= n; ++j) {
+            if (isPalin[i][j - 1]) {
+                path.push(s.substring(i, j));
+                explore(s, j, n, path, result, isPalin);
+                path.pop();
             }
         }
     }
 
-    private boolean[][] preprocess(String s, int n) {
+    private boolean[][] preprocess(String s) {
+        int n = s.length();
         boolean[][] isPalin = new boolean[n][n];
 
         for (int i = 0; i < n; ++i) {
