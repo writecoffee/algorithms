@@ -12,7 +12,7 @@
  * [Source]     - twitter quiz
  *
  */
-public class jump_game_III {
+public class gd_jump_game_III {
     public int solution(int n) {
         int count = 0;
 
