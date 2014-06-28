@@ -3,8 +3,8 @@ package traversal;
 import java.util.ArrayList;
 import java.util.Stack;
 
-class binary_tree_inorder_traversal {
-    public static class TreeNode {
+public class tr_trav_binary_tree_inorder_traversal {
+    public class TreeNode {
         int val;
         TreeNode left;
         TreeNode right;
@@ -14,7 +14,7 @@ class binary_tree_inorder_traversal {
         }
     }
 
-    public static ArrayList<Integer> inorderTraversal(TreeNode root) {
+    public ArrayList<Integer> inorderTraversal(TreeNode root) {
         ArrayList<Integer> result = new ArrayList<Integer>();
 
         if (root == null) {
@@ -34,7 +34,7 @@ class binary_tree_inorder_traversal {
         return result;
     }
 
-    public static ArrayList<Integer> inorderTraversalIterative(TreeNode root) {
+    public ArrayList<Integer> inorderTraversalIterative(TreeNode root) {
         ArrayList<Integer> result = new ArrayList<Integer>();
         if (root == null) {
             return result;

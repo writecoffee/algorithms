@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
 
-public class binary_tree_postorder_traversal {
+public class tr_trav_binary_tree_postorder_traversal {
     public class TreeNode {
         int val;
         TreeNode left;

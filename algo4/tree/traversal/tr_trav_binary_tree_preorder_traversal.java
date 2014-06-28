@@ -3,8 +3,7 @@ package traversal;
 import java.util.ArrayList;
 import java.util.Stack;
 
-public class binary_tree_preorder_traversal {
-
+public class tr_trav_binary_tree_preorder_traversal {
     public class TreeNode {
         int val;
         TreeNode left;
