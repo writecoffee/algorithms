@@ -42,10 +42,10 @@ public class dp_unique_coin_change_ways {
      * 
      */
     public int count(int[] denomination, int value) {
-        int m = denomination.length;
-        int[][] dp = new int[value + 1][m + 1];
+        int n = denomination.length;
+        int[][] dp = new int[value + 1][n + 1];
 
-        for (int i = 0; i < m + 1; ++i) {
+        for (int i = 0; i < n + 1; ++i) {
             dp[0][i] = 1;
         }
 
@@ -54,7 +54,7 @@ public class dp_unique_coin_change_ways {
         }
 
         for (int v = 1; v <= value; ++v) {
-            for (int j = 1; j <= m; ++j) {
+            for (int j = 1; j <= n; ++j) {
                 if (denomination[j - 1] > v) {
                     dp[v][j] = dp[v][j - 1];
                 } else {
@@ -63,6 +63,20 @@ public class dp_unique_coin_change_ways {
             }
         }
 
-        return dp[value][m];
+        return dp[value][n];
+    }
+
+    public int count2(int[] denomination, int value) {
+        int[] dp = new int[value + 1];
+        dp[0] = 1;
+        int n = denomination.length;
+
+        for (int i = 0; i < n; ++i) {
+            for (int j = denomination[i]; j <= value; ++j) {
+                dp[j] += dp[j - denomination[i]];
+            }
+        }
+
+        return dp[value];
     }
 }
