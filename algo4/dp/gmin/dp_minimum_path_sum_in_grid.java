@@ -6,13 +6,13 @@ package gmin;
  * 
  * Note: You can only move either down or right at any point in time.
  * 
- * http://oj.leetcode.com/problems/minimum-path-sum/
+ * [Difficulty] - Easy
+ * [Source]     - {@linkplain http://oj.leetcode.com/problems/minimum-path-sum/}
  * 
  */
 public class dp_minimum_path_sum_in_grid {
     public int minPathSum(int[][] grid) {
-        int m = grid.length;
-        int n = grid[0].length;
+        int m = grid.length, n = grid[0].length;
         int[] dp = new int[n];
         dp[0] = grid[0][0];
 

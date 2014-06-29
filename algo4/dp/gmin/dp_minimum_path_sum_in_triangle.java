@@ -7,6 +7,7 @@ import java.util.ArrayList;
  * step you may move to adjacent numbers on the row below.
  * 
  * For example, given the following triangle
+ * 
  * [
  *      [2],
  *     [3,4],
@@ -16,7 +17,8 @@ import java.util.ArrayList;
  * 
  * The minimum path sum from top to bottom is 11 (i.e., 2 + 3 + 5 + 1 = 11).
  * 
- * http://oj.leetcode.com/problems/triangle/
+ * [Difficulty] - Easy
+ * [Source]     - {@linkplain http://oj.leetcode.com/problems/triangle/}
  * 
  */
 public class dp_minimum_path_sum_in_triangle {
