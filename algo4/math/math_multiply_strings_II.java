@@ -1,9 +1,14 @@
-public class multiply_strings_with_negative {
+/**
+ * Multiply two strings, considering negative numbers, 0 as well.
+ * 
+ * [Difficulty] - Medium
+ * [Source]     - {@linkplain http://www.itint5.com/oj/#29}
+ *
+ */
+public class math_multiply_strings_II {
     public String multiply(String a, String b) {
         int m = a.length(), n = b.length();
-
         boolean isNeg = (a.startsWith("-") && !b.startsWith("-")) || (!a.startsWith("-") && b.startsWith("-"));
-        boolean isZero = a.equals("0") || b.equals("0");
 
         if (a.startsWith("-")) {
             m--;
@@ -37,13 +42,13 @@ public class multiply_strings_with_negative {
             i++;
         }
 
-        return convert(isZero, isNeg, result, i, m + n);
+        return convert(isNeg, result, i, m + n);
     }
 
-    private String convert(boolean isZero, boolean isNeg, int[] result, int start, int end) {
+    private String convert(boolean isNeg, int[] result, int start, int end) {
         StringBuilder sb = new StringBuilder();
 
-        if (isZero) {
+        if (start == end) {
             return "0";
         } else if (isNeg) {
             sb.append('-');

@@ -3,10 +3,11 @@
  * 
  * The digits are stored such that the most significant digit is at the head of the list.
  * 
- * https://oj.leetcode.com/problems/plus-one/
+ * [Difficulty] - Easy
+ * [Source]     - {@linkplain https://oj.leetcode.com/problems/plus-one/}
  * 
  */
-public class plus_one {
+public class math_plus_one {
     public int[] plusOne(int[] digits) {
         int n = digits.length;
         int start = n - 1;

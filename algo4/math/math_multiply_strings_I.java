@@ -1,7 +1,15 @@
-public class multiply_strings {
+/**
+ * Given two numbers represented as strings, return multiplication of the numbers as a string.
+ * 
+ * Note: The numbers can be arbitrarily large and are non-negative.
+ * 
+ * [Difficulty] - Medium
+ * [Source]     - {@linkplain https://oj.leetcode.com/problems/multiply-strings/}
+ * 
+ */
+public class math_multiply_strings_I {
     public String multiply(String a, String b) {
         int m = a.length(), n = b.length();
-        boolean isZero = a.equals("0") || b.equals("0");
         int[] result = new int[m + n];
 
         for (int i = 0; i < n; ++i) {
@@ -23,11 +31,11 @@ public class multiply_strings {
             ++i;
         }
 
-        return convert(isZero, result, i, m + n);
+        return convert(result, i, m + n);
     }
 
-    private String convert(boolean isZero, int[] result, int start, int end) {
-        if (isZero) {
+    private String convert(int[] result, int start, int end) {
+        if (start == end) {
             return "0";
         }
 
