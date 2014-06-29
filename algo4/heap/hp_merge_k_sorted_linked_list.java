@@ -2,7 +2,15 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
-public class merge_k_sorted_list {
+/**
+ * Merge k sorted linked lists and return it as one sorted list. Analyze and describe its
+ * complexity.
+ * 
+ * [Difficulty] - Medium
+ * [Source]     - {@linkplain https://oj.leetcode.com/problems/merge-k-sorted-lists/}
+ * 
+ */
+public class hp_merge_k_sorted_linked_list {
     public class ListNode {
         int val;
         ListNode next;
@@ -19,33 +27,32 @@ public class merge_k_sorted_list {
      * 
      */
     public ListNode mergeKLists(ArrayList<ListNode> lists) {
-        int n = lists.size();
-        if (n == 0) {
+        if (lists.size() == 0) {
             return null;
         }
 
-        PriorityQueue<ListNode> pq = new PriorityQueue<ListNode>(n * 10, new Comparator<ListNode>() {
+        PriorityQueue<ListNode> pq = new PriorityQueue<ListNode>(lists.size(), new Comparator<ListNode>() {
             @Override
             public int compare(ListNode a, ListNode b) {
                 return a.val - b.val;
             }
         });
 
-        for (int i = 0; i < n; ++i) {
+        for (int i = 0; i < lists.size(); i++) {
             if (lists.get(i) != null) {
                 pq.add(lists.get(i));
             }
         }
 
-        ListNode psudoHead = new ListNode(-1);
-        ListNode c = psudoHead;
+        ListNode psudoHead = new ListNode(-1), h = psudoHead;
         while (!pq.isEmpty()) {
-            ListNode minNode = pq.poll();
-            c.next = minNode;
-            c = minNode;
+            ListNode c = pq.poll();
 
-            if (minNode.next != null) {
-                pq.add(minNode.next);
+            h.next = c;
+            h = h.next;
+
+            if (c.next != null) {
+                pq.add(c.next);
             }
         }
 
