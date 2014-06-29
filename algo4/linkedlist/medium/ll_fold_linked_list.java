@@ -9,7 +9,8 @@ package medium;
  * 
  * For example, Given {1,2,3,4}, reorder it to {1,4,2,3}.
  * 
- * http://oj.leetcode.com/problems/reorder-list/
+ * [Difficulty] - Medium
+ * [Source]     - {@linkplain http://oj.leetcode.com/problems/reorder-list/}
  * 
  */
 public class ll_fold_linked_list {
