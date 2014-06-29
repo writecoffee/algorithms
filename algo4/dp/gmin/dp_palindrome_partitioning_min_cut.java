@@ -1,5 +1,17 @@
 package gmin;
 
+/**
+ * Given a string s, partition s such that every substring of the partition is a palindrome.
+ * 
+ * Return the minimum cuts needed for a palindrome partitioning of s.
+ * 
+ * For example, given s = "aab",
+ * Return 1 since the palindrome partitioning ["aa","b"] could be produced using 1 cut.
+ * 
+ * [Difficulty] - Hard
+ * [Source]     - {@linkplain https://oj.leetcode.com/problems/palindrome-partitioning-ii/}
+ *
+ */
 public class dp_palindrome_partitioning_min_cut {
     /**
      * Devise a recursive function to represent the min-cut for sub-problem s[0 .. k - 1],
@@ -50,7 +62,7 @@ public class dp_palindrome_partitioning_min_cut {
         return dp[n];
     }
 
-    public int minCutOptimized(String s) {
+    public int minCutImproved(String s) {
         int n = s.length();
         boolean[][] isPalin = new boolean[n][n];
         int[] dp = new int[n];
@@ -71,6 +83,37 @@ public class dp_palindrome_partitioning_min_cut {
                     dp[k] = 0;
                 } else if (isPalin[i][k]) {
                     dp[k] = Math.min(dp[k], dp[i - 1] + 1);
+                }
+            }
+        }
+
+        return dp[n - 1];
+    }
+
+    /**
+     * At i-th iteration where we are computing the smallest cut for s[0 .. i],
+     * 
+     * Let isP(j), j from 0 to i - 1, denote whether s[j .. i] is a palindrome or not.
+     * 
+     * So isP(j) holds only when s[j] == s[j - 1] and isP(j + 1) also holds,
+     * where isP(j + 1) is computed in (i - 1)-th iteration.
+     * 
+     */
+    public int minCutOptimized(String s) {
+        int n = s.length();
+        boolean[] isPalin = new boolean[n];
+        int[] dp = new int[n];
+        dp[0] = 0;
+
+        for (int i = 1; i < n; ++i) {
+            isPalin[i] = true;
+            dp[i] = dp[i - 1] + 1;
+
+            for (int j = 0; j < i; ++j) {
+                isPalin[j] = s.charAt(i) == s.charAt(j) && isPalin[j + 1];
+
+                if (isPalin[j]) {
+                    dp[i] = Math.min(dp[i], j == 0 ? 0 : dp[j - 1] + 1);
                 }
             }
         }
