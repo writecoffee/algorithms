@@ -8,8 +8,11 @@
  * If you are thinking of converting the integer to string, note the restriction of using extra
  * space.
  * 
+ * [Difficulty] - Medium
+ * [Source]     - {@linkplain https://oj.leetcode.com/problems/palindrome-number/}
+ * 
  */
-public class palindromic_number {
+public class math_palindromic_number {
     public boolean isPalindrome(int x) {
         if (x < 0) {
             return false;
@@ -20,7 +23,7 @@ public class palindromic_number {
             div *= 10;
         }
 
-        while (div > 1) {
+        while (x > 0) {
             if (x / div != x % 10) {
                 return false;
             }
