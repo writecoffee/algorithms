@@ -1,29 +1,30 @@
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 
 /**
  * Given an array of strings, return all groups of strings that are anagrams.
  * 
  * Note: All inputs will be in lower-case.
  * 
- * https://oj.leetcode.com/problems/anagrams/
+ * [Difficulty] - Medium
+ * [Source]     - {@linkplain https://oj.leetcode.com/problems/anagrams/}
  * 
  */
-public class group_anagrams {
+public class str_group_anagrams {
     public ArrayList<String> anagrams(String[] strs) {
         ArrayList<String> result = new ArrayList<String>();
-        HashMap<String, ArrayList<String>> h = new HashMap<String, ArrayList<String>>();
+        TreeMap<String, ArrayList<String>> h = new TreeMap<String, ArrayList<String>>();
         int n = strs.length;
 
         for (int i = 0; i < n; ++i) {
-            String signature = getSignature(strs[i]);
+            String sign = getSignature(strs[i]);
 
-            if (!h.containsKey(signature)) {
-                h.put(signature, new ArrayList<String>());
+            if (!h.containsKey(sign)) {
+                h.put(sign, new ArrayList<String>());
             }
 
-            h.get(signature).add(strs[i]);
+            h.get(sign).add(strs[i]);
         }
 
         for (Entry<String, ArrayList<String>> ent : h.entrySet()) {
@@ -38,18 +39,18 @@ public class group_anagrams {
     }
 
     private String getSignature(String s) {
-        int[] chars = new int[256];
+        int[] counters = new int[256];
         int n = s.length();
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < n; ++i) {
-            chars[s.charAt(i)]++;
+            counters[s.charAt(i)]++;
         }
 
-        for (int i = 0; i < 256; ++i) {
-            if (chars[i] > 0) {
-                sb.append((char) i);
-                sb.append(chars[i]);
+        for (char c = 0; c < 256; ++c) {
+            if (counters[c] > 0) {
+                sb.append(c);
+                sb.append(counters[c]);
             }
         }
 

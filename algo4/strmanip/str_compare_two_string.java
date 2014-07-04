@@ -7,7 +7,7 @@
  * [Source]     - facebook interview
  *
  */
-public class compare_two_string {
+public class str_compare_two_string {
     public int compareTo(String a, String b) {
         int m = a.length(), n = b.length(), i = 0;
         a = a + '\0';
