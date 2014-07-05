@@ -16,9 +16,9 @@
  */
 public class str_lenght_of_last_word {
     public int lengthOfLastWord(String s) {
-        int count = 0;
+        int count = 0, n = s.length();
 
-        for (int i = s.length() - 1; i >= 0; --i) {
+        for (int i = n - 1; i >= 0; --i) {
             if (s.charAt(i) != ' ') {
                 count++;
             } else if (count > 0) {
