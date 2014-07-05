@@ -7,7 +7,8 @@ import java.util.Stack;
  * The brackets must close in the correct order, "()" and "()[]{}" are all valid
  * but "(]" and "([)]" are not.
  *
- * {@linkplain https://oj.leetcode.com/problems/valid-parentheses/}
+ * [Difficulty] - Easy
+ * [Source]     - {@linkplain https://oj.leetcode.com/problems/valid-parentheses/}
  * 
  */
 public class stk_validate_parentheses_sequence {

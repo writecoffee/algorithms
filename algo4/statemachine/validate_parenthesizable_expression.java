@@ -19,7 +19,7 @@ import java.util.Stack;
  * {@linkplain http://www.itint5.com/oj/41/#41}
  *
  */
-public class stk_validate_parenthesizable_expression {
+public class validate_parenthesizable_expression {
     private enum Token {
         EMPTY, NUMBER, OPERATOR, L_PAREN, R_PAREN
     }
