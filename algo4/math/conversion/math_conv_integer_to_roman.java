@@ -5,10 +5,11 @@ package conversion;
  * 
  * Input is guaranteed to be within the range from 1 to 3999.
  * 
- * https://oj.leetcode.com/problems/integer-to-roman/
+ * [Difficulty] - Medium
+ * [Source]     - {@linkplain https://oj.leetcode.com/problems/integer-to-roman/}
  * 
  */
-public class integer_to_roman {
+public class math_conv_integer_to_roman {
     /**
      * We can apply some greedy heuristic here by subtracting the most significant Roman
      * digit from the input number. So we can create a table or array which ranges in

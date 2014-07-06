@@ -15,7 +15,7 @@ package conversion;
  * [Source]     - {@linkplain http://www.itint5.com/oj/#23}
  * 
  */
-public class math_excel_number_conversion {
+public class math_conv_excel_number_conversion {
     public String decToExcel(int decNum) {
         StringBuilder sb = new StringBuilder();
 
