@@ -1,3 +1,5 @@
+package plane;
+
 import java.util.HashMap;
 
 /**
@@ -10,7 +12,7 @@ import java.util.HashMap;
  * [Source]     - {@linkplain https://oj.leetcode.com/problems/max-points-on-a-line/}
  * 
  */
-public class maximum_number_of_points_on_a_line {
+public class math_plane_maximum_number_of_points_on_a_line {
     public class Point {
         public final int x;
         public final int y;
@@ -34,10 +36,15 @@ public class maximum_number_of_points_on_a_line {
      * points in the set to find the maximum number of points share the same line. It's just
      * (n + 1) * n / 2 number of pairs.
      * 
+     * Question: Why we let j = i + 1, not start from 0?
+     * 
+     * The problem becomes whether we ignored a line which cover the most and some of the points
+     * are in the previous section (index <= i). If that is the case, we must have calculated
+     * before because of transitiveness.
+     * 
      */
     public int maxPoints(Point[] points) {
-        int n = points.length;
-        int gMax = 0;
+        int n = points.length, gMax = 0;
 
         for (int i = 0; i < n - gMax; i++) {
             HashMap<Double, Integer> h = new HashMap<Double, Integer>();
