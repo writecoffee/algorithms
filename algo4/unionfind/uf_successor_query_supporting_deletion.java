@@ -1,11 +1,17 @@
-public class uf_successor_query_supporting_deletion {
-    private int[] leaders;
-    private int[] nexts;
-    private int[] sizes;
+/**
+ * 
+ *
+ */
+public class uf_successor_query_supporting_deletion
+{
+    private int[]     leaders;
+    private int[]     nexts;
+    private int[]     sizes;
     private boolean[] deleted;
-    private int n;
+    private int       n;
 
-    public void init(int _n) {
+    public void init(int _n)
+    {
         n = _n;
         leaders = new int[_n];
         nexts = new int[_n];
@@ -18,7 +24,8 @@ public class uf_successor_query_supporting_deletion {
         }
     }
 
-    public void removeNum(int x) {
+    public void removeNum(int x)
+    {
         deleted[x] = true;
 
         if (x - 1 >= 0 && deleted[x - 1]) {
@@ -30,7 +37,8 @@ public class uf_successor_query_supporting_deletion {
         }
     }
 
-    public int query(int x) {
+    public int query(int x)
+    {
         if (!deleted[x]) {
             return x;
         }
@@ -45,7 +53,8 @@ public class uf_successor_query_supporting_deletion {
      * 
      * Note that we will only update one group's leader in every "fuse" action!
      */
-    private int getLeader(int x) {
+    private int getLeader(int x)
+    {
         if (leaders[x] == x) {
             return x;
         } else {
@@ -58,7 +67,8 @@ public class uf_successor_query_supporting_deletion {
      * will get O(log n) time complexity in searching for the up-to-date leader.
      * 
      */
-    private void fuseGroups(int l, int r) {
+    private void fuseGroups(int l, int r)
+    {
         int ll = getLeader(l), rl = getLeader(r);
 
         if (ll == rl) {
