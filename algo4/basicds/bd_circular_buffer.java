@@ -1,13 +1,16 @@
-public class circular_buffer {
+public class bd_circular_buffer
+{
     private Object[] buffer;
-    private int head;
-    private int size;
+    private int      head;
+    private int      size;
 
-    public circular_buffer(int capacity) {
+    public bd_circular_buffer(int capacity)
+    {
         buffer = new Object[capacity];
     }
 
-    public synchronized void addLast(Object v) throws InterruptedException {
+    public synchronized void addLast(Object v) throws InterruptedException
+    {
         while (size == buffer.length) {
             wait();
         }
@@ -20,7 +23,8 @@ public class circular_buffer {
         }
     }
 
-    public synchronized Object pollFirst() throws InterruptedException {
+    public synchronized Object pollFirst() throws InterruptedException
+    {
         while (size == 0) {
             wait();
         }
@@ -35,7 +39,8 @@ public class circular_buffer {
         return result;
     }
 
-    public synchronized Object get(int index) {
+    public synchronized Object get(int index)
+    {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException();
         }

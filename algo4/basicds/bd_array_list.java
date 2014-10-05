@@ -3,14 +3,16 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class array_list<T> {
-    private Object[] elements;
-    private int size = 0;
-    private int capacity;
-    private int modCount = 0;
+public class bd_array_list<T>
+{
+    private Object[]              elements;
+    private int                   size              = 0;
+    private int                   capacity;
+    private int                   modCount          = 0;
     private static final Object[] EMPTY_ELEMENTDATA = {};
 
-    public array_list(int _capacity) {
+    public bd_array_list(int _capacity)
+    {
         if (_capacity < 0) {
             throw new IllegalArgumentException("Illegal capacity: " + _capacity);
         }
@@ -20,14 +22,16 @@ public class array_list<T> {
         capacity = _capacity;
     }
 
-    public array_list() {
+    public bd_array_list()
+    {
         elements = EMPTY_ELEMENTDATA;
         size = 0;
         capacity = 0;
     }
 
     @SuppressWarnings("unchecked")
-    public T get(int index) {
+    public T get(int index)
+    {
         if (index < 0 || index >= size) {
             throw new ArrayIndexOutOfBoundsException(index);
         }
@@ -35,7 +39,8 @@ public class array_list<T> {
         return (T) elements[index];
     }
 
-    public void add(Object object) {
+    public void add(Object object)
+    {
         if (size == capacity) {
             expandCapacity();
         }
@@ -43,12 +48,14 @@ public class array_list<T> {
         elements[size++] = object;
     }
 
-    private void expandCapacity() {
+    private void expandCapacity()
+    {
         elements = Arrays.copyOf(elements, elements.length * 2);
     }
 
     @SuppressWarnings("unchecked")
-    public T remove(int index) {
+    public T remove(int index)
+    {
         if (index < 0 || index >= size) {
             throw new ArrayIndexOutOfBoundsException(index);
         }
@@ -62,18 +69,21 @@ public class array_list<T> {
         return (T) removed;
     }
 
-    public Iterator<T> iterator() {
+    public Iterator<T> iterator()
+    {
         return new ListIterator();
     }
 
-    private class ListIterator implements Iterator<T> {
+    private class ListIterator implements Iterator<T>
+    {
         int i;
-        int lastRet = -1;
+        int lastRet          = -1;
         int expectedModCount = modCount;
 
         @SuppressWarnings("unchecked")
         @Override
-        public T next() {
+        public T next()
+        {
             checkForComodification();
             if (i >= size) {
                 throw new NoSuchElementException();
@@ -87,26 +97,29 @@ public class array_list<T> {
             return (T) elements[lastRet];
         }
 
-        private void checkForComodification() {
+        private void checkForComodification()
+        {
             if (modCount != expectedModCount) {
                 throw new ConcurrentModificationException();
             }
         }
 
         @Override
-        public boolean hasNext() {
+        public boolean hasNext()
+        {
             return i != size;
         }
 
         @Override
-        public void remove() {
+        public void remove()
+        {
             if (lastRet < 0) {
                 throw new IllegalStateException();
             }
             checkForComodification();
 
             try {
-                array_list.this.remove(lastRet);
+                bd_array_list.this.remove(lastRet);
                 i = lastRet;
                 lastRet = -1;
                 expectedModCount = modCount;

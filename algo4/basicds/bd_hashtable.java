@@ -1,33 +1,39 @@
 import java.util.Map;
 
-public class hashtable<K, V> {
-    private Entry<K, V>[] table;
-    private int count;
-    private float loadFactor;
-    private int threshold;
+public class bd_hashtable<K, V>
+{
+    private Entry<K, V>[]    table;
+    private int              count;
+    private float            loadFactor;
+    private int              threshold;
     private static final int DEFAULT_INITIAL_CAPACITY = 16;
 
     @SuppressWarnings("unchecked")
-    public hashtable(int _capacity) {
+    public bd_hashtable(int _capacity)
+    {
         table = new Entry[_capacity];
         loadFactor = .75f;
         threshold = (int) (_capacity * loadFactor);
         count = 0;
     }
 
-    public hashtable() {
+    public bd_hashtable()
+    {
         this(DEFAULT_INITIAL_CAPACITY);
     }
 
-    public int size() {
+    public int size()
+    {
         return count;
     }
 
-    private int hashToBucket(K key) {
+    private int hashToBucket(K key)
+    {
         return key.hashCode() % table.length;
     }
 
-    public V get(K key) {
+    public V get(K key)
+    {
         if (key == null) {
             throw new NullPointerException();
         }
@@ -42,7 +48,8 @@ public class hashtable<K, V> {
         return null;
     }
 
-    public V put(K key, V value) {
+    public V put(K key, V value)
+    {
         if (key == null) {
             throw new NullPointerException();
         }
@@ -66,7 +73,8 @@ public class hashtable<K, V> {
         return null;
     }
 
-    public V remove(K key) {
+    public V remove(K key)
+    {
         if (key == null) {
             throw new IllegalArgumentException("Unsupported");
         }
@@ -90,7 +98,8 @@ public class hashtable<K, V> {
         return null;
     }
 
-    private void rehash() {
+    private void rehash()
+    {
         int newCapacity = (table.length << 1) + 1;
         int oldCapacity = table.length;
         @SuppressWarnings("unchecked")
@@ -111,29 +120,34 @@ public class hashtable<K, V> {
         }
     }
 
-    private class Entry<M, L> implements Map.Entry<M, L> {
-        private final M key;
-        private L value;
+    private class Entry<M, L> implements Map.Entry<M, L>
+    {
+        private final M     key;
+        private L           value;
         private Entry<M, L> next;
 
-        private Entry(M k, L v, Entry<M, L> n) {
+        private Entry(M k, L v, Entry<M, L> n)
+        {
             value = v;
             next = n;
             key = k;
         }
 
         @Override
-        public M getKey() {
+        public M getKey()
+        {
             return key;
         }
 
         @Override
-        public L getValue() {
+        public L getValue()
+        {
             return value;
         }
 
         @Override
-        public L setValue(L newValue) {
+        public L setValue(L newValue)
+        {
             L oldValue = value;
             value = newValue;
             return oldValue;

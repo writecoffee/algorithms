@@ -1,10 +1,13 @@
-public class remove_all_target_in_linked_list {
-    static class LinkedListNode {
-        int val;
+public class bd_remove_all_target_in_linked_list
+{
+    static class LinkedListNode
+    {
+        int            val;
         LinkedListNode next;
     }
 
-    static LinkedListNode removeAll(int val, LinkedListNode list) {
+    static LinkedListNode removeAll(int val, LinkedListNode list)
+    {
         LinkedListNode psudoHead = new LinkedListNode();
         psudoHead.next = list;
 
