@@ -7,8 +7,10 @@
  * [Source]     - {@linkplain https://oj.leetcode.com/problems/plus-one/}
  * 
  */
-public class math_plus_one {
-    public int[] plusOne(int[] digits) {
+public class math_plus_one
+{
+    public int[] plusOne(int[] digits)
+    {
         int n = digits.length;
         int start = n - 1;
 
