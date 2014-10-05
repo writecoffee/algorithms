@@ -19,7 +19,7 @@ package sums;
  * [Tag]        - $binary-search$
  *
  */
-public class tp_two_sum_input_array_is_sorted
+public class tp_2sum_input_array_is_sorted
 {
     public int[] twoSumOptimized(int[] numbers, int target)
     {

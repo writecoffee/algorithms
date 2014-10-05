@@ -4,18 +4,22 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 
-public class tp_two_sum {
-    private class Pair {
+public class tp_2sum
+{
+    private class Pair
+    {
         private int val;
         private int index;
 
-        private Pair(int _val, int _index) {
+        private Pair(int _val, int _index)
+        {
             val = _val;
             index = _index;
         }
     }
 
-    public int[] tpTwoSum(int[] numbers, int target) {
+    public int[] tpTwoSum(int[] numbers, int target)
+    {
         int n = numbers.length;
         Pair[] pairs = new Pair[n];
 
@@ -47,7 +51,8 @@ public class tp_two_sum {
         return null;
     }
 
-    public int[] twoSum(int[] numbers, int target) {
+    public int[] twoSum(int[] numbers, int target)
+    {
         HashMap<Integer, Integer> h = new HashMap<Integer, Integer>();
         int n = numbers.length;
 

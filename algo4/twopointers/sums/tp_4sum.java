@@ -3,8 +3,10 @@ package sums;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class tp_four_sum {
-    public ArrayList<ArrayList<Integer>> fourSum(int[] num, int target) {
+public class tp_4sum
+{
+    public ArrayList<ArrayList<Integer>> fourSum(int[] num, int target)
+    {
         ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
         Arrays.sort(num);
         int n = num.length;
@@ -45,7 +47,8 @@ public class tp_four_sum {
         return result;
     }
 
-    private ArrayList<Integer> convert(int[] num, int i, int j, int l, int r) {
+    private ArrayList<Integer> convert(int[] num, int i, int j, int l, int r)
+    {
         ArrayList<Integer> result = new ArrayList<Integer>();
         result.add(num[i]);
         result.add(num[j]);
