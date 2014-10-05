@@ -1,18 +1,19 @@
 /**
  * Given an array of integers, every element appears three times except for one. Find that single
  * one.
- * 
+ *
  * Note:
- * 
+ *
  * Your algorithm should have a linear runtime complexity. Could you implement it without using
  * extra memory?
- * 
+ *
  * [Difficulty] - Medium
  * [Source]     - {@linkplain https://oj.leetcode.com/problems/single-number-ii/}
- * 
+ *
  */
 public class bit_single_number_II {
-    public int singleNumber(int[] array) {
+    public int singleNumber(int[] array)
+    {
         int x = 0, n = array.length;
 
         for (int i = 0; i < 32; ++i) {
@@ -31,5 +32,22 @@ public class bit_single_number_II {
         }
 
         return x;
+    }
+
+    public int singleNumberWithoutExtraMemory(int[] array)
+    {
+        int n = array.length, x = 0, ones = 0, twos = 0;
+
+        for (int i = 0; i < n; ++i) {
+            int val = array[i];
+
+            twos |= (ones & val);
+            ones ^= val;
+            x = ~(ones & twos);
+            ones &= x;
+            twos &= x;
+        }
+
+        return ones;
     }
 }
