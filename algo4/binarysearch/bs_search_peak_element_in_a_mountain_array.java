@@ -23,7 +23,10 @@ public class bs_search_peak_element_in_a_mountain_array
         int n = nums.length, l = 0, r = n - 1;
 
         while (l < r - 1) {
-            int mid = (l + r) / 2, lVal = nums[mid - 1], rVal = nums[mid + 1], mVal = nums[mid];
+            int mid = (l + r) / 2,
+                lVal = nums[mid - 1],
+                rVal = nums[mid + 1],
+                mVal = nums[mid];
 
             if (lVal < mVal && mVal > rVal) {
                 return mid;

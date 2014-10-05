@@ -1,5 +1,17 @@
-public class median_of_two_sorted_arrays {
-    public double findMedianSortedArrays(int[] a, int[] b) {
+/**
+ * There are two sorted arrays nums1 and nums2 of size m and n respectively.
+ * Find the median of the two sorted arrays.
+ *
+ * The overall run time complexity should be O(log (m+n)).
+ * 
+ * [Difficulty] - Hard
+ * [Source]     - {@linkplain https://leetcode.com/problems/median-of-two-sorted-arrays/}
+ *
+ */
+public class median_of_two_sorted_arrays
+{
+    public double findMedianSortedArrays(int[] a, int[] b)
+    {
         int m = a.length;
         int n = b.length;
 
@@ -11,7 +23,8 @@ public class median_of_two_sorted_arrays {
         }
     }
 
-    private double explore(int[] a, int al, int ar, int[] b, int bl, int br, int k) {
+    private double explore(int[] a, int al, int ar, int[] b, int bl, int br, int k)
+    {
         int m = ar - al + 1;
         int n = br - bl + 1;
 
@@ -33,7 +46,8 @@ public class median_of_two_sorted_arrays {
         }
     }
 
-    public double findMedianSortedArraysNonrecur(int[] a, int[] b) {
+    public double findMedianSortedArraysNonrecur(int[] a, int[] b)
+    {
         int m = a.length;
         int n = b.length;
 
@@ -45,7 +59,8 @@ public class median_of_two_sorted_arrays {
         }
     }
 
-    private double getKthNumber(int[] a, int[] b, int k) {
+    private double getKthNumber(int[] a, int[] b, int k)
+    {
         int m = a.length;
         int n = b.length;
         int al = 0, ar = m - 1;
