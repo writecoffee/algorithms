@@ -3,27 +3,32 @@ import java.util.Stack;
 /**
  * Given n non-negative integers representing the histogram's bar height where the width of each bar
  * is 1, find the area of largest rectangle in the histogram.
- * 
- * 
+ *
+ *
  * Above is a histogram where width of each bar is 1, given height = [2, 1, 5, 6, 2, 3].
- * 
- * 
+ *
+ *
  * The largest rectangle is shown in the shaded area, which has area = 10 unit.
- * 
+ *
  * For example,
- * 
+ *
  * Given height = [2, 1, 5, 6, 2, 3],
- * 
+ *
  * return 10.
- * 
+ *
+ * [Source]     - {@linkplain http://www.lintcode.com/en/problem/largest-rectangle-in-histogram/}
+ * [Difficulty] - Hard
+ *
  */
-public class stk_largest_rectangle_in_histogram {
+public class stk_largest_rectangle_in_histogram
+{
     /**
-     * For each height we can look backwards to find the "bottleneck" height and find the maximum
-     * rectangle over all n * n possible sizes of rectangles.
-     * 
+     * For each height we can look backwards to find the "bottleneck" height and
+     * find the maximum rectangle over all n * n possible sizes of rectangles.
+     *
      */
-    public int largestRectangleAreaNaive(int[] heights) {
+    public int largestRectangleAreaNaive(int[] heights)
+    {
         int n = heights.length, area = 0;
 
         for (int i = 0; i < n; ++i) {
@@ -43,27 +48,41 @@ public class stk_largest_rectangle_in_histogram {
      * We can use a non-descending stack to keep track of the "bottleneck" height. In terms of
      * non-descending stack, it means at each position i we should update the stack and calculate
      * the maximum size over all previous possible rectangle ending at i - 1.
-     * 
+     *
      * For time complexity, because we hit each element in the input array at most twice so the
      * running time would be O(n).
-     * 
+     *
      */
-    public int largestRectangleArea(int[] heights) {
-        Stack<Integer> stk = new Stack<Integer>();
-        int i = 0, area = 0;
-        int n = heights.length;
+    public int largestRectangleArea(int[] height)
+    {
+        int n = height.length;
+        Stack<Integer> stk = new Stack<>();
+        int result = 0;
 
-        while (i < n || !stk.isEmpty()) {
-            if (stk.isEmpty() || (i < n && heights[i] >= heights[stk.peek()])) {
-                stk.push(i++);
+        for (int i = 0; i <= n; i++) {
+            int val;
+            if (i == n) {
+                val = 0;
             } else {
-                int h = heights[stk.pop()];
-                int w = stk.isEmpty() ? i : (i - stk.peek() - 1);
-
-                area = Math.max(area, h * w);
+                val = height[i];
             }
+
+            while (!stk.isEmpty() && height[stk.peek()] >= val) {
+                int start = stk.pop();
+                int width;
+
+                if (stk.isEmpty()) {
+                    width = i;
+                } else {
+                    width = i - stk.peek() - 1;
+                }
+
+                result = Math.max(result, width * height[start]);
+            }
+
+            stk.push(i);
         }
 
-        return area;
+        return result;
     }
 }

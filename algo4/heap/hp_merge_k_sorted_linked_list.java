@@ -5,17 +5,20 @@ import java.util.PriorityQueue;
 /**
  * Merge k sorted linked lists and return it as one sorted list. Analyze and describe its
  * complexity.
- * 
+ *
  * [Difficulty] - Medium
  * [Source]     - {@linkplain https://oj.leetcode.com/problems/merge-k-sorted-lists/}
- * 
+ *
  */
-public class hp_merge_k_sorted_linked_list {
-    public class ListNode {
-        int val;
+public class hp_merge_k_sorted_linked_list
+{
+    public class ListNode
+    {
+        int      val;
         ListNode next;
 
-        ListNode(int x) {
+        ListNode(int x)
+        {
             val = x;
             next = null;
         }
@@ -24,16 +27,18 @@ public class hp_merge_k_sorted_linked_list {
     /**
      * Should discuss if the {@code lists} contains {@code null}, a.k.a empty list. This is
      * what the contract should specify.
-     * 
+     *
      */
-    public ListNode mergeKLists(ArrayList<ListNode> lists) {
+    public ListNode mergeKLists(ArrayList<ListNode> lists)
+    {
         if (lists.size() == 0) {
             return null;
         }
 
         PriorityQueue<ListNode> pq = new PriorityQueue<ListNode>(lists.size(), new Comparator<ListNode>() {
             @Override
-            public int compare(ListNode a, ListNode b) {
+            public int compare(ListNode a, ListNode b)
+            {
                 return a.val - b.val;
             }
         });
