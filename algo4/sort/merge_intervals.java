@@ -3,10 +3,15 @@ import java.util.Collections;
 import java.util.Comparator;
 
 /**
- * 
+ * Given a collection of intervals, merge all overlapping intervals.
+ *
+ * For example, Given [1,3],[2,6],[8,10],[15,18], return [1,6],[8,10],[15,18].
+ *
+ * [Difficulty] - Hard
+ * [Source]     - {@linkplain https://leetcode.com/problems/merge-intervals/}
  * [Tag]        - $range$
  */
-public class interval_merging
+public class merge_intervals
 {
     public class Interval
     {
@@ -30,6 +35,7 @@ public class interval_merging
     {
         int n = intervals.size();
         ArrayList<Interval> result = new ArrayList<Interval>();
+
         if (n == 0) {
             return result;
         }
