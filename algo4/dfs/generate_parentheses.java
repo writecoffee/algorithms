@@ -2,8 +2,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
 
-public class generate_parentheses {
-    public ArrayList<String> generateParenthesis(int n) {
+/**
+ * Given n pairs of parentheses, write a function to generate all combinations
+ * of well-formed parentheses.
+ *
+ * For example, given n = 3, a solution set is:
+ *
+ * "((()))", "(()())", "(())()", "()(())", "()()()"
+ *
+ * [Difficulty] - Medium
+ * [Source]     - {@linkplain https://leetcode.com/problems/generate-parentheses/}
+ *
+ */
+public class generate_parentheses
+{
+    public ArrayList<String> generateParenthesis(int n)
+    {
         ArrayList<String> result = new ArrayList<String>();
         if (n == 0) {
             return result;
@@ -13,7 +27,8 @@ public class generate_parentheses {
         return result;
     }
 
-    private void explore(int leftCounter, int rightCounter, StringBuilder s, ArrayList<String> result) {
+    private void explore(int leftCounter, int rightCounter, StringBuilder s, ArrayList<String> result)
+    {
         if (leftCounter == 0 && rightCounter == 0) {
             result.add(s.toString());
             return;
@@ -30,7 +45,8 @@ public class generate_parentheses {
         }
     }
 
-    public ArrayList<String> generateParenthesisNonrecur(int n) {
+    public ArrayList<String> generateParenthesisNonrecur(int n)
+    {
         ArrayList<String> result = new ArrayList<String>();
         if (n == 0) {
             return result;

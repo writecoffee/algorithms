@@ -2,17 +2,17 @@ package probe;
 
 /**
  * Implement wildcard pattern matching with support for '?' and '*'.
- * 
+ *
  * '?' Matches any single character.
  * '*' Matches any sequence of characters (including the empty sequence).
- * 
+ *
  * The matching should cover the entire input string (not partial).
- * 
+ *
  * The function prototype should be:
  * bool isMatch(const char *s, const char *p)
- * 
+ *
  * Sample input:
- * 
+ *
  *   isMatch("aa","a") => false
  *   isMatch("aa","aa") => true
  *   isMatch("aaa","aa") => false
@@ -20,7 +20,7 @@ package probe;
  *   isMatch("aa", "a*") => true
  *   isMatch("ab", "?*") => true
  *   isMatch("aab", "c*a*b") => false
- * 
+ *
  * [Difficulty] - Hard
  * [Source]     - {@linkplain https://oj.leetcode.com/problems/wildcard-matching/}
  *
@@ -29,13 +29,15 @@ public class dfs_wildcard_matching {
     /**
      * If i reaches the end of 's', we need to see whether p[j] is '*' or not, if p[j] is '*',
      * we can try skipping the current '*' and probe to till the end of 'p'.
-     * 
+     *
      */
-    public boolean isMatch(String s, String p) {
+    public boolean isMatch(String s, String p)
+    {
         return explore(s.concat("\0"), 0, s.length(), p.concat("\0"), 0, p.length());
     }
 
-    private boolean explore(String s, int i, int m, String p, int j, int n) {
+    private boolean explore(String s, int i, int m, String p, int j, int n)
+    {
         char c1 = s.charAt(i), c2 = p.charAt(j);
 
         if (i == m && j == n) {
@@ -59,7 +61,8 @@ public class dfs_wildcard_matching {
         }
     }
 
-    public boolean isMatchNonrecur(String s, String p) {
+    public boolean isMatchNonrecur(String s, String p)
+    {
         int i = 0, j = 0, iBack = -1, jBack = -1, m = s.length(), n = p.length();
 
         s = s.concat("\0");
