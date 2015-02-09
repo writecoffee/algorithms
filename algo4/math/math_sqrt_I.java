@@ -7,7 +7,7 @@
  * [Source]     - {@linkplain https://oj.leetcode.com/problems/sqrtx/}
  * 
  */
-public class math_sqrt_x {
+public class math_sqrt_I {
     /**
      * Note that the goal is not to find the exact square root r but to find the floor(r).
      * So we terminate the loop when narrowing down the range to 1. A necessary testing case
