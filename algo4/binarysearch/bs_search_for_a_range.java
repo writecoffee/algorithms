@@ -13,10 +13,13 @@
  * 
  * [Difficulty] - Medium
  * [Source]     - {@linkplain https://oj.leetcode.com/problems/search-for-a-range/}
+ * [Tag]        - $range$
  *
  */
-public class bs_search_for_a_range {
-    public int[] searchRange(int[] array, int target) {
+public class bs_search_for_a_range
+{
+    public int[] searchRange(int[] array, int target)
+    {
         int n = array.length;
         int l = lSearch(array, target, n, 0, n - 1);
         int r = rSearch(array, target, n, 0, n - 1);
@@ -28,7 +31,8 @@ public class bs_search_for_a_range {
         }
     }
 
-    private int lSearch(int[] array, int target, int n, int l, int r) {
+    private int lSearch(int[] array, int target, int n, int l, int r)
+    {
         while (l <= r) {
             int mid = l + (r - l) / 2;
 
@@ -42,7 +46,8 @@ public class bs_search_for_a_range {
         return l;
     }
 
-    private int rSearch(int[] array, int target, int n, int l, int r) {
+    private int rSearch(int[] array, int target, int n, int l, int r)
+    {
         while (l <= r) {
             int mid = l + (r - l) / 2;
 
