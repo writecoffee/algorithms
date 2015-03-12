@@ -1,8 +1,22 @@
 import java.util.ArrayList;
 
-public class place_windows {
-    private class Rect {
-        public Rect(int _x1, int _y1, int _x2, int _y2) {
+/**
+ * On a W * H screen, the upper left corner is of coordinate (0, 0), the bottom
+ * right corner is of coordinate (W, H). There are N windows in the screen which
+ * we can consider them as "Box". You are required to place these N windows on
+ * the screen such that the overall overlapping area is minimal.
+ *
+ * [Difficulty] - Hard
+ * [Source]     - imo.im interview, itint5 - 47
+ * [Tag]        - $greedy$, $geometry$
+ *
+ */
+public class place_windows
+{
+    private class Rect
+    {
+        public Rect(int _x1, int _y1, int _x2, int _y2)
+        {
             x1 = _x1;
             x2 = _x2;
             y1 = _y1;
@@ -12,7 +26,8 @@ public class place_windows {
         int x1, y1, x2, y2;
     }
 
-    public int minOverlapping(Rect[] rects, int W, int H, int w, int h) {
+    public int minOverlapping(Rect[] rects, int W, int H, int w, int h)
+    {
         if (rects.length == 0) {
             return 0;
         }
@@ -58,7 +73,8 @@ public class place_windows {
         return gMin;
     }
 
-    private int calculateOverlappingRegion(Rect a, Rect b) {
+    private int calculateOverlappingRegion(Rect a, Rect b)
+    {
         int x = Math.max(0, Math.min(a.x2, b.x2) - Math.max(a.x1, b.x1));
         int y = Math.max(0, Math.min(a.y2, b.y2) - Math.max(a.y1, b.y1));
         return x * y;
