@@ -15,6 +15,7 @@ package circle;
  *
  * [Difficulty] - Medium
  * [Source]     - {@linkplain http://www.geeksforgeeks.org/array-rotation/}
+ *                {@linkplain https://leetcode.com/problems/rotate-array/}
  *
  */
 public class rotate_array {
@@ -30,24 +31,24 @@ public class rotate_array {
      * of n and k and thus we can make sure it will not introduce overlapping. </p>
      *
      */
-    public void rotateOnepass(int[] array, int k) {
-        int n = array.length;
-
-        while (k < 0) {
-            k += n;
-        }
+    public void rotateOnepass(int[] nums, int k) {
+        int n = nums.length,
+            groups = gcd(n, k),
+            groupMembers = n / groups;
 
         k = k % n;
 
-        for (int i = 0; i < gcd(n, k); i++) {
-            int hold = array[(i + k) % n];
-            array[(i + k) % n] = array[i];
+        for (int i = 0; i < groups; ++i) {
+            int t1 = nums[i];
 
-            for (int j = (i + k) % n; j != i; j = (j + k) % n) {
-                int t = array[(j + k) % n];
-                array[(j + k) % n] = hold;
-                hold = t;
+            for (int j = 1; j < groupMembers; ++j) {
+                int nextIndex = (i + j * k) % n;
+                int t2 = nums[nextIndex];
+                nums[nextIndex] = t1;
+                t1 = t2;
             }
+
+            nums[i] = t1;
         }
     }
 
