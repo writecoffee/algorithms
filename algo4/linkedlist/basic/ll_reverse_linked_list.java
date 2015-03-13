@@ -1,36 +1,44 @@
 package basic;
 
-public class ll_reverse_linked_list {
-    public class ListNode {
-        int val;
+/**
+ * Reverse a singly linked list.
+ *
+ * [Difficulty] - Easy
+ * [Source]     - {@linkplain https://leetcode.com/problems/reverse-linked-list/}
+ *
+ */
+public class ll_reverse_linked_list
+{
+    public class ListNode
+    {
+        int      val;
         ListNode next;
 
-        ListNode(int x) {
+        ListNode(int x)
+        {
             val = x;
             next = null;
         }
     }
 
-    /**
-     * The optimal solution requires one pass.
-     * 
-     */
-    public ListNode reverse(ListNode head) {
-        if (head == null) {
+    public ListNode reverseList(ListNode head)
+    {
+        ListNode ph = new ListNode(-1),
+                 c = head;
+
+        ph.next = head;
+
+        if (c == null) {
             return null;
         }
 
-        ListNode psudoHead = new ListNode(-1);
-        psudoHead.next = head;
-        ListNode c = head.next;
-
         while (c.next != null) {
-            ListNode t1 = c.next.next, t2 = psudoHead.next;
-            psudoHead.next = c.next;
-            psudoHead.next.next = t2;
-            c.next = t1;
+            ListNode t = ph.next;
+            ph.next = c.next;
+            c.next = c.next.next;
+            ph.next.next = t;
         }
 
-        return psudoHead.next;
+        return ph.next;
     }
 }
