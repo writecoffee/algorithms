@@ -1,72 +1,54 @@
-import java.util.NoSuchElementException;
 import java.util.Stack;
 
-public class stk_stack_with_min_function {
-    public static class MinStack {
-        private final Stack<Integer> s;
-        private final Stack<Integer> minStack;
+/**
+ * Design a stack that supports push, pop, top, and retrieving the minimum
+ * element in constant time.
+ *
+ * push(x) -- Push element x onto stack.
+ * pop() -- Removes the element on top of the stack.
+ * top() -- Get the top element.
+ * getMin() -- Retrieve the minimum element in the stack.
+ *
+ * [Difficulty] - Easy
+ * [Source]     - Amazon interview, {@linkplain https://leetcode.com/problems/min-stack/}
+ * [Tag]        - $stack$, $state machine$
+ *
+ */
+public class stk_stack_with_min_function
+{
+    public static class MinStack
+    {
+        private Stack<Integer> currentMins = new Stack<Integer>(),
+                               stk = new Stack<Integer>();
 
-        public int min() {
-            if (s.isEmpty()) {
-                throw new NoSuchElementException("Stack underflow");
+        public void push(int x)
+        {
+            if (currentMins.isEmpty()) {
+                currentMins.push(x);
+            } else if (x <= currentMins.peek()) {
+                currentMins.push(x);
             }
 
-            return minStack.peek();
+            stk.push(x);
         }
 
-        public MinStack() {
-            s = new Stack<Integer>();
-            minStack = new Stack<Integer>();
-            minStack.push(Integer.MAX_VALUE);
-        }
+        public void pop()
+        {
+            int result = stk.pop();
 
-        public int pop() {
-            if (s.isEmpty()) {
-                throw new NoSuchElementException("Stack underflow");
+            if (result == currentMins.peek()) {
+                currentMins.pop();
             }
-
-            int result = s.pop();
-            if (result == minStack.peek()) {
-                minStack.pop();
-            }
-
-            return result;
         }
 
-        public boolean isEmpty() {
-            return s.isEmpty();
+        public int top()
+        {
+            return stk.peek();
         }
 
-        public void push(int v) {
-            if (v < minStack.peek()) {
-                minStack.push(v);
-            }
-
-            s.push(v);
-        }
-
-        public int peek() {
-            if (s.isEmpty()) {
-                throw new NoSuchElementException("Stack underflow");
-            }
-
-            return s.peek();
-        }
-    }
-
-    public static void main(String[] args) {
-        MinStack s = new MinStack();
-        s.push(4);
-        s.push(3);
-
-        try {
-            assert s.min() == 3;
-            assert s.pop() == 3;
-            assert s.min() == 4;
-            assert s.pop() == 4;
-            s.min();
-        } catch (NoSuchElementException e) {
-            System.out.println(e.getMessage());
+        public int getMin()
+        {
+            return currentMins.peek();
         }
     }
 }
