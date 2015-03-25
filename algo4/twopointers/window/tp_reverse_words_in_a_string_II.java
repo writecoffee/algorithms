@@ -2,20 +2,23 @@ package window;
 
 /**
  * Given an input string, reverse the string word by WORD and CHARACTER.
- * 
+ *
  * For example,
- * 
+ *
  * "the sky is blue" => "eulb si yks eht"
  * "  a" => "a"
  * "K         " => "K"
  * "ab" => "ba"
- * 
+ *
  * [Difficulty] - Medium
- * [Source]     - facebook interview, variation of {@linkplain https://oj.leetcode.com/problems/reverse-words-in-a-string/}
- * 
+ * [Source]     - facebook interview,
+ *                variation of {@linkplain https://oj.leetcode.com/problems/reverse-words-in-a-string/}
+ *
  */
-public class tp_reverse_words_in_a_string_II {
-    public String reverseWords(String s) {
+public class tp_reverse_words_in_a_string_II
+{
+    public String reverseWords(String s)
+    {
         StringBuilder sb = new StringBuilder();
         int n = s.length();
 
