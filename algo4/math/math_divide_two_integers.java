@@ -5,26 +5,33 @@
  * [Source]     - facebook interview, {@linkplain https://oj.leetcode.com/problems/divide-two-integers/}
  *
  */
-public class math_divide_two_integers {
-    public int divide(int dividend, int divisor) {
-        int neg = 1 << 31;
-        boolean isNeg = ((dividend & neg) == 0 && (divisor & neg) != 0)
-                     || ((dividend & neg) != 0 && (divisor & neg) == 0);
-
-        long a = Math.abs((long) dividend), b = Math.abs((long) divisor), quotient = 0;
-
-        while (a >= b) {
-            long prod = b, q = 1;
-
-            while ((prod << 1) <= a) {
-                prod <<= 1;
-                q <<= 1;
-            }
-
-            a -= prod;
-            quotient += q;
+public class math_divide_two_integers
+{
+    public int divide(int numerator, int denominator)
+    {
+        if (numerator == 0) {
+            return 0;
+        } else if (denominator == 0) {
+            return Integer.MAX_VALUE;
         }
 
-        return isNeg ? ~((int) quotient) + 1 : (int) quotient;
+        long neg = ((numerator < 0) ^ (denominator < 0)) ? -1 : 1,
+             n = Math.abs((long) numerator),
+             d = Math.abs((long) denominator),
+             quotient = 0;
+
+        while (n >= d) {
+            long tq = 1, td = d;
+
+            while ((td << 1) <= n) {
+                td <<= 1;
+                tq <<= 1;
+            }
+
+            quotient += tq;
+            n -= td;
+        }
+
+        return (int) Math.min((long) Integer.MAX_VALUE, neg * quotient);
     }
 }
