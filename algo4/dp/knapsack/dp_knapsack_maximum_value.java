@@ -1,4 +1,4 @@
-package basic;
+package knapsack;
 
 /**
  * We have n objects and a knapsack. The i-th object has positive weight w[i] and positive value
@@ -9,8 +9,10 @@ package basic;
  * [Source]     - Classical problem
  * 
  */
-public class dp_knapsack_maximum_value {
-    public int getMax(int capacity, int[] w, int[] v) {
+public class dp_knapsack_maximum_value
+{
+    public int getMax(int capacity, int[] w, int[] v)
+    {
         int n = w.length;
         int[][] dp = new int[capacity][n + 1];
 
