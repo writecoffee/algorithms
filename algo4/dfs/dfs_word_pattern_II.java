@@ -28,30 +28,30 @@ public class dfs_word_pattern_II
         return explore(pattern.toCharArray(), 0, str, 0, new HashMap<Character, String>());
     }
 
-    private boolean explore(char[] pattern, int i, String str, int j, HashMap<Character, String> pToString)
+    private boolean explore(char[] pattern, int iPattern, String str, int iStr, HashMap<Character, String> pToString)
     {
-        if (i == pattern.length && j == str.length() && new HashSet<String>(pToString.values()).size() == pToString.size()) {
+        if (iPattern == pattern.length && iStr == str.length() && new HashSet<String>(pToString.values()).size() == pToString.size()) {
             return true;
-        } else if (i == pattern.length || j == str.length()) {
+        } else if (iPattern == pattern.length || iStr == str.length()) {
             return false;
         }
 
-        char theP = pattern[i];
-        for (int k = j + 1; k <= str.length(); k++) {
-            String theNextStr = str.substring(j, k);
+        char p = pattern[iPattern];
+        for (int k = iStr + 1; k <= str.length(); k++) {
+            String theNextStr = str.substring(iStr, k);
 
-            if (!pToString.containsKey(theP)) {
-                pToString.put(theP, theNextStr);
+            if (!pToString.containsKey(p)) {
+                pToString.put(p, theNextStr);
 
-                if (explore(pattern, i + 1, str, k, pToString)) {
+                if (explore(pattern, iPattern + 1, str, k, pToString)) {
                     return true;
                 }
 
-                pToString.remove(theP);
+                pToString.remove(p);
 
-            } else if (pToString.get(theP).equals(theNextStr)) {
+            } else if (pToString.get(p).equals(theNextStr)) {
 
-                if (explore(pattern, i + 1, str, k, pToString)) {
+                if (explore(pattern, iPattern + 1, str, k, pToString)) {
                     return true;
                 }
             }

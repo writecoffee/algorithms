@@ -21,14 +21,15 @@ import java.util.Iterator;
  *
  * 1. Think of "looking ahead". You want to cache the next element.
  *
- * 2. Is one variable sufficient? Why or why not? Test your design with call order of peek() before
- * next() vs next() before peek().
+ * 2. Is one variable sufficient? Why or why not? Test your design with call
+ *    order of peek() before next() vs next() before peek().
  *
  * 3. For a clean implementation, check out Google's guava library source code.
  *
- * Follow up: How would you extend your design to be generic and work with all types, not just integer?
+ * Follow up: How would you extend your design to be generic and work with all
+ *            types, not just integer?
  *
- * [Difficulty] - Easy
+ * [Difficulty] - Medium
  * [Source]     - {@linkplain https://leetcode.com/problems/peeking-iterator/}
  *
  */
@@ -36,24 +37,28 @@ public class peeking_iterator
 {
     class PeekingIterator implements Iterator<Integer>
     {
-        private Iterator<Integer> core;
-        private Integer           peekVal;
+        private Iterator<Integer> it;
+        private Integer cache = null;
 
-        public PeekingIterator(Iterator<Integer> iterator)
-        {
-            // initialize any member here.
-            core = iterator;
-
-            if (iterator.hasNext()) {
-                peekVal = core.next();
-            }
+        public PeekingIterator(Iterator<Integer> iterator) {
+            it = iterator;
         }
 
         // Returns the next element in the iteration without advancing the
         // iterator.
         public Integer peek()
         {
-            return peekVal;
+            if (cache != null) {
+                return cache;
+            }
+
+            if (it.hasNext()) {
+                cache = it.next();
+            } else {
+                cache = null;
+            }
+
+            return cache;
         }
 
         // hasNext() and next() should behave the same as in the Iterator
@@ -62,21 +67,19 @@ public class peeking_iterator
         @Override
         public Integer next()
         {
-            int result = peekVal;
-
-            if (core.hasNext()) {
-                peekVal = core.next();
-            } else {
-                peekVal = null;
+            if (cache != null) {
+                Integer result = cache;
+                cache = null;
+                return result;
             }
 
-            return result;
+            return it.next();
         }
 
         @Override
         public boolean hasNext()
         {
-            return peekVal != null || core.hasNext();
+            return cache != null || it.hasNext();
         }
     }
 }

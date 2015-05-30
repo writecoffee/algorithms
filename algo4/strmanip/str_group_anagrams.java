@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,45 +33,28 @@ public class str_group_anagrams
 {
     public List<List<String>> groupAnagrams(String[] strs)
     {
-        List<List<String>> result = new ArrayList<>();
         Map<String, List<String>> h = new HashMap<>();
-        int n = strs.length;
+        Arrays.sort(strs);
 
-        for (int i = 0; i < n; ++i) {
-            String sign = getSignature(strs[i]);
+        for (String s : strs) {
+            String sign = getSignature(s);
 
-            if (!h.containsKey(sign)) {
-                h.put(sign, new ArrayList<String>());
+            List<String> values = h.get(sign);
+            if (values == null) {
+                values = new ArrayList<>();
+                h.put(sign, values);
             }
 
-            h.get(sign).add(strs[i]);
+            values.add(s);
         }
 
-        for (Map.Entry<String, List<String>> ent : h.entrySet()) {
-            Collections.sort(ent.getValue());
-            result.add(ent.getValue());
-        }
-
-        return result;
+        return new ArrayList<List<String>>(h.values());
     }
 
     private String getSignature(String s)
     {
-        int[] counters = new int[256];
-        int n = s.length();
-        StringBuilder sb = new StringBuilder();
-
-        for (int i = 0; i < n; ++i) {
-            counters[s.charAt(i)]++;
-        }
-
-        for (char c = 0; c < 256; ++c) {
-            if (counters[c] > 0) {
-                sb.append(c);
-                sb.append(counters[c]);
-            }
-        }
-
-        return sb.toString();
+        char[] chars = s.toCharArray();
+        Arrays.sort(chars);
+        return new String(chars);
     }
 }

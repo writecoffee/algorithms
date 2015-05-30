@@ -16,25 +16,19 @@
  * [Source]     - {@linkplain https://oj.leetcode.com/problems/jump-game/}
  *
  */
-public class gd_jump_game_I {
-    public boolean canJump(int[] array) {
-        int n = array.length;
+public class gd_jump_game_I
+{
+    public boolean canJump(int[] nums)
+    {
+        int n = nums.length;
+        int lastReachableIndex = n - 1;
 
-        for (int i = 0; i + array[i] < n - 1;) {
-            if (array[i] == 0) {
-                return false;
+        for (int i = n - 2; i >= 0; i--) {
+            if (lastReachableIndex - i <= nums[i]) {
+                lastReachableIndex = i;
             }
-
-            int next = i + 1;
-            for (int j = i + 1; j <= i + array[i]; ++j) {
-                if (j - i + array[j] > next - i + array[next]) {
-                    next = j;
-                }
-            }
-
-            i = next;
         }
 
-        return true;
+        return lastReachableIndex == 0;
     }
 }

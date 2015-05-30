@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * Given a collection of intervals, merge all overlapping intervals.
@@ -31,12 +32,11 @@ public class merge_intervals
         }
     }
 
-    public ArrayList<Interval> merge(ArrayList<Interval> intervals)
+    public List<Interval> merge(List<Interval> intervals)
     {
-        int n = intervals.size();
-        ArrayList<Interval> result = new ArrayList<Interval>();
+        List<Interval> result = new ArrayList<>();
 
-        if (n == 0) {
+        if (intervals.size() == 0) {
             return result;
         }
 
@@ -48,17 +48,21 @@ public class merge_intervals
             }
         });
 
-        result.add(new Interval(intervals.get(0).start, intervals.get(0).end));
-        for (int i = 0; i < n - 1; ++i) {
-            Interval a = result.get(result.size() - 1), b = intervals.get(i + 1);
+        int n = intervals.size();
+        Interval pre = intervals.get(0);
 
-            if (a.end < b.start) {
-                result.add(b);
-            } else if (a.end >= b.start) {
-                a.end = Math.max(a.end, b.end);
+        for (int i = 1; i < n; i++) {
+            Interval nxt = intervals.get(i);
+
+            if (pre.end < nxt.start) {
+                result.add(pre);
+                pre = nxt;
+            } else {
+                pre.end = Math.max(pre.end, nxt.end);
             }
         }
 
+        result.add(pre);
         return result;
     }
 }

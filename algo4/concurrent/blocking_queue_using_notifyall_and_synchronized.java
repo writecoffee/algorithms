@@ -1,7 +1,8 @@
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class blocking_queue_using_notifyall_and_synchronized {
+public class blocking_queue_using_notifyall_and_synchronized
+{
     public final int capacity;
     private Queue<Object> q;
 
@@ -10,7 +11,8 @@ public class blocking_queue_using_notifyall_and_synchronized {
         q = new LinkedList<Object>();
     }
 
-    public synchronized void addLast(Object o) throws InterruptedException {
+    public synchronized void addLast(Object o) throws InterruptedException
+    {
         if (q.size() == 0) {
             q.add(o);
             notifyAll();
@@ -24,7 +26,8 @@ public class blocking_queue_using_notifyall_and_synchronized {
         }
     }
 
-    public synchronized Object pollFirst() throws InterruptedException {
+    public synchronized Object pollFirst() throws InterruptedException
+    {
         Object result;
 
         if (q.size() == capacity) {
@@ -33,9 +36,11 @@ public class blocking_queue_using_notifyall_and_synchronized {
         } else if (q.size() > 0) {
             result = q.poll();
         } else {
+
             while (q.size() == 0) {
                 wait();
             }
+
             result = q.poll();
         }
 

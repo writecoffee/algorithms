@@ -23,4 +23,16 @@ public class bit_number_of_1_bits
 
         return result;
     }
+
+    public int hammingWeightTrick(int n)
+    {
+        int result = 0;
+
+        while (n != 0) {
+            result++;
+            n &= (n - 1);
+        }
+
+        return result;
+    }
 }

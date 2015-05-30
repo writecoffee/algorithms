@@ -34,7 +34,7 @@ package conversion;
  * [Source]     - {@linkplain https://oj.leetcode.com/problems/string-to-integer-atoi/}
  *
  */
-public class math_conv_string_to_integer
+public class math_conv_string_to_integer_atoi
 {
     public int myAtoi(String str)
     {

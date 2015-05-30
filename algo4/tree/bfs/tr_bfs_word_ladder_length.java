@@ -70,22 +70,22 @@ public class tr_bfs_word_ladder_length {
         h.put(start, 1);
 
         while (!q.isEmpty()) {
-            String c = q.poll();
-            int d = h.get(c);
+            String u = q.poll();
+            int height = h.get(u);
 
-            if (c.equals(end)) {
-                return d;
+            if (u.equals(end)) {
+                return height;
             }
 
-            for (int i = 0; i < c.length(); ++i) {
+            for (int i = 0; i < u.length(); ++i) {
                 for (char j = 'a'; j <= 'z'; ++j) {
-                    char[] cStr = c.toCharArray();
+                    char[] cStr = u.toCharArray();
                     cStr[i] = j;
                     String t = new String(cStr);
 
                     if (!h.containsKey(t) && dict.contains(t)) {
                         q.add(t);
-                        h.put(t, d + 1);
+                        h.put(t, height + 1);
                     }
                 }
             }

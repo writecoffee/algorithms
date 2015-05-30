@@ -136,118 +136,107 @@ public class tr_segment_range_sum_query_mutable
     {
         public class NumArray
         {
-            public class SegmentTreeNode
+            public class TreeNode
             {
-                public int start, end, sum;
-                public SegmentTreeNode left, right;
+                int left;
+                int right;
+                int sum;
+                TreeNode leftChild;
+                TreeNode rightChild;
 
-                public SegmentTreeNode(int start, int end, int sum)
-                {
-                    this.start = start;
-                    this.end = end;
-                    this.sum = sum;
+                TreeNode(int l, int r) {
+                    left = l;
+                    right = r;
                 }
             }
 
-            private SegmentTreeNode root;
+            private TreeNode root;
+
+            public NumArray(int[] nums) {
+                int n = nums.length;
+
+                if (n == 0) {
+                    return;
+                }
+
+                root = constructTree(nums, 0, n);
+            }
+
+            private TreeNode constructTree(int[] nums, int start, int end)
+            {
+                int l = start;
+                int r = end - 1;
+
+                TreeNode c = new TreeNode(l, r);
+
+                if (l == r) {
+                    c.sum = nums[l];
+                    return c;
+                }
+
+                int mid = (l + r) / 2;
+
+                c.leftChild = constructTree(nums, start, mid + 1);
+                c.rightChild = constructTree(nums, mid + 1, end);
+                c.sum = c.leftChild.sum + c.rightChild.sum;
+
+                return c;
+            }
 
             void update(int i, int val)
             {
-                updateTree(i, val, root);
+                i = Math.max(i, root.left);
+                i = Math.min(i, root.right);
+
+                updateRecurse(root, i, val);
             }
 
-            public NumArray(int[] nums)
+            private int updateRecurse(TreeNode c, int i, int val)
             {
-                root = buildTreeNode(nums, 0, nums.length - 1);
+                if (c.left == c.right && c.left == i) {
+                    int diff = val - c.sum;
+                    c.sum = val;
+                    return diff;
+                }
+
+                int mid = (c.left + c.right) / 2;
+
+                if (i <= mid) {
+                    int diff = updateRecurse(c.leftChild, i, val);
+                    c.sum += diff;
+                    return diff;
+                } else {
+                    int diff = updateRecurse(c.rightChild, i, val);
+                    c.sum += diff;
+                    return diff;
+                }
             }
 
             public int sumRange(int i, int j)
             {
-                return treeSum(i, j, root);
+                return sumRangeRecurse(i, j, root);
             }
 
-            private int treeSum(int start, int end, SegmentTreeNode root)
+            private int sumRangeRecurse(int i, int j, TreeNode c)
             {
-                if (root == null || start > root.end || end < root.start) {
-                    return 0;
+                if (c.left >= i && c.right <= j) {
+                    return c.sum;
                 }
 
-                if (start == root.start && end == root.end) {
-                    return root.sum;
+                TreeNode lNode = c.leftChild;
+                TreeNode rNode = c.rightChild;
+
+                int lSum = 0;
+                if (i <= lNode.right) {
+                    lSum = sumRangeRecurse(i, Math.min(lNode.right, j), lNode);
                 }
 
-                int leftSum = 0;
-                int rightSum = 0;
-
-                if (root.left != null) {
-                   leftSum = treeSum(Math.max(root.left.start, start),
-                                     Math.min(root.left.end, end),
-                                     root.left);
+                int rSum = 0;
+                if (j >= rNode.left) {
+                    rSum = sumRangeRecurse(Math.max(rNode.left, i), j, rNode);
                 }
 
-                if (root.right != null) {
-                   rightSum = treeSum(Math.max(root.right.start, start),
-                                      Math.min(root.right.end, end),
-                                      root.right);
-                }
-
-                return leftSum + rightSum;
-            }
-
-            private SegmentTreeNode buildTreeNode(int[] nums, int start, int end)
-            {
-                if (start > end) {
-                    return null;
-                }
-
-                if (start == end) {
-                    return new SegmentTreeNode(start, end, nums[start]);
-                }
-
-                SegmentTreeNode root = new SegmentTreeNode(start, end, 0);
-                int mid = start + (end - start) / 2;
-                root.left = buildTreeNode(nums, start, mid);
-                root.right = buildTreeNode(nums, mid + 1, end);
-
-                if (root.left != null) {
-                    root.sum += root.left.sum;
-                }
-
-                if (root.right != null) {
-                    root.sum += root.right.sum;
-                }
-
-                return root;
-            }
-
-            private void updateTree(int index, int val, SegmentTreeNode root)
-            {
-                if (root.start > index || root.end < index) {
-                    return;
-                }
-
-                int start = root.start;
-                int end = root.end;
-                int mid = start + (end - start) / 2;
-
-                if (start == end) {
-                    root.sum = val;
-                    return;
-                }
-
-                if (index > mid) {
-                    updateTree(index, val, root.right);
-                } else {
-                    updateTree(index, val, root.left);
-                }
-
-                if (root.left != null) {
-                    root.sum += root.left.sum;
-                }
-
-                if (root.right != null) {
-                    root.sum += root.right.sum;
-                }
+                return lSum + rSum;
             }
         }
     }

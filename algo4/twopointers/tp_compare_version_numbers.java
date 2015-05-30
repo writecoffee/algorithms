@@ -23,69 +23,30 @@ public class tp_compare_version_numbers
 {
     public int compareVersion(String version1, String version2)
     {
-        int m = version1.length(),
-            n = version2.length(),
-            dot1 = version1.indexOf(".", 0),
-            dot2 = version2.indexOf(".", 0),
-            i = 0,
-            j = 0;
+        String[] v1 = version1.split("\\.");
+        String[] v2 = version2.split("\\.");
+        int lengthV1 = v1.length;
+        int lengthV2 = v2.length;
+        int len = Math.max(lengthV1, lengthV2);
 
-        StringBuilder s1 = new StringBuilder(),
-                      s2 = new StringBuilder();
+        for (int i = 0; i < len; i++) {
+            int nV1 = 0, nV2 = 0;
 
-        while (dot1 != -1 && dot2 != -1) {
-            int subLen1 = dot1 - i,
-                subLen2 = dot2 - j;
+            if (i < lengthV1) {
+                nV1 = Integer.parseInt(v1[i]);
+            }
 
-            align(s1, i, subLen1, version1, s2, j, subLen2, version2);
-            i += subLen1 + 1;
-            j += subLen2 + 1;
-            dot1 = version1.indexOf(".", dot1 + 1);
-            dot2 = version2.indexOf(".", dot2 + 1);
+            if (i < lengthV2) {
+                nV2 = Integer.parseInt(v2[i]);
+            }
+
+            if (nV1 > nV2) {
+                return 1;
+            } else if (nV1 < nV2) {
+                return -1;
+            }
         }
 
-        while (dot1 != -1) {
-            int subLen1 = dot1 - i,
-                subLen2 = j >= n ? 0 : n - j;
-
-            align(s1, i, subLen1, version1, s2, j, subLen2, version2);
-            i += subLen1 + 1;
-            j += subLen2;
-            dot1 = version1.indexOf(".", dot1 + 1);
-        }
-
-        while (dot2 != -1) {
-            int subLen1 = i >= m ? 0 : m - i,
-                subLen2 = dot2 - j;
-
-            align(s1, i, subLen1, version1, s2, j, subLen2, version2);
-            i += subLen1;
-            j += subLen2 + 1;
-            dot2 = version2.indexOf(".", dot2 + 1);
-        }
-
-        align(s1, i, m - i, version1, s2, j, n - j, version2);
-        return Math.min(Math.max(-1, s1.toString().compareTo(s2.toString())), 1);
-    }
-
-    private void align(StringBuilder s1, int i, int subLen1, String version1, StringBuilder s2, int j, int subLen2, String version2)
-    {
-        int maxLen = Math.max(subLen1, subLen2);
-
-        for (int k = 0; k < maxLen - subLen1; ++k) {
-            s1.append(0);
-        }
-
-        for (int k = 0; k < maxLen - subLen2; ++k) {
-            s2.append(0);
-        }
-
-        for (int k = 0; k < subLen1; ++k) {
-            s1.append(version1.charAt(i + k));
-        }
-
-        for (int k = 0; k < subLen2; ++k) {
-            s2.append(version2.charAt(j + k));
-        }
+        return 0;
     }
 }

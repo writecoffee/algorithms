@@ -1,7 +1,6 @@
 package deque;
 
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Deque;
 
 /**
@@ -30,32 +29,38 @@ import java.util.Deque;
  * Challenge o(n) time and O(k) memory
  *
  * [Source]     - {@linkplain http://www.lintcode.com/en/problem/sliding-window-maximum/}
+ *                {@linkplain https://leetcode.com/problems/sliding-window-maximum/}
  * [Difficulty] - Medium
  *
  */
 public class deque_sliding_window_maximum
 {
-    public ArrayList<Integer> maxSlidingWindow(int[] nums, int k)
+    public int[] maxSlidingWindow(int[] nums, int k)
     {
-        ArrayList<Integer> result = new ArrayList<Integer>();
-        Deque<Integer> deque = new ArrayDeque<Integer>();
         int n = nums.length;
 
+        if (k == 0 || n < k) {
+            return new int[0];
+        }
+
+        Deque<Integer> deque = new ArrayDeque<>();
+        int[] result = new int[n - k + 1];
+
         for (int i = 0; i < n; i++) {
-            int num = nums[i];
+            int theNum = nums[i];
 
-            while (!deque.isEmpty() && num > deque.peekLast()) {
-                deque.pollLast();
+            while (!deque.isEmpty() && theNum > deque.getLast()) {
+                deque.removeLast();
             }
 
-            deque.offer(num);
-
-            if (i + 1 > k && deque.peekFirst() == nums[i - k]) {
-                deque.pollFirst();
+            if (i >= k && !deque.isEmpty() && deque.getFirst() == nums[i - k]) {
+                deque.removeFirst();
             }
 
-            if (i + 1 >= k) {
-                result.add(deque.peekFirst());
+            deque.addLast(theNum);
+
+            if (i >= k - 1) {
+                result[i - k + 1] = deque.getFirst();
             }
         }
 

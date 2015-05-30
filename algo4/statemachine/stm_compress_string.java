@@ -14,7 +14,7 @@
  * [Source]     - google interview
  *
  */
-public class compress_string {
+public class stm_compress_string {
     public String compress(String s) {
         int n = s.length(), l = 0;
         StringBuilder sb = new StringBuilder();

@@ -44,14 +44,13 @@ public class tp_3sum
             while (l < r) {
                 int tsum = num[l] + num[r];
 
-                if (tsum == target) {
+                if (l > i + 1 && num[l] == num[l - 1]) {
+                    l++;
+                } else if (tsum == target) {
                     result.add(Arrays.asList(new Integer[] { num[i], num[l], num[r] }));
 
                     l++;
                     r--;
-                    while (l < r && num[l] == num[l - 1]) {
-                        l++;
-                    }
 
                 } else if (tsum < target) {
                     l++;

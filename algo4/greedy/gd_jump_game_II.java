@@ -17,27 +17,23 @@
  * [Source]     - {@linkplain https://oj.leetcode.com/problems/jump-game-ii/}
  *
  */
-public class gd_jump_game_II {
-    public int jump(int[] array) {
-        int count = 0, n = array.length;
+public class gd_jump_game_II
+{
+    public int jump(int[] array)
+    {
+        int minSteps = 0;
+        int currentBoundary = 0;
+        int newBoundary = 0;
 
-        for (int i = 0; i + array[i] < n - 1;) {
-            count++;
+        for (int i = 0; i < array.length - 1; i++) {
+            newBoundary = Math.max(newBoundary, i + array[i]);
 
-            if (array[i] == 0) {
-                return -1;
+            if (i == currentBoundary) {
+                minSteps++;
+                currentBoundary = newBoundary;
             }
-
-            int next = i;
-            for (int j = i + 1; j <= i + array[i]; ++j) {
-                if (j - i + array[j] > next - i + array[next]) {
-                    next = j;
-                }
-            }
-
-            i = next;
         }
 
-        return n == 1 ? count : count + 1;
+        return minSteps;
     }
 }
