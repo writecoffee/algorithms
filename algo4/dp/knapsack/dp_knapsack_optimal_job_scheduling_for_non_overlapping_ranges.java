@@ -21,6 +21,7 @@ import com.google.common.collect.Lists;
  *
  * [Difficulty] - Hard
  * [Source]     - facebook interview
+ * [Tag]        - $ranges$
  *
  */
 public class dp_knapsack_optimal_job_scheduling_for_non_overlapping_ranges

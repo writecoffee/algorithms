@@ -1,3 +1,15 @@
+/**
+ * There are n points (x, y) in a 2-D plane. These points are sorted in ascending order in terms of
+ * x.
+ *
+ * The goal is to compute the minimum Euclidean distance sum where we start off from the left-most
+ * point, passing some of the points, and then reach the right-most point, and then return from the
+ * right-most point passing the left-over points and reach the starting point again.
+ *
+ * [Difficulty] - Extreme Hard
+ * [Source]     - {@linkplain http://www.itint5.com/oj/#50}
+ *
+ */
 public class shortest_round_trip_traversal_for_all_points {
     class Point {
         int x, y;
@@ -19,10 +31,10 @@ public class shortest_round_trip_traversal_for_all_points {
      *           point(0) to point(j). When i = k we have a minimum cost bitonic tour through
      *           the first i nodes. When i = k = n we have a minimum cost bitonic tour through
      *           all n points.
-     *           
+     *
      *  We are filling the table from top to the bottom, from left to the right, and thus we can
      *  remove duplicate paths (i, k swapped).
-     * 
+     *
      */
     public double minDist(Point[] points) {
         int n = points.length;
@@ -33,12 +45,12 @@ public class shortest_round_trip_traversal_for_all_points {
                 /**
                  * Case 1: i > k + 1. The minimum cost disjoint paths from 1 to i and from 1 to k
                  * must contain the edge (i - 1, i).
-                 * 
+                 *
                  * Case 2: i == k. The edge ending in i comes from u, 0 <= u < k.
-                 * 
+                 *
                  * Case 3: i == k + 1. The two edges entering k + 1 must come from k and from some
                  * u, 0 <= u <= k.
-                 * 
+                 *
                  */
                 if (i - k > 1) {
                     dp[k][i] = dp[k][i - 1] + dist(points[i - 1], points[i]);
