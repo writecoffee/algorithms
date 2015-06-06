@@ -2,23 +2,32 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class interval_merging {
-    public class Interval {
+/**
+ * 
+ * [Tag]        - $range$
+ */
+public class interval_merging
+{
+    public class Interval
+    {
         int start;
         int end;
 
-        Interval() {
+        Interval()
+        {
             start = 0;
             end = 0;
         }
 
-        Interval(int s, int e) {
+        Interval(int s, int e)
+        {
             start = s;
             end = e;
         }
     }
 
-    public ArrayList<Interval> merge(ArrayList<Interval> intervals) {
+    public ArrayList<Interval> merge(ArrayList<Interval> intervals)
+    {
         int n = intervals.size();
         ArrayList<Interval> result = new ArrayList<Interval>();
         if (n == 0) {
@@ -27,7 +36,8 @@ public class interval_merging {
 
         Collections.sort(intervals, new Comparator<Interval>() {
             @Override
-            public int compare(Interval a, Interval b) {
+            public int compare(Interval a, Interval b)
+            {
                 return a.start - b.start;
             }
         });

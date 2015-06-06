@@ -1,22 +1,31 @@
 import java.util.ArrayList;
 
-public class interval_insertion {
-    public class Interval {
+/**
+ * 
+ * [Tag]        - $range$
+ */
+public class interval_insertion
+{
+    public class Interval
+    {
         int start;
         int end;
 
-        Interval() {
+        Interval()
+        {
             start = 0;
             end = 0;
         }
 
-        Interval(int s, int e) {
+        Interval(int s, int e)
+        {
             start = s;
             end = e;
         }
     }
 
-    public ArrayList<Interval> insert(ArrayList<Interval> intervals, Interval nxt) {
+    public ArrayList<Interval> insert(ArrayList<Interval> intervals, Interval nxt)
+    {
         int n = intervals.size();
         ArrayList<Interval> result = new ArrayList<Interval>();
 

@@ -1,23 +1,33 @@
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class interval_detect_intersection {
-    private class Interval {
+/**
+ *
+ *
+ * [Tag]        - $range$
+ */
+public class interval_detect_intersection
+{
+    private class Interval
+    {
         int start;
         int end;
     }
 
-    private class MyInterval extends Interval {
+    private class MyInterval extends Interval
+    {
         public final int index;
 
-        MyInterval(int _start, int _end, final int _index) {
+        MyInterval(int _start, int _end, final int _index)
+        {
             start = _start;
             end = _end;
             index = _index;
         }
     }
 
-    public void intersected(Interval[] intervals, boolean[] isIntersected) {
+    public void intersected(Interval[] intervals, boolean[] isIntersected)
+    {
         int n = intervals.length;
 
         MyInterval[] myIntervals = new MyInterval[n];
@@ -27,7 +37,8 @@ public class interval_detect_intersection {
 
         Arrays.sort(myIntervals, new Comparator<MyInterval>() {
             @Override
-            public int compare(MyInterval a, MyInterval b) {
+            public int compare(MyInterval a, MyInterval b)
+            {
                 return a.start - b.start;
             }
         });

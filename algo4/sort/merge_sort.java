@@ -1,11 +1,14 @@
-public class merge_sort {
-    static int[] mergeSort(int[] array) {
+public class merge_sort
+{
+    static int[] mergeSort(int[] array)
+    {
         int[] helper = new int[array.length];
         mergeSort(array, helper, 0, array.length);
         return array;
     }
 
-    private static void mergeSort(int[] array, int[] helper, int start, int end) {
+    private static void mergeSort(int[] array, int[] helper, int start, int end)
+    {
         if (end - start <= 1) {
             return;
         }
@@ -16,7 +19,8 @@ public class merge_sort {
         merge(array, helper, start, middle, end);
     }
 
-    private static void merge(int[] array, int[] helper, int start, int middle, int end) {
+    private static void merge(int[] array, int[] helper, int start, int middle, int end)
+    {
         for (int i = start; i < end; i++) {
             helper[i] = array[i];
         }
@@ -41,7 +45,8 @@ public class merge_sort {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         int[] result = mergeSort(new int[] { 1, 5, 2, 8, 9 });
         for (int i = 1; i < result.length; i++) {
             assert result[i] >= result[i - 1];
