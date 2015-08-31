@@ -1,4 +1,6 @@
-public class add_two_numbers {
+package implementation;
+
+public class math_impl_add_two_numbers {
     public String add(String a, String b) {
         if (a.length() < b.length()) {
             return add(b, a);

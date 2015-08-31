@@ -1,5 +1,9 @@
-public class find_another_integer_to_form_an_all_one_product {
-    public int findMinAllOne(int a) {
+package number_theory;
+
+public class math_nt_find_another_integer_to_form_an_all_one_product
+{
+    public int findMinAllOne(int a)
+    {
         int[] m = new int[] { 0, 1, 0, 1, 0, 0, 0, 1, 0, 1 };
         if (m[a % 10] == 0) {
             return -1;

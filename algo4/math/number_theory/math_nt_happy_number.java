@@ -1,3 +1,5 @@
+package number_theory;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,7 +23,7 @@ import java.util.Set;
  * [Source]     - {@linkplain https://leetcode.com/problems/happy-number/}
  *
  */
-public class math_happy_number
+public class math_nt_happy_number
 {
     public boolean isHappy(int n)
     {

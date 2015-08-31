@@ -1,3 +1,5 @@
+package implementation;
+
 /**
  * Given an expression, including only non-negative number, '+', '-', '*' operators.
  * The task is to evaluate the expression.
@@ -7,8 +9,10 @@
  * {@linkplain http://www.itint5.com/oj/#26}
  *
  */
-public class evaluate_simple_expression_I {
-    public int evaluateNonrecur(String expr) {
+public class math_impl_evaluate_simple_expression_I
+{
+    public int evaluateNonrecur(String expr)
+    {
         int result = 0;
         int n = expr.length();
         int k = 1;
@@ -32,19 +36,21 @@ public class evaluate_simple_expression_I {
     }
 
     /**
-     * In order to preserve the higher precedence of '*' operator, we should figure out
-     * a way of representing '+' and '-'. So we can evaluate '+' and '-' in right
-     * associative manner.
+     * In order to preserve the higher precedence of '*' operator, we should
+     * figure out a way of representing '+' and '-'. So we can evaluate '+' and
+     * '-' in right associative manner.
      * 
-     * So if there is an expression, "1 + 3 * 2", it can be converted into a form with
-     * coefficients "1 * 1 + 3 * 2". For minus, it should be similar. "1 - 3 + 2" could
-     * be turned into a form "1 * 1 + (-1) * 3 + 1 * 2".
+     * So if there is an expression, "1 + 3 * 2", it can be converted into a
+     * form with coefficients "1 * 1 + 3 * 2". For minus, it should be similar.
+     * "1 - 3 + 2" could be turned into a form "1 * 1 + (-1) * 3 + 1 * 2".
      * 
-     * It is straightforward that the coefficient can be passed from the previous 
-     * calculation and let the coefficient multiply the number we pull off from the string.
+     * It is straightforward that the coefficient can be passed from the
+     * previous calculation and let the coefficient multiply the number we pull
+     * off from the string.
      * 
      */
-    public int evaluate(String expr, int i, int k) {
+    public int evaluate(String expr, int i, int k)
+    {
         int n = expr.length();
 
         int operand = 0;
@@ -63,7 +69,8 @@ public class evaluate_simple_expression_I {
         }
     }
 
-    public int evaluate(String expr) {
+    public int evaluate(String expr)
+    {
         return evaluate(expr, 0, 1);
     }
 }

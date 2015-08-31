@@ -1,3 +1,5 @@
+package implementation;
+
 /**
  * Multiply two strings, considering negative numbers, 0 as well.
  * 
@@ -5,10 +7,13 @@
  * [Source]     - {@linkplain http://www.itint5.com/oj/#29}
  *
  */
-public class math_multiply_strings_II {
-    public String multiply(String a, String b) {
+public class math_multiply_strings_II
+{
+    public String multiply(String a, String b)
+    {
         int m = a.length(), n = b.length();
-        boolean isNeg = (a.startsWith("-") && !b.startsWith("-")) || (!a.startsWith("-") && b.startsWith("-"));
+        boolean isNeg = (a.startsWith("-") && !b.startsWith("-"))
+                     || (!a.startsWith("-") && b.startsWith("-"));
 
         if (a.startsWith("-")) {
             m--;
@@ -45,7 +50,8 @@ public class math_multiply_strings_II {
         return convert(isNeg, result, i, m + n);
     }
 
-    private String convert(boolean isNeg, int[] result, int start, int end) {
+    private String convert(boolean isNeg, int[] result, int start, int end)
+    {
         StringBuilder sb = new StringBuilder();
 
         if (start == end) {

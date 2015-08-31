@@ -1,3 +1,5 @@
+package implementation;
+
 /**
  * Given input of arithmetic expression with ONLY digit and +, -, * and /, parse the expression and 
  * evaluate it. You may assume the input is legal but there could be space in the expression.
@@ -12,7 +14,7 @@
  * [Source]     - mercurial system quiz
  *
  */
-public class evaluate_simple_expression_II {
+public class math_impl_evaluate_simple_expression_II {
     private static double evaluate(String[] nums, int m, int i, String[] ops, int n, int j, double coeff) {
         double operand = 0f;
 

@@ -1,3 +1,5 @@
+package number_theory;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -8,11 +10,11 @@ import java.io.PrintWriter;
  *
  * [Difficulty] - Medium
  * [Source]     - facebook interview,
- *                {@linkplain http://acm.zju.edu.cn/onlinejudge/showProblem.do?problemCode=2022}
+ *                {@linkplain http://acm.zju.edu.cn/onlinejudge/showProblem.do?problemCode=2022},
  *                {@linkplain https://leetcode.com/problems/factorial-trailing-zeroes/}
  *
  */
-public class count_trailing_zero_in_n_factorial
+public class math_nt_count_trailing_zero_in_n_factorial
 {
     /**
      * The key observation here is that how many 10 could be formed from the

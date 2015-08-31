@@ -1,4 +1,6 @@
-public class math_count_primes
+package number_theory;
+
+public class math_nt_count_primes
 {
     public int countPrimes(int n)
     {

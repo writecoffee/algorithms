@@ -1,3 +1,5 @@
+package implementation;
+
 /**
  * Divide two integers without using multiplication, division and mod operator.
  * 
@@ -5,7 +7,7 @@
  * [Source]     - facebook interview, {@linkplain https://oj.leetcode.com/problems/divide-two-integers/}
  *
  */
-public class math_divide_two_integers
+public class math_impl_divide_two_integers
 {
     public int divide(int numerator, int denominator)
     {

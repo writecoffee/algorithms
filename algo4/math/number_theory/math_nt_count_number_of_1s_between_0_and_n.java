@@ -1,3 +1,5 @@
+package number_theory;
+
 /**
  * Write a method to count the number of 2s between 0 and n.
  * 
@@ -12,7 +14,7 @@
  * [Source]     - {@linkplain CC150-18.4}
  * 
  */
-public class count_number_of_2s_between_0_and_n {
+public class math_nt_count_number_of_1s_between_0_and_n {
     /**
      * The algorithm is to iterate through all digits in the number from right to left
      * and discuss how many times 2 can appear at the current position.
