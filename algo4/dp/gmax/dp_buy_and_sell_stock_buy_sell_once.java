@@ -22,13 +22,13 @@ public class dp_buy_and_sell_stock_buy_sell_once
         }
 
         int minPrice = prices[0];
-        int gMax = 0;
+        int result = 0;
 
         for (int i = 1; i < n; ++i) {
             minPrice = Math.min(minPrice, prices[i]);
-            gMax = Math.max(gMax, prices[i] - minPrice);
+            result = Math.max(result, prices[i] - minPrice);
         }
 
-        return gMax;
+        return result;
     }
 }

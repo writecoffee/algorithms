@@ -8,7 +8,7 @@ package window;
  *
  * T is "ece" which its length is 3.
  *
- * [Difficulty] - Medium
+ * [Difficulty] - Hard
  * [Source]     - {@linkplain https://leetcode.com/problems/longest-substring-with-at-most-two-distinct-characters/}
  *
  */
@@ -16,33 +16,36 @@ public class tp_longest_substring_with_at_most_two_distinct_characters
 {
     public int lengthOfLongestSubstringTwoDistinct(String s)
     {
-        int n = s.length(),
-            l = 0,
-            gMax = 0,
-            distinct = 0;
-
+        int n = s.length();
+        int distinct = 0;
         int[] h = new int[256];
+        int result = 0;
 
-        for (int r = 0; r < n; ++r) {
-            char c = s.charAt(r);
-
-            if (!(distinct < 2 || h[c] > 0)) {
-                for (char cPrev = s.charAt(l); l < r - 1 && distinct == 2; ++l, cPrev = s.charAt(l)) {
-                    h[cPrev]--;
-                    if (h[cPrev] == 0) {
-                        distinct--;
-                    }
+        for (int i = 0, j = 0; i < n; i++) {
+            for (; j < n && distinct <= 2; j++) {
+                char c = s.charAt(j);
+                h[c]++;
+                if (h[c] == 1) {
+                    distinct++;
                 }
             }
 
-            if (h[c] == 0) {
-                distinct++;
+            /*
+             * Edge case where only 1 distinct character appears in the string.
+             */
+            if (distinct == 3) {
+                result = Math.max(result, j - i - 1);
+            } else {
+                result = Math.max(result, j - i);
             }
-            h[c]++;
 
-            gMax = Math.max(r - l + 1, gMax);
+            char backchar = s.charAt(i);
+            h[backchar]--;
+            if (h[backchar] == 0) {
+                distinct--;
+            }
         }
 
-        return gMax;
+        return result;
     }
 }

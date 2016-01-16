@@ -19,11 +19,15 @@ import java.util.ArrayList;
  * For a given n, a gray code sequence is not uniquely defined.
  *
  * [Difficulty] - Easy
- * [Source]     - google interview, {@linkplain https://oj.leetcode.com/problems/gray-code/}
+ * [Source]     - google interview,
+ *                amazon interview,
+ *                {@linkplain https://oj.leetcode.com/problems/gray-code/}
  * 
  */
-public class bit_gray_code {
-    public ArrayList<Integer> grayCode(int n) {
+public class bit_gray_code
+{
+    public ArrayList<Integer> grayCode(int n)
+    {
         ArrayList<Integer> result = new ArrayList<Integer>();
         result.add(0);
 

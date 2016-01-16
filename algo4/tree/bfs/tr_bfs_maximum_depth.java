@@ -5,13 +5,13 @@ import java.util.Queue;
 
 /**
  * Given a binary tree, find its maximum depth.
- * 
+ *
  * The maximum depth is the number of nodes along the longest path from the root node down to the
  * farthest leaf node.
- * 
+ *
  * [Difficulty] - Easy
  * [Source]     - {@linkplain https://oj.leetcode.com/problems/maximum-depth-of-binary-tree/}
- * 
+ *
  */
 public class tr_bfs_maximum_depth {
     public class TreeNode {

@@ -1,6 +1,20 @@
 import java.util.Stack;
 
-public class stk_longest_valid_parentheses {
+/**
+ * Given a string containing just the characters '(' and ')', find the length of
+ * the longest valid (well-formed) parentheses substring.
+ * 
+ * For "(()", the longest valid parentheses substring is "()", which has length
+ * = 2.
+ * 
+ * Another example is ")()())", where the longest valid parentheses substring is
+ * "()()", which has length = 4.
+ * 
+ * 
+ *
+ */
+public class stk_longest_valid_parentheses
+{
     /**
      * We can use a stack to keep track of open left parenthesis and use a left window
      * to record the starting position of the current window.
@@ -9,8 +23,9 @@ public class stk_longest_valid_parentheses {
      * match.
      * 
      */
-    public int longestValidParentheses(String s) {
-        Stack<Integer> stk = new Stack<Integer>();
+    public int longestValidParentheses(String s)
+    {
+        Stack<Integer> stk = new Stack<>();
         int n = s.length();
         int l = 0, gMax = 0;
 
@@ -58,7 +73,8 @@ public class stk_longest_valid_parentheses {
      *         will be detected when we are looking backward trying the opposite way.
      * 
      */
-    private int match(String s, int start, int end, int stride, char forward) {
+    private int match(String s, int start, int end, int stride, char forward)
+    {
         int gMax = 0, count = 0, lMax = 0;
 
         for (int i = start; i != end; i += stride) {
@@ -75,7 +91,8 @@ public class stk_longest_valid_parentheses {
         return gMax;
     }
 
-    public int longestValidParenthesesWithoutStack(String s) {
+    public int longestValidParenthesesWithoutStack(String s)
+    {
         return Math.max(match(s, 0, s.length(), 1, '('), match(s, s.length() - 1, -1, -1, ')'));
     }
 }

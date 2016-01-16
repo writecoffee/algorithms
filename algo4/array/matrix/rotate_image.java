@@ -1,7 +1,9 @@
 package matrix;
 
-public class rotate_image {
-    public void rotate(int[][] matrix) {
+public class rotate_image
+{
+    public void rotate(int[][] matrix)
+    {
         int n = matrix.length;
         int d = n / 2;
 

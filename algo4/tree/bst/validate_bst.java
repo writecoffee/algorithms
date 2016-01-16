@@ -3,51 +3,45 @@ package bst;
 import java.util.HashMap;
 import java.util.Stack;
 
-public class validate_bst {
-    public static class TreeNode {
-        public final int val;
+/**
+ * Given a binary tree, determine if it is a valid binary search tree (BST).
+ *
+ * Assume a BST is defined as follows:
+ *
+ *  - The left subtree of a node contains only nodes with keys less than the node's key.
+ *  - The right subtree of a node contains only nodes with keys greater than the node's key.
+ *  - Both the left and right subtrees must also be binary search trees.
+ *
+ * [Difficulty] - Medium
+ * [Source]     - {@linkplain https://leetcode.com/problems/validate-binary-search-tree/}
+ *
+ */
+public class validate_bst
+{
+    public static class TreeNode
+    {
+        public final int      val;
         public final TreeNode left;
         public final TreeNode right;
 
-        TreeNode(int _v, TreeNode _left, TreeNode _right) {
+        TreeNode(int _v, TreeNode _left, TreeNode _right)
+        {
             val = _v;
             left = _left;
             right = _right;
         }
     }
 
-    /**
-     * Only work when the tree contains no duplicate values. 
-     */
-    public boolean isValidBST(TreeNode root) {
-        return explore(root);
+    public boolean isValidBST(TreeNode root)
+    {
+        return checkBSTWithMaxMinRange(root, Long.MIN_VALUE, Long.MAX_VALUE);
     }
 
-    TreeNode pre = null;
-    public boolean explore(TreeNode root) {
+    boolean checkBSTWithMaxMinRange(TreeNode root, long min, long max)
+    {
         if (root == null) {
             return true;
-        }
-
-        if (!explore(root.left)) {
-            return false;
-        }
-
-        if (pre != null && pre.val >= root.val) {
-            return false;
-        }
-
-        pre = root;
-        return explore(root.right);
-    }
-
-    /**
-     * Work regardless of whether the tree has duplicate values or not. 
-     */
-    boolean checkBSTWithMaxMinRange(TreeNode root, int min, int max) {
-        if (root == null) {
-            return true;
-        } else if (root.val <= min || root.val > max) {
+        } else if (root.val <= min || root.val >= max) {
             return false;
         }
 
@@ -56,10 +50,11 @@ public class validate_bst {
     }
 
     /**
-     * For any node T, T's value should be > any node in its left sub-tree
-     * and < any node in its right sub-tree.
+     * For any node T, T's value should be > any node in its left sub-tree and <
+     * any node in its right sub-tree.
      */
-    public boolean isValidBSTNonrecurNodup(TreeNode root) {
+    public boolean isValidBSTNonrecurNodup(TreeNode root)
+    {
         Stack<TreeNode> s = new Stack<TreeNode>();
         TreeNode next = root;
         TreeNode last = null;
@@ -83,20 +78,24 @@ public class validate_bst {
         return true;
     }
 
-    class MaxMinPair {
+    class MaxMinPair
+    {
         final int max;
         final int min;
-        MaxMinPair(int _min, int _max) {
+
+        MaxMinPair(int _min, int _max)
+        {
             min = _min;
             max = _max;
         }
     }
 
     /**
-     * For any node T, T's value should be >= any node in its left sub-tree
-     * and < any node in its right sub-tree.
+     * For any node T, T's value should be >= any node in its left sub-tree and
+     * < any node in its right sub-tree.
      */
-    public boolean isValidBSTNonrecur(TreeNode root) {
+    public boolean isValidBSTNonrecur(TreeNode root)
+    {
         if (root == null) {
             return true;
         }

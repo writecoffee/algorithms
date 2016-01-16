@@ -48,33 +48,19 @@ public class sort_alien_dictionary
             rounds = Math.max(word.length(), rounds);
         }
 
-        Map<Character, Set<Character>> relyOn = new HashMap<>();
-        Map<Character, Set<Character>> notifier = new HashMap<>();
+        Map<Character, Integer> indegree = new HashMap<>();
+        Map<Character, Set<Character>> happensBefore = new HashMap<>();
 
-        for (int i = 0; i < rounds; i++) {
-            addIfNotExists(words[0], i, relyOn, notifier);
-
-            for (int j = 1; j < n; j++) {
-                addIfNotExists(words[j], i, relyOn, notifier);
-
-                if (isSamePrefix(words[j], words[j - 1], i)) {
-                    char from = words[j].charAt(i),
-                         to = words[j - 1].charAt(i);
-
-                    notifier.get(to).add(from);
-                    relyOn.get(from).add(to);
-                }
-            }
-        }
+        constructGraph(n, rounds, words, indegree, happensBefore);
 
         StringBuilder sb = new StringBuilder();
         Queue<Character> q = new LinkedList<>();
 
-        for (Map.Entry<Character, Set<Character>> entry : relyOn.entrySet()) {
+        for (Map.Entry<Character, Integer> entry : indegree.entrySet()) {
             char key = entry.getKey();
-            Set<Character> value = entry.getValue();
+            int value = entry.getValue();
 
-            if (value.isEmpty()) {
+            if (value == 0) {
                 q.add(key);
             }
         }
@@ -87,10 +73,10 @@ public class sort_alien_dictionary
                 Character c = tq.poll();
                 sb.append(c);
 
-                for (char notified : notifier.get(c)) {
-                    relyOn.get(notified).remove(c);
+                for (char notified : happensBefore.get(c)) {
+                    indegree.put(notified, indegree.get(notified) - 1);
 
-                    if (relyOn.get(notified).isEmpty()) {
+                    if (indegree.get(notified) == 0) {
                         q.add(notified);
                     }
                 }
@@ -100,40 +86,58 @@ public class sort_alien_dictionary
         /*
          * Detect if any characters that are not finished.
          */
-        for (Set<Character> relies : relyOn.values()) {
-           if (!relies.isEmpty()) {
-               return "";
-           }
+        for (int relies : indegree.values()) {
+            if (relies != 0) {
+                return "";
+            }
         }
 
         return sb.toString();
     }
 
-    private void addIfNotExists(String string, int i, Map<Character, Set<Character>> relyOn, Map<Character, Set<Character>> notifier)
+    private void constructGraph(int n, int rounds, String[] words, Map<Character, Integer> indegree, Map<Character, Set<Character>> happensBefore)
     {
-        if (i >= string.length()) {
-            return;
+        for (String s : words) {
+            for (char c : s.toCharArray()) {
+                safeAdd(c, indegree, happensBefore);
+            }
         }
 
-        relyOn.putIfAbsent(string.charAt(i), new HashSet<>());
-        notifier.putIfAbsent(string.charAt(i), new HashSet<>());
+        for (int i = 1; i < n; i++) {
+            for (int j = 0; j < rounds; j++) {
+                if (!isSamePrefix(words[i], words[i - 1], j)) {
+                    break;
+                } else if (words[i].charAt(j) == words[i - 1].charAt(j)) {
+                    continue;
+                }
+
+                char from = words[i - 1].charAt(j), to = words[i].charAt(j);
+
+                happensBefore.get(from).add(to);
+                indegree.put(to, indegree.get(to) + 1);
+            }
+        }
+    }
+
+    private void safeAdd(char c, Map<Character, Integer> indegrees, Map<Character, Set<Character>> notifier)
+    {
+        if (!indegrees.containsKey(c)) {
+            indegrees.put(c, 0);
+        }
+
+        if (!notifier.containsKey(c)) {
+            notifier.put(c, new HashSet<Character>());
+        }
     }
 
     private boolean isSamePrefix(String a, String b, int endIndex)
     {
         if (endIndex >= a.length() || endIndex >= b.length()) {
             return false;
+        } else if (endIndex == 0) {
+            return true;
         }
 
-        for (int i = 0; i < endIndex; i++) {
-            char ac = a.charAt(i),
-                 bc = b.charAt(i);
-
-            if (ac != bc) {
-                return false;
-            }
-        }
-
-        return a.charAt(endIndex) != b.charAt(endIndex);
+        return a.charAt(endIndex - 1) == b.charAt(endIndex - 1);
     }
 }

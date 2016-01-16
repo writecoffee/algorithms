@@ -21,8 +21,10 @@ package window;
  * [Source]     - facebook interview
  * 
  */
-public class tp_validate_palindrome_II {
-    public boolean isPalindrome(String s) {
+public class tp_validate_palindrome_II
+{
+    public boolean isPalindrome(String s)
+    {
         if (s.isEmpty()) {
             return false;
         }

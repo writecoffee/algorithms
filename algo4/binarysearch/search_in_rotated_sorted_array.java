@@ -1,5 +1,11 @@
-public class search_in_rotated_sorted_array {
-    public int search(int[] array, int target) {
+/**
+ * 
+ *
+ */
+public class search_in_rotated_sorted_array
+{
+    public int search(int[] array, int target)
+    {
         int n = array.length;
         int l = 0;
         int r = n - 1;

@@ -1,15 +1,19 @@
-public class add_two_linked_list {
-    public static class ListNode {
-        int val;
+public class add_two_linked_list
+{
+    public static class ListNode
+    {
+        int      val;
         ListNode next;
 
-        ListNode(int x) {
+        ListNode(int x)
+        {
             val = x;
             next = null;
         }
     }
 
-    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2)
+    {
         ListNode l1Curr = l1;
         ListNode l2Curr = l2;
         ListNode result = new ListNode(-1);

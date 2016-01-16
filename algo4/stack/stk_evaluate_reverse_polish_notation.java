@@ -2,19 +2,22 @@ import java.util.Stack;
 
 /**
  * Evaluate the value of an arithmetic expression in Reverse Polish Notation.
- * 
+ *
  * Valid operators are +, -, *, /. Each operand may be an integer or another expression.
- * 
+ *
  * Some examples:
- * 
+ *
  *   ["2", "1", "+", "3", "*"] -> ((2 + 1) * 3) -> 9
  *   ["4", "13", "5", "/", "+"] -> (4 + (13 / 5)) -> 6
- * 
- * {@linkplain https://oj.leetcode.com/problems/evaluate-reverse-polish-notation/}
+ *
+ * [Difficulty] - Easy
+ * [Source]     - {@linkplain https://oj.leetcode.com/problems/evaluate-reverse-polish-notation/}
  *
  */
-public class stk_evaluate_reverse_polish_notation {
-    public int evalRPN(String[] tokens) {
+public class stk_evaluate_reverse_polish_notation
+{
+    public int evalRPN(String[] tokens)
+    {
         Stack<Integer> stk = new Stack<Integer>();
         int n = tokens.length;
 

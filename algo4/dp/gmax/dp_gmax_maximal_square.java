@@ -14,6 +14,7 @@ package gmax;
  * Return 4.
  *
  * [Source]     - {@linkplain https://leetcode.com/problems/maximal-square/}
+ *                {@linkplain http://www.lintcode.com/en/problem/maximal-square/}
  * [Difficulty] - Medium
  *
  */
@@ -59,14 +60,15 @@ public class dp_gmax_maximal_square
     /**
      * dp(i, j) represents the length of the square whose lower-right corner is
      * located at (i, j).
-     * 
+     *
      * dp(i, j) = min{ dp(i-1, j-1), dp(i-1, j), dp(i, j-1) }
      *
      */
     public int maximalSquareThoughEvoluted(char[][] a)
     {
-        if (a == null || a.length == 0 || a[0].length == 0)
+        if (a == null || a.length == 0 || a[0].length == 0) {
             return 0;
+        }
 
         int gMax = 0,
             n = a.length,
@@ -87,5 +89,39 @@ public class dp_gmax_maximal_square
         }
 
         return gMax * gMax;
+    }
+
+    public int maxSquare(int[][] matrix)
+    {
+        int m = matrix.length,
+            n = matrix[0].length;
+
+        int[][] dp = new int[2][n + 1];
+        int rd = 0;
+
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (matrix[i - 1][j - 1] == 1) {
+                    int crow = i % 2,
+                        prow = (i - 1) % 2;
+
+                    dp[crow][j] = Math.min(dp[prow][j - 1],
+                                  Math.min(dp[prow][j],
+                                           dp[crow][j - 1])) + 1;
+
+                    rd = Math.max(rd, dp[crow][j]);
+
+                /*
+                 * This is the tricky part. Since we are reusing
+                 * the rows as memorization, we need to clear them
+                 * off before moving onto next row.
+                 */
+                } else {
+                    dp[i % 2][j] = 0;
+                }
+            }
+        }
+
+        return rd * rd;
     }
 }

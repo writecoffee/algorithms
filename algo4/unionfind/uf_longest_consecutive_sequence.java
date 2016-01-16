@@ -24,7 +24,7 @@ public class uf_longest_consecutive_sequence
     {
         int n = nums.length;
         int result = 0;
-        Map<Integer, Integer> map = new HashMap<>();
+        Map<Integer, Integer> leaders = new HashMap<>();
         Map<Integer, Integer> groupLength = new HashMap<>();
 
         for (int i = 0; i < n; i++) {
@@ -33,33 +33,33 @@ public class uf_longest_consecutive_sequence
                 right = number + 1,
                 leftBound = 0,
                 rightBound = 0,
-                leftLeader = find(map, left);
+                leftLeader = find(leaders, left);
 
-            if (map.containsKey(number)) {
+            if (leaders.containsKey(number)) {
                 continue;
             }
 
-            if (map.containsKey(left)) {
+            if (leaders.containsKey(left)) {
                 leftBound = groupLength.get(leftLeader);
             }
 
-            if (map.containsKey(right)) {
+            if (leaders.containsKey(right)) {
                 rightBound = groupLength.get(right);
             }
 
             if (leftBound > 0 && rightBound > 0) {
-                map.put(right, leftLeader);
-                map.put(number, leftLeader);
+                leaders.put(right, leftLeader);
+                leaders.put(number, leftLeader);
                 groupLength.put(leftLeader, rightBound + 1 + leftBound);
             } else if (leftBound > 0) {
-                map.put(number, leftLeader);
+                leaders.put(number, leftLeader);
                 groupLength.put(leftLeader, leftBound + 1);
             } else if (rightBound > 0) {
-                map.put(number, number);
-                map.put(right, number);
+                leaders.put(number, number);
+                leaders.put(right, number);
                 groupLength.put(number, rightBound + 1);
             } else {
-                map.put(number, number);
+                leaders.put(number, number);
                 groupLength.put(number, 1);
             }
 
@@ -69,14 +69,14 @@ public class uf_longest_consecutive_sequence
         return result;
     }
 
-    private int find(Map<Integer, Integer> map, int x)
+    private int find(Map<Integer, Integer> leaders, int x)
     {
-        if (!map.containsKey(x)) {
+        if (!leaders.containsKey(x)) {
             return -1;
         }
 
-        while (x != map.get(x)) {
-            x = map.get(x);
+        while (x != leaders.get(x)) {
+            x = leaders.get(x);
         }
 
         return x;

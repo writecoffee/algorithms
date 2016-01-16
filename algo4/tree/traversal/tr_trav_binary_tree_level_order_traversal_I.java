@@ -2,33 +2,34 @@ package traversal;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 /**
  * Given a binary tree, return the level order traversal of its nodes' values.
  * (ie, from left to right, level by level).
- * 
+ *
  * For example:
- * 
+ *
  * Given binary tree {3,9,20,#,#,15,7},
- * 
+ *
  *     3
  *    / \
  *   9  20
  *     /  \
  *    15   7
- *    
+ *
  * return its level order traversal as:
- * 
+ *
  * [
  *   [3],
  *   [9,20],
  *   [15,7]
  * ]
- * 
+ *
  * [Difficulty] - Medium
  * [Source]     - {@linkplain https://oj.leetcode.com/problems/binary-tree-level-order-traversal-ii/}
- * 
+ *
  */
 public class tr_trav_binary_tree_level_order_traversal_I {
     public class TreeNode {
@@ -41,23 +42,30 @@ public class tr_trav_binary_tree_level_order_traversal_I {
         }
     }
 
-    public ArrayList<ArrayList<Integer>> levelOrder(TreeNode root) {
-        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+    public List<List<Integer>> levelOrder(TreeNode root)
+    {
+        List<List<Integer>> result = new ArrayList<>();
 
         if (root == null) {
             return result;
         }
 
-        Queue<TreeNode> q = new LinkedList<TreeNode>();
-        q.add(root);
+        Queue<TreeNode> p = new LinkedList<TreeNode>(),
+                        q = new LinkedList<TreeNode>();
 
+        q.add(root);
         while (!q.isEmpty()) {
-            Queue<TreeNode> tq = new LinkedList<TreeNode>(q);
-            ArrayList<Integer> level = new ArrayList<Integer>();
+            List<Integer> level = new ArrayList<Integer>();
+
+            /*
+             * Juggle "q" to "p" for current iteration. Use "p" to store
+             * next level.
+             */
+            p = new LinkedList<TreeNode>(q);
             q.clear();
 
-            while (!tq.isEmpty()) {
-                TreeNode c = tq.poll();
+            while (!p.isEmpty()) {
+                TreeNode c = p.poll();
                 level.add(c.val);
 
                 if (c.left != null) {

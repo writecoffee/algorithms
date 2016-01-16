@@ -9,6 +9,7 @@ package gmax;
  *
  * [Difficulty] - Medium
  * [Source]     - {@linkplain https://leetcode.com/problems/maximum-product-subarray/}
+ *                {@linkplain http://www.lintcode.com/en/problem/maximum-product-subarray/}
  *
  */
 public class dp_gmax_maximum_sub_array_product
@@ -38,34 +39,18 @@ public class dp_gmax_maximum_sub_array_product
     public int maxProduct(int[] nums)
     {
         int n = nums.length;
-        int[] dp1 = new int[n], dp2 = new int[n];
-        dp1[0] = nums[0];
-        dp2[0] = nums[0];
 
-        for (int i = 1; i < n; ++i) {
-            dp1[i] = Math.max(dp2[i - 1] * nums[i], Math.max(dp1[i - 1] * nums[i], nums[i]));
-            dp2[i] = Math.min(dp2[i - 1] * nums[i], Math.min(dp1[i - 1] * nums[i], nums[i]));
+        int preMin = nums[0];
+        int preMax = nums[0];
+        int result = nums[0];
+
+        for (int i = 1; i < n; i++) {
+            int tPreMin = preMin;
+            preMin = Math.min(preMin * nums[i], Math.min(preMax * nums[i], nums[i]));
+            preMax = Math.max(preMax * nums[i], Math.max(tPreMin * nums[i], nums[i]));
+            result = Math.max(preMax, result);
         }
 
-        int gMax = nums[0];
-        for (int i = 1; i < n; ++i) {
-            gMax = Math.max(gMax, dp1[i]);
-        }
-
-        return gMax;
-    }
-
-    public int maxProductOptimized(int[] nums)
-    {
-        int n = nums.length, lMin = nums[0], lMax = nums[0], gMax = nums[0];
-
-        for (int i = 1; i < n; ++i) {
-            int preLMin = lMin;
-            lMin = Math.min(lMax * nums[i], Math.min(lMin * nums[i], nums[i]));
-            lMax = Math.max(preLMin * nums[i], Math.max(lMax * nums[i], nums[i]));
-            gMax = Math.max(gMax, lMax);
-        }
-
-        return gMax;
+        return result;
     }
 }

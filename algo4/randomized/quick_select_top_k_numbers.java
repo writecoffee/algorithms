@@ -2,66 +2,78 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * Select the k smallest elements from the input in Theta(n) time complexity.
- * 
- * Sample Input:
- * 
- * (1) array = { 1, 5, 2, 8, 9, 11 }, k = 3
- * (2) array = { 4, 6, 1, 1, 4 }, k = 2
- * (3) array = { 1, 1, 1, 1 }, k = 1
- * 
- * [Difficulty] - Medium
- * [Source]     - Classical problem
+ * Find K-th largest element in an array.
+ *
+ * Have you met this question in a real interview? Yes
+ *
+ * Example
+ *
+ * In array [9,3,2,4,8], the 3rd largest element is 4.
+ *
+ * In array [1,2,3,4,5], the 1st largest element is 5, 2nd largest element is 4,
+ * 3rd largest element is 3 and etc.
+ *
+ * Note
+ *
+ * You can swap elements in the array
+ *
+ * Challenge
+ *
+ * O(n) time, O(1) extra memory.
+ *
+ *
+ *
+ * [Difficulty] - Hard
+ * [Source]     - {@linkplain http://www.lintcode.com/en/problem/kth-largest-element/}
+ *                Classical problem
  *
  */
-public class quick_select_top_k_numbers {
+public class quick_select_top_k_numbers
+{
     private static Random r = new Random();
 
-    public ArrayList<Integer> quickSelect(int[] array, int k) {
-        return quickSelect(array, k, 0, array.length);
+    public int kthLargestElement(int k, ArrayList<Integer> numbers)
+    {
+        Integer[] vs = new Integer[numbers.size()];
+        numbers.toArray(vs);
+        return qf(vs, 0, numbers.size(), numbers.size() + 1 - k);
     }
 
-    private ArrayList<Integer> quickSelect(int[] array, int k, int start, int end) {
-        int finalRank = randomPartition(array, start, end);
+    private int qf(Integer[] numbers, int start, int end, int k)
+    {
+        int randomIndex = start + r.nextInt(end - start);
+        swap(numbers, start, randomIndex);
+        int pivot = numbers[start];
 
-        if (finalRank == k) {
-            return convert(array, k);
-        } else if (finalRank < k) {
-            return quickSelect(array, k, finalRank, end);
-        } else {
-            return quickSelect(array, k, start, finalRank);
-        }
-    }
+        int i = start + 1;
+        int j = end - 1;
 
-    private ArrayList<Integer> convert(int[] array, int k) {
-        ArrayList<Integer> result = new ArrayList<Integer>();
-
-        for (int i = 0; i < k; ++i) {
-            result.add(array[i]);
-        }
-
-        return result;
-    }
-
-    private int randomPartition(int[] array, int start, int end) {
-        swap(array, start, start + r.nextInt(end - start));
-        return partition(array, start, end);
-    }
-
-    private int partition(int[] array, int start, int end) {
-        int pivot = array[end - 1], i = start;
-
-        for (int j = i; j < end - 1; ++j) {
-            if (array[j] < pivot) {
-                swap(array, i++, j);
+        for (; i <= j;) {
+            if (numbers[i] <= pivot) {
+                i++;
+            } else if (numbers[j] > pivot) {
+                j--;
+            } else {
+                swap(numbers, i++, j--);
             }
         }
 
-        swap(array, i, end - 1);
-        return i;
+        /*
+         * Finally, put the pivot to its right position.
+         */
+        swap(numbers, start, j);
+
+        if (i == k) {
+            return pivot;
+        } else if (i > k) {
+            return qf(numbers, start, i - 1, k);
+        } else {
+            return qf(numbers, i, end, k);
+        }
     }
 
-    private void swap(int[] array, int i, int j) {
+    private void swap(Integer[] array, int i, int j)
+    {
         int t = array[j];
         array[j] = array[i];
         array[i] = t;

@@ -217,11 +217,6 @@ public class hp_sliding_window_median
         }
     }
 
-    /**
-     * @param nums
-     *            : A list of integers.
-     * @return: The median of the element inside the window at each moving.
-     */
     public ArrayList<Integer> medianSlidingWindow(int[] nums, int k)
     {
         ArrayList<Integer> ans = new ArrayList<Integer>();
@@ -229,47 +224,51 @@ public class hp_sliding_window_median
             return ans;
         }
 
-        int median = nums[0];
         HashHeap minheap = new HashHeap("min");
         HashHeap maxheap = new HashHeap("max");
 
         for (int i = 0; i < nums.length; i++) {
-            if (i != 0) {
-                if (nums[i] > median) {
-                    minheap.add(nums[i]);
-                } else {
-                    maxheap.add(nums[i]);
+            int num = nums[i];
+
+            if (Math.min(i, k) % 2 == 0) {
+                maxheap.add(num);
+
+                /*
+                 * Special case when original array sizes are equivalent,
+                 * we need to ensure max.peek() <= min.peek().
+                 * 
+                 */
+                if (Math.min(i, k) >= 1 && maxheap.peak() > minheap.peak()) {
+                    minheap.add(maxheap.poll());
+                    maxheap.add(minheap.poll());
+                }
+            } else {
+                maxheap.add(num);
+                minheap.add(maxheap.poll());
+            }
+
+            if (i + 1 == k) {
+                ans.add(maxheap.peak());
+                continue;
+            } else if (i + 1 < k) {
+                continue;
+            }
+
+            if (maxheap.peak() >= nums[i - k]) {
+                maxheap.delete(nums[i - k]);
+
+                if (maxheap.size() < minheap.size()) {
+                    maxheap.add(minheap.poll());
+                }
+            } else {
+                minheap.delete(nums[i - k]);
+
+                if (maxheap.size() > minheap.size() + 1) {
+                    minheap.add(maxheap.poll());
                 }
             }
 
-            if (i >= k) {
-                if (median == nums[i - k]) {
-                    if (maxheap.size() > 0) {
-                        median = maxheap.poll();
-                    } else if (minheap.size() > 0) {
-                        median = minheap.poll();
-                    }
-
-                } else if (median < nums[i - k]) {
-                    minheap.delete(nums[i - k]);
-                } else {
-                    maxheap.delete(nums[i - k]);
-                }
-            }
-
-            while (maxheap.size() > minheap.size()) {
-                minheap.add(median);
-                median = maxheap.poll();
-            }
-
-            while (minheap.size() > maxheap.size() + 1) {
-                maxheap.add(median);
-                median = minheap.poll();
-            }
-
-            if (i + 1 >= k) {
-                ans.add(median);
-            }
+            ans.add(maxheap.peak());
         }
 
         return ans;

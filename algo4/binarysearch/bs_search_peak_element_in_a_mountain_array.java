@@ -22,6 +22,10 @@ public class bs_search_peak_element_in_a_mountain_array
     {
         int n = nums.length, l = 0, r = n - 1;
 
+        /*
+         * Ensure we have at lease 3 elements within the window we are comparing,
+         * such that there won't be OutOfBoundary exception.
+         */
         while (l < r - 1) {
             int mid = (l + r) / 2,
                 lVal = nums[mid - 1],
@@ -39,10 +43,8 @@ public class bs_search_peak_element_in_a_mountain_array
 
         if (l == r - 1 && nums[l] > nums[r]) {
             return l;
-        } else if (l == r - 1) {
-            return r;
         } else {
-            return l;
+            return r;
         }
     }
 }

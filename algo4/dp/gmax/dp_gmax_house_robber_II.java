@@ -15,7 +15,7 @@ package gmax;
  * [Source]     - {@linkplain https://leetcode.com/problems/house-robber/}
  *
  */
-public class dp_gmax_house_robber
+public class dp_gmax_house_robber_II
 {
     public int rob(int[] nums)
     {

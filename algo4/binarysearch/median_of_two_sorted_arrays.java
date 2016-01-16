@@ -3,102 +3,53 @@
  * Find the median of the two sorted arrays.
  *
  * The overall run time complexity should be O(log (m+n)).
- * 
+ *
  * [Difficulty] - Hard
  * [Source]     - {@linkplain https://leetcode.com/problems/median-of-two-sorted-arrays/}
  *
  */
 public class median_of_two_sorted_arrays
 {
-    public double findMedianSortedArrays(int[] a, int[] b)
+    public double findMedianSortedArrays(int[] nums1, int[] nums2)
     {
-        int m = a.length;
-        int n = b.length;
+        int m = nums1.length;
+        int n = nums2.length;
+        int mn = m + n;
 
-        if (((m + n) & 0x1) == 1) {
-            return explore(a, 0, m - 1, b, 0, n - 1, (m + n) / 2 + 1);
+        if (mn % 2 == 1) {
+            return find(nums1, 0, nums2, 0, mn / 2 + 1);
         } else {
-            return (explore(a, 0, m - 1, b, 0, n - 1, (m + n) / 2)
-                  + explore(a, 0, m - 1, b, 0, n - 1, (m + n) / 2 + 1)) / 2;
+            return (find(nums1, 0, nums2, 0, mn / 2) + find(nums1, 0, nums2, 0, mn / 2 + 1)) * 0.5;
         }
     }
 
-    private double explore(int[] a, int al, int ar, int[] b, int bl, int br, int k)
+    private int find(int[] nums1, int i1, int[] nums2, int i2, int k)
     {
-        int m = ar - al + 1;
-        int n = br - bl + 1;
-
-        if (m > n) {
-            return explore(b, bl, br, a, al, ar, k);
-        } else if (m == 0) {
-            return b[k - 1];
-        } else if (k == 1) {
-            return Math.min(a[al], b[bl]);
+        if (i1 >= nums1.length) {
+            return nums2[i2 + k - 1];
         }
 
-        int aMid = Math.min(k / 2, m);
-        int bMid = k - aMid;
+        if (i2 >= nums2.length) {
+            return nums1[i1 + k - 1];
+        }
 
-        if (a[al + aMid - 1] < b[bl + bMid - 1]) {
-            return explore(a, al + aMid, ar, b, bl, br, k - aMid);
+        if (k == 1) {
+            return Math.min(nums1[i1], nums2[i2]);
+        }
+
+        /*
+         * We forward only one array at a time. If medium k / 2 exceed the length of one array,
+         * we arbitrarily set the mid-value to be MAX such that we can force the other array to move
+         * forward.
+         *
+         */
+        int mid1 = i1 + k / 2 - 1 >= nums1.length ? Integer.MAX_VALUE : nums1[i1 + k / 2 - 1];
+        int mid2 = i2 + k / 2 - 1 >= nums2.length ? Integer.MAX_VALUE : nums2[i2 + k / 2 - 1];
+
+        if (mid1 >= mid2) {
+            return find(nums1, i1, nums2, i2 + k / 2, k - k / 2);
         } else {
-            return explore(a, al, ar, b, bl + bMid, br, k - bMid);
-        }
-    }
-
-    public double findMedianSortedArraysNonrecur(int[] a, int[] b)
-    {
-        int m = a.length;
-        int n = b.length;
-
-        if (((m + n) & 0x1) == 1) {
-            return getKthNumber(m < n ? a : b, m < n ? b : a, (m + n) / 2 + 1);
-        } else {
-            return (getKthNumber(m < n ? a : b, m < n ? b : a, (m + n) / 2)
-                  + getKthNumber(m < n ? a : b, m < n ? b : a, (m + n) / 2 + 1)) / 2;
-        }
-    }
-
-    private double getKthNumber(int[] a, int[] b, int k)
-    {
-        int m = a.length;
-        int n = b.length;
-        int al = 0, ar = m - 1;
-        int bl = 0, br = n - 1;
-
-        while (m > 0 && k != 1) {
-            int aMid = Math.min(k / 2, m);
-            int bMid = k - aMid;
-
-            if (a[al + aMid - 1] < b[bl + bMid - 1]) {
-                al = al + aMid;
-                k = k - aMid;
-                m = ar - al + 1;
-            } else {
-                bl = bl + bMid;
-                k = k - bMid;
-                n = br - bl + 1;
-            }
-
-            if (n < m) {
-                int[] tmp = a;
-                a = b;
-                b = tmp;
-                int lTmp = al;
-                al = bl;
-                bl = lTmp;
-                int rTmp = ar;
-                ar = br;
-                br = rTmp;
-                m = ar - al + 1;
-                n = br - bl + 1;
-            }
-        }
-
-        if (m == 0) {
-            return b[bl + k - 1];
-        } else {
-            return Math.min(a[al], b[bl]);
+            return find(nums1, i1 + k / 2, nums2, i2, k - k / 2);
         }
     }
 }

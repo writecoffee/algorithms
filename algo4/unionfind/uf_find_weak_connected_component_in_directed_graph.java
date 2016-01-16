@@ -88,10 +88,17 @@ public class uf_find_weak_connected_component_in_directed_graph
             leaders.put(node, node);
         }
 
-        while (leaders.get(node) != node) {
-            node = leaders.get(node);
+        int result = node;
+        while (leaders.get(result) != result) {
+            result = leaders.get(result);
         }
 
-        return node;
+        while (node != leaders.get(node)) {
+            int t = leaders.get(node);
+            leaders.put(node, result);
+            node = t;
+        }
+
+        return result;
     }
 }
