@@ -40,17 +40,20 @@ public class dp_gmax_maximum_sub_array_product
     {
         int n = nums.length;
 
-        int preMin = nums[0];
-        int preMax = nums[0];
-        int result = nums[0];
+        int minEndingHere = nums[0];
+        int maxEndingHere = nums[0];
+        int maxSoFar = nums[0];
 
         for (int i = 1; i < n; i++) {
-            int tPreMin = preMin;
-            preMin = Math.min(preMin * nums[i], Math.min(preMax * nums[i], nums[i]));
-            preMax = Math.max(preMax * nums[i], Math.max(tPreMin * nums[i], nums[i]));
-            result = Math.max(preMax, result);
+            int c = nums[i];
+            int product1 = maxEndingHere * c;
+            int product2 = minEndingHere * c;
+
+            maxEndingHere = Math.max(Math.max(product1, product2), c);
+            minEndingHere = Math.min(Math.min(product1, product2), c);
+            maxSoFar = Math.max(maxSoFar, maxEndingHere);
         }
 
-        return result;
+        return maxSoFar;
     }
 }
