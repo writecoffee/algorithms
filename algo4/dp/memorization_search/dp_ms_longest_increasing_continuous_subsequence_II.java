@@ -24,6 +24,7 @@ package memorization_search;
  * O(nm) time and memory.
  *
  * [Source]     - {@linkplain http://www.lintcode.com/en/problem/longest-increasing-continuous-subsequence-ii/}
+ *                {@linkplain https://leetcode.com/problems/longest-increasing-path-in-a-matrix/}
  * [Difficulty] - Medium
  *
  */
@@ -59,13 +60,12 @@ public class dp_ms_longest_increasing_continuous_subsequence_II
         }
 
         int local = 0;
-        visited[i][j] = -1;
 
         for (int[] dir : dirs) {
             int nx = dir[0] + j;
             int ny = dir[1] + i;
 
-            if (nx < 0 || nx == n || ny < 0 || ny == m || visited[ny][nx] == -1 || matrix[i][j] >= matrix[ny][nx]) {
+            if (nx < 0 || nx == n || ny < 0 || ny == m || matrix[i][j] >= matrix[ny][nx]) {
                 continue;
             }
 

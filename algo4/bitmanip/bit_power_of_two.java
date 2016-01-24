@@ -3,6 +3,7 @@
  *
  * [Difficulty] - Easy
  * [Source]     - {@linkplain https://leetcode.com/problems/power-of-two/}
+ * [Tag]        - $math$
  *
  */
 public class bit_power_of_two
