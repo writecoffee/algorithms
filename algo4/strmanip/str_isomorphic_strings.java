@@ -20,33 +20,36 @@ import java.util.Map;
  *
  * [Difficulty] - Easy
  * [Source]     - {@linkplain https://leetcode.com/problems/isomorphic-strings/}
+ * [Tag]        - $mapping$
  *
  */
 public class str_isomorphic_strings
 {
     public boolean isIsomorphic(String s, String t)
     {
-        if (s.length() != t.length()) {
+        int m = s.length();
+        int n = t.length();
+        if (m != n) {
             return false;
         }
 
-        int n = s.length();
-        Map<Character, Character> sMapper = new HashMap<Character, Character>(),
-                                  tMapper = new HashMap<Character, Character>();
+        char[] sChars = s.toCharArray();
+        char[] tChars = t.toCharArray();
+        Map<Character, Character> sMap = new HashMap<>();
+        Map<Character, Character> tMap = new HashMap<>();
 
-        for (int i = 0; i < n; ++i) {
-            char a = s.charAt(i), b = t.charAt(i);
+        for (int i = 0; i < m; i++) {
+            char sc = sChars[i];
+            char tc = tChars[i];
+            Character sMapped = sMap.get(sc);
+            Character tMapped = tMap.get(tc);
 
-            if (!sMapper.containsKey(a) && !tMapper.containsKey(b)) {
-                sMapper.put(a, a);
-                tMapper.put(b, a);
-
-            } else if (sMapper.containsKey(a)
-                    && tMapper.containsKey(b)
-                    && sMapper.get(a) == tMapper.get(b)) {
-                continue;
-
-            } else {
+            if (sMapped == null && tMapped == null) {
+                sMap.put(sc, tc);
+                tMap.put(tc, sc);
+            } else if (sMapped == null || tMapped == null) {
+                return false;
+            } else if (sMapped != tc || tMapped != sc) {
                 return false;
             }
         }
@@ -64,20 +67,21 @@ public class str_isomorphic_strings
         Map<String, Character> mapper = new HashMap<String, Character>();
 
         for (int i = 0; i < n; ++i) {
-            char a = s.charAt(i),
-                 b = t.charAt(i);
+            char sc = s.charAt(i);
+            char tc = t.charAt(i);
 
-            String keyA = "l" + a,
-                   keyB = "r" + b;
+            String sKey = "l" + sc;
+            String tKey = "r" + tc;
 
-            if (!mapper.containsKey(keyA) && !mapper.containsKey(keyB)) {
-                mapper.put(keyA, b);
-                mapper.put(keyB, a);
-            } else if (mapper.containsKey(keyA)
-                    && mapper.containsKey(keyB)
-                    && mapper.get(keyA) == b) {
-                continue;
-            } else {
+            Character sMapped = mapper.get(sKey);
+            Character tMapped = mapper.get(tKey);
+
+            if (sMapped == null && tMapped == null) {
+                mapper.put(sKey, tc);
+                mapper.put(tKey, sc);
+            } else if (sMapped == null || tMapped == null) {
+                return false;
+            } else if (sMapped != tc || tMapped != sc) {
                 return false;
             }
         }

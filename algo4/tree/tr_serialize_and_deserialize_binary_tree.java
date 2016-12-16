@@ -52,7 +52,6 @@ public class tr_serialize_and_deserialize_binary_tree
         preOrder(root, sb);
         String result = sb.toString().substring(1);
 
-        System.out.println(result);
         return result;
     }
 

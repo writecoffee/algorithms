@@ -38,56 +38,57 @@ public class dfs_wildcard_matching {
 
     private boolean explore(String s, int i, int m, String p, int j, int n)
     {
-        char c1 = s.charAt(i), c2 = p.charAt(j);
+        char sc = s.charAt(i), pc = p.charAt(j);
 
         if (i == m && j == n) {
             return true;
         } else if (j == n) {
             return false;
-        } else if (i == m && c2 != '*') {
+        } else if (i == m && pc != '*') {
             return false;
-        } else if (i == m && c2 == '*') {
-            return explore(s, i, m, p, j + 1, n);
-        } else if (c2 == '*' && p.charAt(j + 1) == '*') {
+        } else if (i == m && pc == '*') {
             return explore(s, i, m, p, j + 1, n);
         }
 
-        if (c1 == c2 || c2 == '?') {
+        if (sc == pc || pc == '?') {
             return explore(s, i + 1, m, p, j + 1, n);
-        } else if (c2 == '*') {
+        } else if (pc == '*') {
             return explore(s, i + 1, m, p, j, n) || explore(s, i, m, p, j + 1, n);
         } else {
             return false;
         }
     }
 
-    public boolean isMatchNonrecur(String s, String p)
+    public boolean isMatchNonrecur(String t, String p)
     {
-        int i = 0, j = 0, iBack = -1, jBack = -1, m = s.length(), n = p.length();
-
-        s = s.concat("\0");
-        p = p.concat("\0");
+        int i = 0;
+        int j = 0;
+        int iPivot = -1;
+        int jPivot = -1;
+        int m = t.length();
+        int n = p.length();
 
         while (i < m) {
-            int c1 = s.charAt(i), c2 = p.charAt(j);
+            char tc = t.charAt(i);
+            char pc = p.charAt(j);
 
-            if (c2 == '?' || c1 == c2) {
+            if (pc == '?' || tc == pc) {
                 i++;
                 j++;
-            } else if (c2 == '*' && p.charAt(j + 1) == '*') {
-                j++;
-            } else if (c2 == '*') {
-                iBack = i;
-                jBack = ++j;
-            } else if (iBack == -1) {
+            } else if (pc == '*') {
+                iPivot = i;
+                jPivot = ++j;
+            // no pivot, no '*', break
+            } else if (iPivot == -1) {
                 return false;
+            // backtrack
             } else {
-                i = ++iBack;
-                j = jBack;
+                i = ++iPivot;
+                j = jPivot;
             }
         }
 
-        while (p.charAt(j) == '*') {
+        while (j < n && p.charAt(j) == '*') {
             ++j;
         }
 

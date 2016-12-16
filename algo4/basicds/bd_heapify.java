@@ -37,6 +37,11 @@
  */
 public class bd_heapify
 {
+    /**
+     * Time complexity: O(n)
+     * 
+     * https://www.cs.bgu.ac.il/~ds122/wiki.files/Presentation09.pdf
+     */
     public void heapify(int[] data)
     {
         int n = data.length;
@@ -48,23 +53,19 @@ public class bd_heapify
 
     private void shifDown(int[] data, int k, int n)
     {
-        while (k < n) {
-            int smallest = k, lchild = k * 2 + 1, rchild = k * 2 + 2;
+        for (int l = k * 2 + 1, r = k * 2 + 2; l < n; l = k * 2 + 1, r = k * 2 + 2) {
+            int lval = data[l];
+            int rval = r < n ? data[r] : Integer.MAX_VALUE;
 
-            if (lchild < n && data[lchild] < data[smallest]) {
-                smallest = lchild;
-            }
-
-            if (rchild < n && data[rchild] < data[smallest]) {
-                smallest = rchild;
-            }
-
-            if (smallest == k) {
+            if (data[k] < lval && data[k] < rval) {
                 break;
+            } else if (lval < rval) {
+                swap(data, k, l);
+                k = l;
+            } else {
+                swap(data, k, r);
+                k = r;
             }
-
-            swap(data, k, smallest);
-            k = smallest;
         }
     }
 

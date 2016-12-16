@@ -45,4 +45,9 @@ public class sort_maximum_gap
 
         return result;
     }
+
+    public static void main(String[] args)
+    {
+        new sort_maximum_gap().maximumGap(new int[] { 3,4,57, 9, 4, 0, -1 });
+    }
 }

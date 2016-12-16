@@ -1,7 +1,35 @@
 package uniqueways;
 
-public class dp_unique_paths_top_left_to_bottom_right_with_obstacles {
-    int uniquePathsWithObstacles(int[][] obstacleGrid) {
+/**
+ * Follow up for "Unique Paths":
+ *
+ * Now consider if some obstacles are added to the grids. How many unique paths
+ * would there be?
+ *
+ * An obstacle and empty space is marked as 1 and 0 respectively in the grid.
+ *
+ * For example,
+ *
+ * There is one obstacle in the middle of a 3x3 grid as illustrated below.
+ *
+ * [
+ *  [0,0,0],
+ *  [0,1,0],
+ *  [0,0,0]
+ * ]
+ *
+ * The total number of unique paths is 2.
+ *
+ * Note: m and n will be at most 100.
+ *
+ * [Source]     - {@linkplain https://leetcode.com/problems/unique-paths-ii/}
+ * [Difficulty] - Medium
+ *
+ */
+public class dp_unique_paths_top_left_to_bottom_right_with_obstacles
+{
+    int uniquePathsWithObstacles(int[][] obstacleGrid)
+    {
         int m = obstacleGrid.length;
         int n = obstacleGrid[0].length;
         int[][] dp = new int[m][n];
@@ -28,7 +56,8 @@ public class dp_unique_paths_top_left_to_bottom_right_with_obstacles {
         return dp[m - 1][n - 1];
     }
 
-    int uniquePathsWithObstaclesImproved(int[][] obstacleGrid) {
+    int uniquePathsWithObstaclesImproved(int[][] obstacleGrid)
+    {
         int m = obstacleGrid.length;
         int n = obstacleGrid[0].length;
         int[][] dp = new int[2][n];
@@ -53,7 +82,8 @@ public class dp_unique_paths_top_left_to_bottom_right_with_obstacles {
         return dp[(m - 1) % 2][n - 1];
     }
 
-    int uniquePathsWithObstaclesOptimized(int[][] obstacleGrid) {
+    int uniquePathsWithObstaclesOptimized(int[][] obstacleGrid)
+    {
         int m = obstacleGrid.length;
         int n = obstacleGrid[0].length;
         int[] dp = new int[n];

@@ -236,7 +236,9 @@ public class hp_sliding_window_median
                 /*
                  * Special case when original array sizes are equivalent,
                  * we need to ensure max.peek() <= min.peek().
-                 * 
+                 *
+                 * Checking here for optimization purpose.
+                 *
                  */
                 if (Math.min(i, k) >= 1 && maxheap.peak() > minheap.peak()) {
                     minheap.add(maxheap.poll());
@@ -254,6 +256,9 @@ public class hp_sliding_window_median
                 continue;
             }
 
+            /*
+             * Out of window number is on the left-hand side.
+             */
             if (maxheap.peak() >= nums[i - k]) {
                 maxheap.delete(nums[i - k]);
 

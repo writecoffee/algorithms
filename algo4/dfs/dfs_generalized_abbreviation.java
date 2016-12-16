@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.List;
 
 /**
@@ -21,30 +22,44 @@ public class dfs_generalized_abbreviation
     {
         List<String> result = new ArrayList<>();
         int n = word.length();
-        explore(0, n, word, result, new StringBuilder(), false);
-        return new ArrayList<String>(result);
+        explore(0, n, word, result, new BitSet());
+        return result;
     }
 
-    private void explore(int i, int n, String word, List<String> result, StringBuilder path, boolean isPreDigit)
+    private void explore(int i, int n, String word, List<String> result, BitSet bitSet)
     {
         if (i == n) {
-            result.add(path.toString());
+            result.add(convert(bitSet, word, n));
             return;
         }
 
-        path.append(word.substring(i, i + 1));
-        explore(i + 1, n, word, result, path, false);
-        path.delete(path.length() - 1, path.length());
+        bitSet.set(i);
+        explore(i + 1, n, word, result, bitSet);
+        bitSet.clear(i);
+        explore(i + 1, n, word, result, bitSet);
+    }
 
-        if (!isPreDigit) {
-            return;
+    private String convert(BitSet bitSet, String word, int n)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < n; ) {
+
+            int start = i;
+
+            while (i < n && bitSet.get(i)) {
+                i++;
+            }
+
+            int count = i - start;
+            if (count > 0) {
+                sb.append(count);
+            } else {
+                sb.append(word.charAt(i));
+                i++;
+            }
         }
 
-        for (int k = 1; i + k <= n; k++) {
-            int kLength = Integer.toString(k).length();
-            path.append(k);
-            explore(i + k, n, word, result, path, true);
-            path.delete(path.length() - kLength, path.length());
-        }
+        return sb.toString();
     }
 }

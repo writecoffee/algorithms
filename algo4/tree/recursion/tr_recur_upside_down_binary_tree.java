@@ -29,7 +29,7 @@ package recursion;
  */
 public class tr_recur_upside_down_binary_tree
 {
-    public class TreeNode
+    public static class TreeNode
     {
         int      val;
         TreeNode left;
@@ -43,36 +43,42 @@ public class tr_recur_upside_down_binary_tree
 
     public TreeNode upsideDownBinaryTree(TreeNode root)
     {
-        return recurse(root, null);
+        return recurse(root, null, null);
     }
 
-    private TreeNode recurse(TreeNode c, TreeNode parent)
+    private TreeNode recurse(TreeNode c, TreeNode newLeft, TreeNode newRight)
     {
-        if (c == null) {
-            return null;
+        TreeNode newNewLeft = c.right;
+        TreeNode newNewRight = c;
+        TreeNode next = c.left;
+        c.left = newLeft;
+        c.right = newRight;
+
+        if (next != null) {
+            return recurse(next, newNewLeft, newNewRight);
+        } else {
+            return c;
         }
-
-        TreeNode root = recurse(c.left, c);
-
-        c.left = parent == null ? null : parent.right;
-        c.right = parent;
-
-        return root == null ? c : root;
     }
 
-    public TreeNode upsideDownBinaryTreeNonRecur(TreeNode root)
-    {
-        TreeNode parentRight = null, parent = null, c = root;
+    public TreeNode upsideDownBinaryTreeIterative(TreeNode root) {
+        TreeNode c = root;
+        TreeNode newLeft = null;
+        TreeNode newRight = null;
+        TreeNode oldParent = null;
 
         while (c != null) {
-            TreeNode newParentRight = c.right, newParent = c, next = c.left;
-            c.left = parentRight;
-            c.right = parent;
-            parentRight = newParentRight;
-            parent = newParent;
+            TreeNode newNewLeft = c.right;
+            TreeNode newNewRight = c;
+            TreeNode next = c.left;
+            c.right = newRight;
+            c.left = newLeft;
+            newRight = newNewRight;
+            newLeft = newNewLeft;
+            oldParent = c;
             c = next;
         }
 
-        return parent;
+        return oldParent;
     }
 }

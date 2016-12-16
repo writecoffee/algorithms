@@ -26,9 +26,16 @@ import java.util.List;
  * Try to solve it in one dimension first. How can this solution apply to the two
  * dimension case?
  *
+ * [Source]     - {@linkplain https://leetcode.com/problems/best-meeting-point/}
+ * [Difficulty] - Medium
+ *
  */
 public class math_plane_best_meeting_point
 {
+    /**
+     * Using median to get shortest meeting point.
+     *
+     */
     public int minTotalDistance(int[][] grid)
     {
         if (grid == null || grid.length == 0) {

@@ -22,6 +22,7 @@ package probe;
  *
  * [Difficulty] - Hard
  * [Source]     - facebook interview,
+ *                twitter interview,
  *                {@linkplain https://oj.leetcode.com/problems/regular-expression-matching/}
  *
  */
@@ -62,37 +63,5 @@ public class dfs_regular_expression_matching
         } else {
             return false;
         }
-    }
-
-    public boolean isMatchDp(String s, String p)
-    {
-        int m = s.length();
-        int n = p.length();
-        boolean[][] dp = new boolean[m + 1][n + 1];
-
-        /*
-         * Initialize the first row, only if the "" and "" matches.
-         */
-        dp[0][0] = true;
-        for (int j = 1; j <= n; j++) {
-            dp[0][j] = j > 1 && '*' == p.charAt(j - 1) && dp[0][j - 2];
-        }
-
-        for (int i = 1; i <= m; i++) {
-            for (int j = 1; j <= n; j++) {
-                char pchar = p.charAt(j - 1);
-                char schar = s.charAt(i - 1);
-
-                if (pchar == '*') {
-                    char pPreSymbol = p.charAt(j - 2);
-
-                    dp[i][j] = dp[i][j - 2] || ((schar == pPreSymbol || pPreSymbol == '.') && dp[i - 1][j]);
-                } else {
-                    dp[i][j] = (pchar == '.' || schar == pchar) && dp[i - 1][j - 1];
-                }
-            }
-        }
-
-        return dp[m][n];
     }
 }

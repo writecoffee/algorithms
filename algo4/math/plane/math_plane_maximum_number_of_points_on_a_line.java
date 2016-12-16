@@ -1,6 +1,7 @@
 package plane;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Given n points on a 2D plane, find the maximum number of points that lie on the same straight
@@ -24,48 +25,51 @@ public class math_plane_maximum_number_of_points_on_a_line {
     }
 
     /**
-     * A naive thought is that any two points in the plane can form a line. So we can choose
-     * (n + 1) * n / 2 number of possible edges to calculate their slope k. For each k we can
-     * add up the number of edges. Let the number of points be m, we can derive that
-     * (m + 1) * m / 2 = k and hence eventually we can derive m from the maximum k.
-     * 
-     * However, there would be case when point a and point b can coincide then we can not
-     * determine which k it belongs to.
-     * 
-     * Now, each time we can pick a specific point in the point set and iterate through other
-     * points in the set to find the maximum number of points share the same line. It's just
-     * (n + 1) * n / 2 number of pairs.
-     * 
+     * The idea is to generate all possible point pairs where <a, b> is equivalent to <b, a>.
+     * We generate slope from (b.y - a.y) / (b.x - a.x) and put it into a counter map.
+     *
      * Question: Why we let j = i + 1, not start from 0?
-     * 
-     * The problem becomes whether we ignored a line which cover the most and some of the points
-     * are in the previous section (index <= i). If that is the case, we must have calculated
-     * before because of transitiveness.
-     * 
+     *
+     * The problem can be turned into finding whether we ignored a line which cover the most
+     * and some of the points are in the previous section (index <= i). If that is the case,
+     * we must have calculated before because of transitiveness
+     *
      */
-    public int maxPoints(Point[] points) {
-        int n = points.length, gMax = 0;
+    public int maxPoints(Point[] points)
+    {
+        int n = points.length;
+        int gMax = 0;
 
         for (int i = 0; i < n - gMax; i++) {
-            HashMap<Double, Integer> h = new HashMap<Double, Integer>();
-            int lMax = 1, nan = 0;
+            Map<Double, Integer> h = new HashMap<>();
+            Point p1 = points[i];
+            int lMax = 1;
+            int samePoint = 0;
 
             for (int j = i + 1; j < n; j++) {
-                if (points[j].x == points[i].x && points[j].y == points[i].y) {
-                    nan++;
-                } else {
-                    double dx = points[j].x - points[i].x, dy = points[j].y - points[i].y;
-                    double slope = dx == 0.0 ? Double.POSITIVE_INFINITY : 0.0 + dy / dx;
+                Point p2 = points[j];
+                double slope = Double.POSITIVE_INFINITY;
 
-                    if (!h.containsKey(slope)) {
-                        h.put(slope, 1);
-                    }
-
-                    lMax = Math.max(lMax, h.put(slope, h.get(slope) + 1) + 1);
+                if (p1.x == p2.x && p1.y == p2.y) {
+                    samePoint++;
+                    continue;
                 }
+
+                if (p1.x != p2.x) {
+                    slope = 0.0 + 1.0 * (p2.y - p1.y) / (p2.x - p1.x);
+                }
+
+                Integer v = h.get(slope);
+                if (v == null) {
+                    v = 1;
+                }
+                v++;
+
+                lMax = Math.max(lMax, v);
+                h.put(slope, v);
             }
 
-            gMax = Math.max(lMax + nan, gMax);
+            gMax = Math.max(gMax, samePoint + lMax);
         }
 
         return gMax;

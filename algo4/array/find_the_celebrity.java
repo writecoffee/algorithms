@@ -25,10 +25,54 @@ public abstract class find_the_celebrity
 {
     public abstract boolean knows(int i, int j);
 
+    /**
+     * The first loop is to exclude n - 1 labels that are not possible to be a
+     * celebrity. After the first loop, x is the only candidate. The second and
+     * third loop is to verify x is actually a celebrity by definition.
+     *
+     * The key part is the first loop. To understand this you can think the
+     * knows(a,b) as a a < b comparison, if a knows b then a < b, if a does not
+     * know b, a > b. Then if there is a celebrity, he/she must be the "maximum"
+     * of the n people.
+     *
+     * However, the "maximum" may not be the celebrity in the case of no
+     * celebrity at all. Thus we need the second and third loop to check if x is
+     * actually celebrity by definition.
+     *
+     */
+    public int findCelebrityOptimized(int n)
+    {
+        int x = 0;
+
+        for (int i = 1; i < n; ++i) {
+            if (knows(x, i)) {
+                x = i;
+            }
+        }
+
+        /*
+         * Check celebrity doesn't know any of the others.
+         */
+        for (int i = 0; i < x; ++i) {
+            if (knows(x, i)) {
+                return -1;
+            }
+        }
+
+        /*
+         * Check others all know the celebrity.
+         */
+        for (int i = 0; i < n; ++i) {
+            if (!knows(i, x)) {
+                return -1;
+            }
+        }
+
+        return x;
+    }
+
     public int findCelebrity(int n)
     {
-        int[][] knowCache = new int[n][n];
-
         for (int i = 0; i < n; i++) {
             int knowCount = 0;
 
@@ -37,19 +81,14 @@ public abstract class find_the_celebrity
                     continue;
                 }
 
-                if (knowCache[i][j] == 0) {
-                    knowCache[i][j] = knows(i, j) ? 1 : -1;
-                }
-
-                if (knowCache[j][i] == 0) {
-                    knowCache[j][i] = knows(j, i) ? 1 : -1;
-                }
-
-                if (knowCache[i][j] > 0) {
+                /*
+                 * If person(i) knows any other people, he/she cannot be celebrity.
+                 */
+                if (knows(i, j)) {
                     break;
                 }
 
-                if (knowCache[j][i] > 0) {
+                if (knows(j, i)) {
                     knowCount++;
                 }
             }

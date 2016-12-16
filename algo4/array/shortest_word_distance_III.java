@@ -25,25 +25,30 @@ public class shortest_word_distance_III
 {
     public int shortestWordDistance(String[] words, String word1, String word2)
     {
-        int index1 = -1, index2 = -1, result = words.length;
+        int n = words.length;
+        int[] indices = new int[] { -1, -1 };
+        int j = 0;
+        int result = Integer.MAX_VALUE;
+        boolean isSame = word1.equals(word2);
 
-        for (int i = 0; i < words.length; i++) {
+        for (int i = 0; i < n; i++) {
             String word = words[i];
 
-            if (word.equals(word1)) {
-
-                if (word1.equals(word2) && index1 != -1) {
-                    index2 = index1;
-                    index1 = i;
-                } else {
-                    index1 = i;
-                }
+            if (isSame && word.equals(word1)) {
+                indices[j % 2] = i;
+                j++;
+            } else if (word.equals(word1)) {
+                indices[0] = i;
+                j++;
             } else if (word.equals(word2)) {
-                index2 = i;
+                indices[1] = i;
+                j++;
             }
 
-            if (index1 != -1 && index2 != -1) {
-                result = Math.min(result, Math.abs(index1 - index2));
+            if (j >= 2) {
+                int i1 = (j - 1) % 2;
+                int i2 = (j - 2) % 2;
+                result = Math.min(result, Math.abs(indices[i1] - indices[i2]));
             }
         }
 

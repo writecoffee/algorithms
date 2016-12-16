@@ -2,51 +2,63 @@ package combination;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Stack;
 
 /**
  * Given a set of candidate numbers (C) and a target number (T), find all unique combinations in C
  * where the candidate numbers sums to T.
  *
- * The same repeated number may be chosen from C unlimited number of times.
+ * THE SAME REPEATED NUMBER MAY BE CHOSEN FROM C UNLIMITED NUMBER OF TIMES.
  *
  * Note:
- * 
+ *
  *    -- All numbers (including target) will be positive integers.
  *    -- Elements in a combination (a1, a2, … , ak) must be in non-descending order. (ie, a1 ≤ a2 ≤ … ≤ ak).
  *    -- The solution set must not contain duplicate combinations.
  *
- * For example, given candidate set 2,3,6,7 and target 7, 
- * 
- * A solution set is: 
- * 
- * [7] 
- * [2, 2, 3] 
+ * For example, given candidate set 2,3,6,7 and target 7,
+ *
+ * A solution set is:
+ *
+ * [7]
+ * [2, 2, 3]
  *
  * [Difficulty] - Medium
- * [Source]     - {@linkplain https://oj.leetcode.com/problems/combination-sum/} 
+ * [Source]     - {@linkplain https://oj.leetcode.com/problems/combination-sum/}
  *
  */
-public class dfs_combination_sum_I {
-    public ArrayList<ArrayList<Integer>> combinationSum(int[] candidates, int target) {
+public class dfs_combination_sum_I
+{
+    public List<List<Integer>> combinationSum(int[] candidates, int target)
+    {
+        List<List<Integer>> result = new ArrayList<>();
+
         Arrays.sort(candidates);
-        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
-        explore(candidates, candidates.length, target, 0, new Stack<Integer>(), result);
+        explore(candidates, 0, target, result, new Stack<>(), 0);
+
         return result;
     }
 
-    private void explore(int[] candidates, int n, int target, int start, Stack<Integer> path, ArrayList<ArrayList<Integer>> result) {
-        if (target == 0) {
-            result.add(new ArrayList<Integer>(path));
+    private void explore(int[] candidates, int candidateStart, int target, List<List<Integer>> result, Stack<Integer> path, int pathSum)
+    {
+        if (pathSum == target) {
+            result.add(new ArrayList<>(path));
+            return;
+        } else if (candidateStart == candidates.length) {
             return;
         }
 
-        for (int i = start; i < n && target >= candidates[i]; ++i) {
-            if (i == 0 || candidates[i] != candidates[i - 1]) {
-                path.push(candidates[i]);
-                explore(candidates, n, target - candidates[i], i, path, result);
-                path.pop();
+        for (int i = candidateStart; i < candidates.length; i++) {
+            int can = candidates[i];
+
+            if (can + pathSum > target) {
+                break;
             }
+
+            path.push(can);
+            explore(candidates, i, target, result, path, pathSum + can);
+            path.pop();
         }
     }
 }

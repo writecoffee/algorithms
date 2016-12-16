@@ -1,5 +1,6 @@
 package matrix;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -43,29 +44,37 @@ public class flatten_2d_vector
 {
     public class Vector2D
     {
-        int row = 0,
-            col = 0;
-
-        List<List<Integer>> vector;
+        private Iterator<List<Integer>> iRow;
+        private Iterator<Integer> iCol;
 
         public Vector2D(List<List<Integer>> vec2d)
         {
-            vector = vec2d;
+            if (vec2d == null || vec2d.size() == 0) {
+                return;
+            }
+
+            iRow = vec2d.iterator();
+            iCol = iRow.next().iterator();
+            getNextRow();
+        }
+
+        private void getNextRow()
+        {
+            while (!iCol.hasNext() && iRow.hasNext()) {
+                iCol = iRow.next().iterator();
+            }
         }
 
         public int next()
         {
-            return vector.get(row).get(col++);
+            int next = iCol.next();
+            getNextRow();
+            return next;
         }
 
         public boolean hasNext()
         {
-            while (row < vector.size() && col == vector.get(row).size()) {
-                row++;
-                col = 0;
-            }
-
-            return row < vector.size() && col < vector.get(row).size();
+            return iCol != null && iCol.hasNext();
         }
     }
 }

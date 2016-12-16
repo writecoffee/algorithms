@@ -8,25 +8,39 @@
  * You may assume no duplicate exists in the array.
  *
  * [Difficulty] - Medium
- * [Source]     - {@linkplain https://leetcode.com/problems/find-minimum-in-rotated-sorted-array-ii/}
+ * [Source]     - {@linkplain https://leetcode.com/problems/find-minimum-in-rotated-sorted-array-i/}
  *
  */
 public class bs_search_minimum_in_rotated_array_I
 {
+    /**
+     * (1) There is no rotation.
+     * (2) start point is on the left.
+     * (3) start point is on the right.
+     * 
+     */
     public int findMin(int[] nums)
     {
-        int l = 0, r = nums.length - 1;
+        if (nums == null || nums.length == 0) {
+            return -1;
+        }
 
-        while (l < r && nums[l] > nums[r]) {
-            int mid = (l + r) / 2, midVal = nums[mid];
+        int n = nums.length;
+        int l = 0;
+        int r = n - 1;
+        int target = nums[r];
 
-            if (midVal > nums[r]) {
-                l = mid + 1;
+        while (l + 1 < r) {
+            int mid = l + ((r - l) >>> 1);
+            int mval = nums[mid];
+
+            if (mval >= target) {
+                l = mid;
             } else {
                 r = mid;
             }
         }
 
-        return nums[l];
+        return Math.min(nums[l], nums[r]);
     }
 }

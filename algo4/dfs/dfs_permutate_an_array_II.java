@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Stack;
 
 /**
@@ -15,59 +17,35 @@ import java.util.Stack;
  * [Source]     - {@linkplain https://oj.leetcode.com/problems/permutations-ii/}
  *
  */
-public class dfs_permutate_an_array_II {
-    public ArrayList<ArrayList<Integer>> permuteUnique(int[] nums) {
-        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+public class dfs_permutate_an_array_II
+{
+    public List<List<Integer>> permuteUnique(int[] nums)
+    {
+        List<List<Integer>> result = new ArrayList<>();
         Arrays.sort(nums);
-        explore(nums, nums.length, new Stack<Integer>(), new boolean[nums.length], result);
+        explore(nums, nums.length, result, new HashSet<Integer>(), new Stack<Integer>());
         return result;
     }
 
-    private void explore(int[] nums, int n, Stack<Integer> path, boolean[] visited, ArrayList<ArrayList<Integer>> result) {
+    private void explore(int[] nums, int n, List<List<Integer>> result, HashSet<Integer> visited, Stack<Integer> path)
+    {
         if (path.size() == n) {
             result.add(new ArrayList<Integer>(path));
             return;
         }
-
-        for (int i = 0, last = -1; i < n; ++i) {
-            if (!visited[i] && (last == -1 || nums[i] != nums[last])) {
-                visited[i] = true;
-                path.add(nums[i]);
-                explore(nums, n, path, visited, result);
-                path.pop();
-                visited[i] = false;
-                last = i;
-            }
-        }
-    }
-
-    public ArrayList<ArrayList<Integer>> permuteUnique2(int[] nums) {
-        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
-        Arrays.sort(nums);
-        explore2(nums, nums.length, new Stack<Integer>(), new boolean[nums.length], result);
-        return result;
-    }
-
-    private void explore2(int[] nums, int n, Stack<Integer> path, boolean[] visited, ArrayList<ArrayList<Integer>> result) {
-        if (path.size() == n) {
-            result.add(new ArrayList<Integer>(path));
-            return;
-        }
-
-        ArrayList<Integer> t = new ArrayList<Integer>();
 
         for (int j = 0; j < n; ++j) {
-            if (!visited[j] && (t.isEmpty() || nums[t.get(t.size() - 1)] != nums[j])) {
-                t.add(j);
-            }
-        }
+            int val = nums[j];
 
-        for (int j : t) {
-            visited[j] = true;
-            path.push(nums[j]);
-            explore(nums, n, path, visited, result);
+            if (visited.contains(j) || (j > 0 && val == nums[j - 1] && !visited.contains(j - 1))) {
+                continue;
+            }
+
+            path.push(val);
+            visited.add(j);
+            explore(nums, n, result, visited, path);
+            visited.remove(j);
             path.pop();
-            visited[j] = false;
         }
     }
 }

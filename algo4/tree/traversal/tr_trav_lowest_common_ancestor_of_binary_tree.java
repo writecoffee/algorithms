@@ -44,7 +44,7 @@ public class tr_trav_lowest_common_ancestor_of_binary_tree
         }
     }
 
-    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode node1, TreeNode node2)
+    public TreeNode lowestCommonAncestorBFS(TreeNode root, TreeNode node1, TreeNode node2)
     {
         Map<TreeNode, Integer> hLevel = new HashMap<>();
         Map<TreeNode, TreeNode> hParent = new HashMap<>();
@@ -96,5 +96,47 @@ public class tr_trav_lowest_common_ancestor_of_binary_tree
         }
 
         return node1;
+    }
+
+    public TreeNode lowestCommonAncestorDFS(TreeNode root, TreeNode p, TreeNode q)
+    {
+        TreeNode[] ancestor = new TreeNode[1];
+        covers(root, p, q, ancestor);
+        return ancestor[0];
+    }
+
+    // Checks how many "special" nodes are located under this root
+    private int covers(TreeNode root, TreeNode p, TreeNode q, TreeNode[] ancestor)
+    {
+        if (root == null) {
+            return 0;
+        }
+
+        if (p == q && root == p) {
+            ancestor[0] = root;
+            return 2;
+        }
+
+        int nodesFromLeft = covers(root.left, p, q, ancestor);
+        if (nodesFromLeft == 1) {
+            if (root == p || root == q) {
+                ancestor[0] = root;
+                return 2;
+            }
+        }
+
+        if (nodesFromLeft == 2) {
+            return 2;
+        }
+
+        int nodesFromRight = covers(root.right, p, q, ancestor);
+        if (nodesFromRight == 1) {
+            if (root == p || root == q || nodesFromLeft == 1) {
+                ancestor[0] = root;
+                return 2;
+            }
+        }
+
+        return nodesFromLeft + nodesFromRight + ((root == p || root == q) ? 1 : 0);
     }
 }

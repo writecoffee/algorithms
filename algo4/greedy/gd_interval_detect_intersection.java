@@ -2,11 +2,15 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 /**
+ * Given an array of intervals, determine if the interval is intersected with any
+ * other interval or not.
  *
- *
+ * [Source]     - itint5
+ * [Difficulty] - Hard
  * [Tag]        - $range$
+ *
  */
-public class interval_detect_intersection
+public class gd_interval_detect_intersection
 {
     private class Interval
     {

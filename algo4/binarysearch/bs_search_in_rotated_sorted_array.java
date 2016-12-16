@@ -1,37 +1,52 @@
 /**
- * 
+ * Suppose a sorted array is rotated at some pivot unknown to you beforehand.
+ *
+ * (i.e., 0 1 2 4 5 6 7 might become 4 5 6 7 0 1 2).
+ *
+ * You are given a target value to search. If found in the array return its index,
+ * otherwise return -1.
+ *
+ * You may assume no duplicate exists in the array.
+ *
+ * [Source]     - {@linkplain https://leetcode.com/problems/search-in-rotated-sorted-array/}
+ * [Difficulty] - Hard
  *
  */
-public class search_in_rotated_sorted_array
+public class bs_search_in_rotated_sorted_array
 {
-    public int search(int[] array, int target)
+    public int search(int[] nums, int target)
     {
-        int n = array.length;
-        int l = 0;
-        int r = n - 1;
+        int n = nums.length;
 
-        while (l <= r) {
-            int mid = (l + r) / 2;
+        for (int l = 0, r = n - 1; l + 1 < r;) {
+            int lval = nums[l];
+            int rval = nums[r];
+            int mid = l + ((r - l) >>> 1);
+            int mval = nums[mid];
 
-            if (array[mid] == target) {
+            if (mval == target) {
                 return mid;
-            }
-
-            if (array[l] <= array[mid]) {
-                if (target >= array[l] && target < array[mid]) {
-                    r = mid - 1;
+            } else if (lval < mval) {
+                if (target >= lval && target < mval) {
+                    r = mid;
                 } else {
-                    l = mid + 1;
+                    l = mid;
                 }
             } else {
-                if (target > array[mid] && target <= array[r]) {
-                    l = mid + 1;
+                if (target > mval && target <= rval) {
+                    l = mid;
                 } else {
-                    r = mid - 1;
+                    r = mid;
                 }
             }
         }
 
-        return -1;
+        if (nums[0] == target) {
+            return 0;
+        } else if (nums[n - 1] == target) {
+            return n - 1;
+        } else {
+            return -1;
+        }
     }
 }

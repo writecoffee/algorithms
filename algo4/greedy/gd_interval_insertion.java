@@ -23,7 +23,7 @@ import java.util.ArrayList;
  * [Tag]        - $range$
  *
  */
-public class interval_insertion
+public class gd_interval_insertion
 {
     public class Interval
     {

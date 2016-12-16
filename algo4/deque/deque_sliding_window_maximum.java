@@ -1,5 +1,3 @@
-package deque;
-
 import java.util.ArrayDeque;
 import java.util.Deque;
 
@@ -49,6 +47,9 @@ public class deque_sliding_window_maximum
         for (int i = 0; i < n; i++) {
             int theNum = nums[i];
 
+            /*
+             * We reserve numbers that == "theNum" because  
+             */
             while (!deque.isEmpty() && theNum > deque.getLast()) {
                 deque.removeLast();
             }

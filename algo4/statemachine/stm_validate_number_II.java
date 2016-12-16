@@ -17,6 +17,19 @@ import java.util.Set;
  *    "2e+3"    => true
  *    "2e+3.5"    => false
  *
+ * Scientific notation in java:
+ *
+ * Section 3.10.2 of the JLS talks about floating-point literals in Java.
+ * In short, provide the decimal part as if it were scientific notation,
+ * but instead of x 10^23 you would write e23:
+ *
+ * 3.30e23
+ *
+ * To write one with a negative exponent, you can do that easily also for
+ * 6.67 x 10^(-11):
+ *
+ * 6.67e−11
+ *
  * Note: It is intended for the problem statement to be ambiguous.
  * You should gather all requirements up front before implementing one.
  *
@@ -29,7 +42,7 @@ import java.util.Set;
  * [Source]     - {@linkplain https://oj.leetcode.com/problems/valid-number/}
  *
  */
-public class stm_validate_number
+public class stm_validate_number_II
 {
     private enum State {
         START,
@@ -62,7 +75,7 @@ public class stm_validate_number
         @Override
         public int hashCode()
         {
-            return first.ordinal() * 3 + second.ordinal() * 7;
+            return first.ordinal() * 31 + second.ordinal();
         }
 
         @Override

@@ -1,16 +1,16 @@
 /**
  * Given a sorted array of integers, find the starting and ending position of a given target value.
- * 
+ *
  * Your algorithm's runtime complexity must be in the order of O(log n).
- * 
+ *
  * If the target is not found in the array, return [-1, -1].
- * 
+ *
  * For example,
- * 
+ *
  * Given [5, 7, 7, 8, 8, 10] and target value 8,
- * 
+ *
  * return [3, 4].
- * 
+ *
  * [Difficulty] - Medium
  * [Source]     - {@linkplain https://oj.leetcode.com/problems/search-for-a-range/}
  * [Tag]        - $range$
@@ -18,46 +18,51 @@
  */
 public class bs_search_for_a_range
 {
-    public int[] searchRange(int[] array, int target)
+    public int[] searchRange(int[] nums, int target)
     {
-        int n = array.length;
-        int l = lSearch(array, target, n, 0, n - 1);
-        int r = rSearch(array, target, n, 0, n - 1);
+        int n = nums.length;
+        int l = 0;
+        int r = n - 1;
+        int rl = -1;
+        int rr = -1;
 
-        if (l <= r) {
-            return new int[] { l, r };
-        } else {
-            return new int[] { -1, -1 };
-        }
-    }
+        while (l + 1 < r) {
+            int mid = l + ((r - l) >>> 1);
+            int mval = nums[mid];
 
-    private int lSearch(int[] array, int target, int n, int l, int r)
-    {
-        while (l <= r) {
-            int mid = l + (r - l) / 2;
-
-            if (array[mid] >= target) {
-                r = mid - 1;
+            if (mval < target) {
+                l = mid;
             } else {
-                l = mid + 1;
+                r = mid;
             }
         }
 
-        return l;
-    }
+        if (nums[l] == target) {
+            rl = l;
+        } else if (nums[r] == target) {
+            rl = r;
+        }
 
-    private int rSearch(int[] array, int target, int n, int l, int r)
-    {
-        while (l <= r) {
-            int mid = l + (r - l) / 2;
+        l = 0;
+        r = n - 1;
 
-            if (array[mid] <= target) {
-                l = mid + 1;
+        while (l + 1 < r) {
+            int mid = l + ((r - l) >>> 1);
+            int mval = nums[mid];
+
+            if (mval <= target) {
+                l = mid;
             } else {
-                r = mid - 1;
+                r = mid;
             }
         }
 
-        return r;
+        if (nums[r] == target) {
+            rr = r;
+        } else if (nums[l] == target) {
+            rr = l;
+        }
+
+        return new int[] { rl, rr };
     }
 }

@@ -16,42 +16,25 @@ public class math_sqrt_I {
      * Notice that we calculate the matching target to be x / mid so as to avoid data overflow.
      *
      */
-    public int sqrt(int x) {
-        int l = 1, r = x;
-
-        while (l < r - 1) {
-            int a = l + (r - l) / 2, b = x / a;
-
-            if (a == b) {
-                return a;
-            } else {
-                l = Math.min(a, b);
-                r = Math.max(a, b);
-            }
-        }
-
-        return x == 0 ? 0 : l;
-    }
-
-    public int sqrt2(int x)
+    public int sqrt(int x)
     {
-        int l = 1, r = x;
+        long start = 1, end = x;
 
-        while (l < r) {
-            int mid = l + (r - l) / 2;
+        while (start + 1 < end) {
+            long mid = start + ((end - start) >>> 2);
 
-            if ((long) mid * mid > Integer.MAX_VALUE) {
-                r = mid - 1;
-            } else if (mid * mid == x) {
-                return mid;
-            } else if (mid * mid < x) {
-                l = mid + 1;
+            if (mid * mid <= x) {
+                start = mid;
             } else {
-                r = mid - 1;
+                end = mid;
             }
         }
 
-        return x == 0 ? 0 : ((long) l * l > x ? l - 1 : l);
+        if (end * end <= x) {
+            return (int) end;
+        }
+
+        return (int) start;
     }
 
     public float sqrt(float n)

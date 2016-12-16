@@ -12,7 +12,7 @@ import java.util.List;
  * [Source]     - {@linkplain https://leetcode.com/problems/merge-intervals/}
  * [Tag]        - $range$
  */
-public class merge_intervals
+public class gd_interval_merge
 {
     public class Interval
     {
@@ -49,20 +49,19 @@ public class merge_intervals
         });
 
         int n = intervals.size();
-        Interval pre = intervals.get(0);
-
+        Interval last = intervals.get(0);
         for (int i = 1; i < n; i++) {
             Interval nxt = intervals.get(i);
 
-            if (pre.end < nxt.start) {
-                result.add(pre);
-                pre = nxt;
+            if (last.end < nxt.start) {
+                result.add(last);
+                last = nxt;
             } else {
-                pre.end = Math.max(pre.end, nxt.end);
+                last.end = Math.max(last.end, nxt.end);
             }
         }
+        result.add(last);
 
-        result.add(pre);
         return result;
     }
 }

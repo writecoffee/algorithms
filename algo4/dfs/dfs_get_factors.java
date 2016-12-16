@@ -1,5 +1,3 @@
-package memorization_search;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -52,33 +50,42 @@ import java.util.Stack;
  * [Difficulty] - Medium
  *
  */
-public class dp_ms_get_factors
+public class dfs_get_factors
 {
     public List<List<Integer>> getFactors(int n)
     {
         List<List<Integer>> result = new ArrayList<>();
 
-        if (n <= 3) {
-            return result;
-        }
+        Stack<Integer> path = new Stack<>();
+        explore(2, n, path, result);
 
-        explore(n, -1, result, new Stack<>());
         return result;
     }
 
-    public void explore(int n, int lower, List<List<Integer>> result, Stack<Integer> path)
+    /**
+     * Time complexity: sqrt(n) * log(n), where log(n) means there are at most log(n) levels, each level
+     * there'd be at most sqrt(n) iteration
+     */
+    private void explore(int startingFactor, int n, Stack<Integer> path, List<List<Integer>> result)
     {
-        if (lower != -1) {
-            path.push(n);
-            result.add(new ArrayList<>(path));
-            path.pop();
+        if (n <= 3) {
+            return;
         }
 
-        int upper = (int) Math.sqrt(n);
-        for (int i = Math.max(2, lower); i <= upper; ++i) {
-            if (n % i == 0) {
-                path.push(i);
-                explore(n / i, i, result, path);
+        // avoid generating repetitive result, such as 12 -> [2, 6], [2, 2, 3] and [2, 3, 2] where
+        // the last one is duplicate.
+        int maxFactor = (int) Math.sqrt(n);
+        for (int factor = startingFactor; factor <= maxFactor; factor++) {
+            if (n % factor == 0) {
+                path.push(factor);
+
+                int quotient = n / factor;
+                path.push(quotient);
+                result.add(new ArrayList<>(path));
+                path.pop();
+
+                explore(factor, quotient, path, result);
+
                 path.pop();
             }
         }
